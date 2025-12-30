@@ -2,6 +2,44 @@
    INDEX PAGE SPECIFIC STYLES
    ============================================================================ */
 
+/* Flexbox Layout: Text on top, image at bottom with no gap */
+body.landing-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.page-container {
+    flex: 0 0 auto; /* Don't grow, don't shrink */
+    padding-bottom: 0;
+    margin-bottom: 0;
+    margin-top: 1rem;
+    
+}
+  
+
+.full-bleed-bg {
+    flex: 1 0 auto; /* Grow to fill space, don't shrink */
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    width: 100%;
+    margin: 0;
+    padding: 0; /* Space between text and image */
+}
+
+.full-bleed-bg img {
+    width: 100%;
+    max-width: 1200px;
+    height: auto;
+    display: block;
+    margin: 0;
+    vertical-align: bottom;
+}
+
 /* 1. Typography: Indentation vs. Spacing 
    Logic: Desktop = Indent, No margin. Mobile = Margin, No indent.
 */
@@ -30,49 +68,66 @@
    Styling for [AUTO] and [Search site] text
 */
 .interactive-text {
-  cursor: pointer;
-  color: var(--accent-color);
-  font-weight: bold;
-  user-select: none; /* Prevents highlighting text when clicking fast */
-  transition: opacity 0.2s ease;
+    cursor: pointer;
+    color: var(--accent-color);
+    font-weight: bold;
+    user-select: none; /* Prevents highlighting text when clicking fast */
+    transition: opacity 0.2s ease;
 }
-
 
 .interactive-text:hover {
-  opacity: 0.7;
-  text-decoration: underline;
-}
-/* 3. Full Bleed Background Image 
-   Logic: Pushed to very bottom, full width, behind text.
-*/
-.full-bleed-bg {
-    position: fixed; /* Stick to the viewport */
-    bottom: 0;
-    left: 0;
-    width: 100vw;    /* Full bleed width */
-    height: auto;
-    z-index: -1;     /* Place behind the text */
-    pointer-events: none; /* Allow clicking text even if image covers it */
-    
-    /* Flex settings to align image to bottom-center or bottom-right */
-    display: flex;
-    justify-content: center; /* Change to flex-end for bottom-right alignment */
-    align-items: flex-end;
+    opacity: 0.7;
+    text-decoration: underline;
 }
 
-.full-bleed-bg img {
-    width: 100%;     /* Adjust this if you want the image smaller/larger */
-    max-width: 1200px; /* Optional: Stop it from getting absurdly huge on 4k screens */
-    height: auto;
-    display: block;
-    margin: 0;      /* Override main CSS margin on images */
-    opacity: 0.5;   /* Optional: Adjust transparency so text is readable */
-}
-
-/* Mobile Adjustment for Image */
+/* Mobile adjustments */
 @media (max-width: 767px) {
+    body.landing-page {
+        justify-content: space-between; /* Header at top, image at bottom */
+        padding-top: 0; /* Ensure header stays at top */
+        padding-bottom: 0; /* Ensure image stays at bottom */
+        height: 100vh;
+    }
+
+    
+    
+    .page-container {
+        flex: 1 1 auto; /* Allow it to grow to fill available space */
+        display: flex;
+        flex-direction: column;
+        min-height: 0; /* Allow flex shrinking */
+        margin-top: 1 rem; /* Remove top margin */
+        margin-bottom: 0; /* Remove bottom margin */
+    }
+    
+    /* Keep header at top */
+    .page-container .site-header {
+        flex: 0 0 auto; /* Don't grow, stay at top */
+    }
+    
+    /* Center the content area vertically between header and image */
+    .home-content {
+        flex: 1 1 auto; /* Grow to fill available space */
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* Center content vertically */
+        align-items: flex-start; /* Keep text left-aligned */
+        margin-top: auto; /* Push down to center */
+        margin-bottom: auto; /* Balance from bottom */
+    }
+
+    .homepage {
+        justify-content: center;
+        align-items: center;
+    }
+    
     .full-bleed-bg {
-        position: relative; /* On mobile, let it sit naturally at the bottom of the scroll */
-        margin-top: 2rem;
+        flex: 0 0 auto; /* Don't grow, don't shrink */
+        margin-top: 0; /* Remove top margin */
+        margin-bottom: 0; /* Remove bottom margin to keep image at bottom */
+    }
+    
+    .full-bleed-bg img {
+        max-width: 100%; /* Full width on mobile */
     }
 }

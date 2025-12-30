@@ -1155,7 +1155,7 @@
   align-items: center;
   font-family: var(--font-heading); /* Your H1 Font */
   font-weight: 700; /* H1 Weight */
-  font-size: 1.5 rem; /* Large text like H1 */
+  font-size: 1.5rem; /* Large text like H1 */
   text-transform: uppercase;
 }
 
@@ -1207,6 +1207,17 @@
 .mobile-search-overlay { display: none; }
 .desktop-only { display: block; width: 200px; } /* Fixed width for search bar */
 
+/* Search Icon - General Styling */
+.search-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0;
+  padding: 0;
+  fill: currentColor;
+  color: var(--text-color);
+  vertical-align: middle;
+}
+
 /* Mobile State (Matches your breakpoint < 767px) */
 @media (max-width: 767px) {
   .desktop-only { display: none; }
@@ -1223,13 +1234,6 @@
     justify-content: center;
     padding: 0;
     margin: 0;
-  }
-
-  .search-icon {
-    width: 24px;
-    height: 24px;
-    margin: 0;
-    padding: 0;
     color: var(--text-color);
   }
   
