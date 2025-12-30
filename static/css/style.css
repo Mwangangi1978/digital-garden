@@ -1,0 +1,1103 @@
+/* ============================================================================
+   DENISMWANGANGI.COM TYPOGRAPHY CONSTITUTION STYLESHEET
+   Based on Practical Typography by Matthew Butterick
+   Inspired by Gwern.net and Wes Anderson's cinematography
+   ============================================================================ */
+
+/* ============================================================================
+   1. FONT FACE DECLARATIONS
+   ============================================================================ */
+
+   @font-face {
+    font-family: 'Charter';
+    src: url('/static/fonts/charter_regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'Charter';
+    src: url('/static/fonts/charter_italic.woff2') format('woff2');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'Charter';
+    src: url('/static/fonts/charter_bold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'Charter';
+    src: url('/static/fonts/charter_bold_italic.woff2') format('woff2');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+  }
+  
+/* Cooper Hewitt Font Family - Using OpenType (.otf) files */
+
+/* Thin (100) */
+@font-face {
+  font-family: 'Cooper Hewitt';
+  src: url('/static/fonts/CooperHewitt-Thin.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cooper Hewitt';
+  src: url('/static/fonts/CooperHewitt-ThinItalic.otf') format('opentype');
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Light (300) */
+@font-face {
+  font-family: 'Cooper Hewitt';
+  src: url('/static/fonts/CooperHewitt-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cooper Hewitt';
+  src: url('/static/fonts/CooperHewitt-LightItalic.otf') format('opentype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Book/Regular (400) */
+@font-face {
+  font-family: 'Cooper Hewitt';
+  src: url('/static/fonts/CooperHewitt-Book.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cooper Hewitt';
+  src: url('/static/fonts/CooperHewitt-BookItalic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Medium (500) */
+@font-face {
+  font-family: 'Cooper Hewitt';
+  src: url('/static/fonts/CooperHewitt-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cooper Hewitt';
+  src: url('/static/fonts/CooperHewitt-MediumItalic.otf') format('opentype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Semibold (600) */
+@font-face {
+  font-family: 'Cooper Hewitt';
+  src: url('/static/fonts/CooperHewitt-Semibold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cooper Hewitt';
+  src: url('/static/fonts/CooperHewitt-SemiboldItalic.otf') format('opentype');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Bold (700) */
+@font-face {
+  font-family: 'Cooper Hewitt';
+  src: url('/static/fonts/CooperHewitt-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cooper Hewitt';
+  src: url('/static/fonts/CooperHewitt-BoldItalic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Heavy (900) */
+@font-face {
+  font-family: 'Cooper Hewitt';
+  src: url('/static/fonts/CooperHewitt-Heavy.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cooper Hewitt';
+  src: url('/static/fonts/CooperHewitt-HeavyItalic.otf') format('opentype');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Computer Modern for Mathematics - Latin Modern is the OpenType version */
+/* If you have Latin Modern Math font files, add them here. Otherwise, it will fallback. */
+@font-face {
+  font-family: 'Latin Modern Math';
+  src: url('/static/fonts/latin-modern-math.regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+  
+  /* ============================================================================
+     2. CSS CUSTOM PROPERTIES (VARIABLES)
+     ============================================================================ */
+  
+  :root {
+    /* Base Typography Scale */
+    --base-font-size: 24px;
+    --modular-scale: 1.5;
+    --line-height-desktop: 1.3;
+    --line-height-mobile: 1.45;
+    
+    /* Font Families */
+    --font-body: 'Charter', Georgia, Merriweather, 'Times New Roman', serif;
+    --font-heading: 'Cooper Hewitt', 'Arial Narrow', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-code: 'Fira Code', 'Cascadia Code', 'Source Code Pro', 'Courier New', Monaco, monospace;
+    --font-math: 'Latin Modern Math', serif;
+    
+    /* Layout Dimensions */
+    --central-column-max: 1000px;
+    --mobile-margin: 1.5rem;
+    --list-indent: 2rem;
+    
+    /* Light Mode Colors */
+    --bg-light: #FDFBF7;
+    --text-light: #111111;
+    --accent-light: #F7CAC9;
+    --accent-light-hover: rgba(247, 202, 201, 0.5);
+    
+    /* Dark Mode Colors */
+    --bg-dark: #556F7A;
+    --text-dark: #FDFBF7;
+    --accent-dark: #FED766;
+    --accent-dark-hover: rgba(254, 215, 102, 0.5);
+    
+    /* Universal Accents */
+    --color-error: #FF0000;
+    --color-cyan: #5BC0EB;
+    --code-bg: rgba(150, 150, 150, 0.1);
+    
+    /* Spacing Multipliers */
+    --paragraph-spacing: 1em;
+    --heading-top-spacing: 2em;
+    --heading-bottom-spacing: 1.5em;
+    
+    /* Active Theme (Default to Light) */
+    --bg-color: var(--bg-light);
+    --text-color: var(--text-light);
+    --accent-color: var(--accent-light);
+    --accent-hover: var(--accent-light-hover);
+  }
+  
+  /* Dark Mode Theme Variables */
+  [data-theme="dark"],
+  .dark-mode {
+    --bg-color: var(--bg-dark);
+    --text-color: var(--text-dark);
+    --accent-color: var(--accent-dark);
+    --accent-hover: var(--accent-dark-hover);
+  }
+  
+  /* Automatic Dark Mode Detection */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg-color: var(--bg-dark);
+      --text-color: var(--text-dark);
+      --accent-color: var(--accent-dark);
+      --accent-hover: var(--accent-dark-hover);
+    }
+  }
+  
+  /* ============================================================================
+     3. RESPONSIVE BREAKPOINTS & BASE SCALING
+     ============================================================================ */
+  
+  /* Mobile Scale Detection: Composite Detection Strategy
+     Applied when: (1) Primary pointer is coarse AND (2) Viewport < 1024px */
+  @media (pointer: coarse) and (max-width: 1023px) {
+    :root {
+      --base-font-size: 16px;
+      --line-height-desktop: var(--line-height-mobile);
+    }
+  }
+  
+  /* Additional mobile viewport adjustment */
+  @media (max-width: 767px) {
+    :root {
+      --base-font-size: 16px;
+      --line-height-desktop: var(--line-height-mobile);
+    }
+  }
+  
+  /* ============================================================================
+     4. GLOBAL RESET & BASE STYLES
+     ============================================================================ */
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html {
+    font-size: var(--base-font-size);
+    line-height: var(--line-height-desktop);
+  }
+  
+  body {
+    font-family: var(--font-body);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* ============================================================================
+     5. MACRO LAYOUT (PAGE STRUCTURE)
+     ============================================================================ */
+  
+  /* Page Margins & Central Column */
+  .page-container,
+  main,
+  article {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: var(--central-column-max);
+  }
+  
+  @media (max-width: 767px) {
+    .page-container,
+    main,
+    article {
+      margin-left: var(--mobile-margin);
+      margin-right: var(--mobile-margin);
+      max-width: calc(100vw - (var(--mobile-margin) * 2));
+    }
+  }
+  
+  /* ============================================================================
+     6. TYPOGRAPHY - HEADINGS
+     ============================================================================ */
+  
+  /* Page Titles (2.25x Base) */
+  h1,
+  .page-title {
+    font-family: var(--font-heading);
+    font-size: calc(var(--base-font-size) * 2.25);
+    line-height: var(--line-height-desktop);
+    margin-top: var(--heading-top-spacing);
+    margin-bottom: var(--heading-bottom-spacing);
+    hyphens: none;
+    -webkit-hyphens: none;
+    -ms-hyphens: none;
+  }
+  
+  /* Article Headings (1.5x Base) */
+  h2,
+  .article-heading {
+    font-family: var(--font-body);
+    font-size: calc(var(--base-font-size) * 1.5);
+    line-height: var(--line-height-desktop);
+    margin-top: var(--heading-top-spacing);
+    margin-bottom: var(--heading-bottom-spacing);
+    hyphens: none;
+    -webkit-hyphens: none;
+    -ms-hyphens: none;
+  }
+  
+  /* Sub-headings (Same as body text) */
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-body);
+    font-size: var(--base-font-size);
+    line-height: var(--line-height-desktop);
+    margin-top: var(--heading-top-spacing);
+    margin-bottom: var(--heading-bottom-spacing);
+    hyphens: none;
+    -webkit-hyphens: none;
+    -ms-hyphens: none;
+  }
+  
+  h3 { font-weight: bold; }
+  h4 { font-weight: bold; font-style: italic; }
+  h5 { font-weight: normal; font-style: italic; }
+  h6 { font-weight: normal; }
+  
+  /* Sidenote Headings (No extra spacing) */
+  .sidenote h1,
+  .sidenote h2,
+  .sidenote h3,
+  .sidenote h4,
+  .sidenote h5,
+  .sidenote h6,
+  aside h1,
+  aside h2,
+  aside h3,
+  aside h4,
+  aside h5,
+  aside h6 {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+  }
+  
+  /* ============================================================================
+     7. TYPOGRAPHY - PARAGRAPHS & BODY TEXT
+     ============================================================================ */
+  
+  p {
+    margin-bottom: var(--paragraph-spacing);
+    text-align: left;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphenate-limit-chars: 6 3 2;
+  }
+  
+  /* Line Length Control (45-90 characters) */
+  p,
+  li {
+    max-width: 90ch;
+  }
+  
+  /* ============================================================================
+     8. TYPOGRAPHY - EMPHASIS & FORMATTING
+     ============================================================================ */
+  
+  /* Gentle Emphasis */
+  em,
+  i,
+  .italic {
+    font-style: italic;
+  }
+  
+  /* Strong Emphasis */
+  strong,
+  b,
+  .bold {
+    font-weight: bold;
+  }
+  
+  /* Metadata Styling */
+  .metadata,
+  .timestamp,
+  .abstract,
+  time {
+    font-style: italic;
+  }
+  
+  /* Small Caps for Citations */
+  .citation,
+  cite {
+    font-variant: small-caps;
+  }
+  
+  /* ============================================================================
+     9. HYPERLINKS & NAVIGATION
+     ============================================================================ */
+  
+  /* Base Link Styles - Typographic Continuity */
+  a {
+    color: inherit;
+    text-decoration: none;
+    position: relative;
+  }
+  
+  /* Internal Links - Subtle Circle Icon */
+  a[href^="/"]::after,
+  a.internal-link::after {
+    content: "°";
+    font-size: 0.8em;
+    color: var(--accent-color);
+    margin-left: 0.1em;
+    vertical-align: super;
+    font-size: 0.6em;
+  }
+  
+  /* External Links - Superscript Icon */
+  a[href^="http"]::after,
+  a[href^="https"]::after,
+  a.external-link::after {
+    content: "↗";
+    font-size: 0.7em;
+    color: var(--accent-color);
+    margin-left: 0.15em;
+    vertical-align: super;
+  }
+  
+  /* Remove icons from specific contexts */
+  a.no-icon::after,
+  nav a::after,
+  .nav-link::after {
+    content: none;
+  }
+  
+  /* Hover States - High Contrast Background */
+  a:hover {
+    background-color: var(--accent-hover);
+    cursor: pointer;
+  }
+  
+  /* Visited States - Uniform Appearance */
+  a:visited {
+    color: inherit;
+  }
+  
+  /* Focus States for Accessibility */
+  a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+  }
+  
+  /* ============================================================================
+     10. SIDENOTES
+     ============================================================================ */
+  
+  .sidenote,
+  aside.sidenote {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    text-align: right;
+    font-size: 0.85em;
+    line-height: 1.4;
+  }
+  
+  @media (min-width: 768px) {
+    .sidenote,
+    aside.sidenote {
+      position: absolute;
+      left: -300px;
+      width: 250px;
+      padding-right: 2rem;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .sidenote,
+    aside.sidenote {
+      text-align: left;
+      margin: 1rem 0;
+      padding-left: 1rem;
+      border-left: 2px solid var(--accent-color);
+    }
+  }
+  
+  /* ============================================================================
+     11. POPOVERS & WINDOW CONTROLS
+     ============================================================================ */
+  
+  .popover,
+  .mini-window {
+    position: fixed;
+    background-color: var(--bg-color);
+    border: 2px solid var(--accent-color);
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .popover-header {
+    padding: 0.5rem 1rem;
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: move;
+    user-select: none;
+  }
+  
+  .popover-controls {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .popover-control-btn {
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    opacity: 0.8;
+  }
+  
+  .popover-control-btn:hover {
+    opacity: 1;
+  }
+  
+  .popover-content {
+    padding: 1.5rem;
+    overflow-y: auto;
+    flex: 1;
+  }
+  
+  /* Pinned State */
+  .popover.pinned {
+    position: fixed;
+  }
+  
+  /* Minimized State */
+  .popover.minimized {
+    bottom: 20px;
+    right: 20px;
+    max-width: 300px;
+    max-height: 50px;
+  }
+  
+  .popover.minimized .popover-content {
+    display: none;
+  }
+  
+  /* Mobile Popover - Modal Style */
+  @media (max-width: 767px) {
+    .popover,
+    .mini-window {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90vw;
+      max-width: 90vw;
+      max-height: 80vh;
+    }
+    
+    .popover-header {
+      cursor: default;
+    }
+    
+    .popover-control-btn.pin-btn,
+    .popover-control-btn.minimize-btn {
+      display: none;
+    }
+  }
+  
+  /* Recursive Popover Disable Icon */
+  .popover-control-btn.eye-btn::before {
+    content: "👁️";
+  }
+  
+  /* ============================================================================
+     12. LISTS
+     ============================================================================ */
+  
+  /* Unordered Lists - Disc Marker Only */
+  ul {
+    list-style-type: disc;
+    margin-bottom: var(--paragraph-spacing);
+    padding-left: var(--list-indent);
+  }
+  
+  ul ul {
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+    padding-left: var(--list-indent);
+    list-style-type: disc;
+  }
+  
+  ul ul ul {
+    padding-left: var(--list-indent);
+    list-style-type: disc;
+  }
+  
+  li {
+    margin-bottom: 0.5em;
+  }
+  
+  /* Ordered Lists - Decimal Numbering (Legal Style) */
+  ol {
+    counter-reset: item;
+    list-style-type: none;
+    margin-bottom: var(--paragraph-spacing);
+    padding-left: 0;
+  }
+  
+  ol > li {
+    counter-increment: item;
+    margin-bottom: 0.5em;
+    padding-left: var(--list-indent);
+    position: relative;
+  }
+  
+  ol > li::before {
+    content: counter(item) ".";
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+  }
+  
+  /* Nested Ordered Lists - Legal Style Continuation */
+  ol ol {
+    counter-reset: subitem;
+    padding-left: var(--list-indent);
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+  }
+  
+  ol ol > li {
+    counter-increment: subitem;
+  }
+  
+  ol ol > li::before {
+    content: counter(item) "." counter(subitem) ".";
+  }
+  
+  ol ol ol {
+    counter-reset: subsubitem;
+    padding-left: var(--list-indent);
+  }
+  
+  ol ol ol > li {
+    counter-increment: subsubitem;
+  }
+  
+  ol ol ol > li::before {
+    content: counter(item) "." counter(subitem) "." counter(subsubitem) ".";
+  }
+  
+  /* Definition Lists */
+  dl {
+    margin-bottom: var(--paragraph-spacing);
+  }
+  
+  dt {
+    font-weight: bold;
+    margin-top: 1em;
+  }
+  
+  dd {
+    margin-left: var(--list-indent);
+    margin-bottom: 0.5em;
+  }
+  
+  /* ============================================================================
+     13. BLOCKQUOTES
+     ============================================================================ */
+  
+  blockquote {
+    font-style: normal;
+    font-size: 0.9em;
+    line-height: 1.4;
+    margin: 2rem 0;
+    padding-left: 1.5rem;
+    border-left: 4px solid var(--accent-color);
+    max-width: 85ch;
+  }
+  
+  blockquote p {
+    margin-bottom: 0.75em;
+  }
+  
+  blockquote p:last-child {
+    margin-bottom: 0;
+  }
+  
+  /* Citation Styling */
+  blockquote cite,
+  blockquote .citation {
+    display: block;
+    text-align: right;
+    font-variant: small-caps;
+    margin-top: 0.5em;
+  }
+  
+  blockquote cite::before,
+  blockquote .citation::before {
+    content: "—";
+    margin-right: 0.5em;
+  }
+  
+  /* ============================================================================
+     14. INLINE QUOTATIONS
+     ============================================================================ */
+  
+  q {
+    quotes: """ """ "'" "'";
+  }
+  
+  q::before {
+    content: open-quote;
+  }
+  
+  q::after {
+    content: close-quote;
+  }
+  
+  /* ============================================================================
+     15. CODE - INLINE
+     ============================================================================ */
+  
+  code {
+    font-family: var(--font-code);
+    background-color: var(--code-bg);
+    padding: 0.15em 0.4em;
+    border-radius: 3px;
+    font-size: 0.9em;
+  }
+  
+  /* Remove inline styling from code blocks */
+  pre code {
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0;
+    font-size: inherit;
+  }
+  
+  /* ============================================================================
+     16. CODE - BLOCKS
+     ============================================================================ */
+  
+  pre {
+    font-family: var(--font-code);
+    margin: 2rem 0;
+    padding: 1.5rem;
+    overflow-x: auto;
+    border-radius: 8px;
+    line-height: 1.5;
+    tab-size: 4;
+  }
+  
+  /* Rosé Pine Dawn (Light Mode) */
+  :root:not([data-theme="dark"]) pre,
+  [data-theme="light"] pre {
+    background-color: #faf4ed;
+    color: #575279;
+  }
+  
+  :root:not([data-theme="dark"]) pre .comment,
+  [data-theme="light"] pre .comment { color: #9893a5; }
+  
+  :root:not([data-theme="dark"]) pre .keyword,
+  [data-theme="light"] pre .keyword { color: #286983; }
+  
+  :root:not([data-theme="dark"]) pre .string,
+  [data-theme="light"] pre .string { color: #ea9d34; }
+  
+  :root:not([data-theme="dark"]) pre .function,
+  [data-theme="light"] pre .function { color: #d7827e; }
+  
+  :root:not([data-theme="dark"]) pre .number,
+  [data-theme="light"] pre .number { color: #56949f; }
+  
+  /* Rosé Pine Main (Dark Mode) */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) pre {
+      background-color: #191724;
+      color: #e0def4;
+    }
+    
+    :root:not([data-theme="light"]) pre .comment { color: #6e6a86; }
+    :root:not([data-theme="light"]) pre .keyword { color: #31748f; }
+    :root:not([data-theme="light"]) pre .string { color: #f6c177; }
+    :root:not([data-theme="light"]) pre .function { color: #ebbcba; }
+    :root:not([data-theme="light"]) pre .number { color: #9ccfd8; }
+  }
+  
+  [data-theme="dark"] pre {
+    background-color: #191724;
+    color: #e0def4;
+  }
+  
+  [data-theme="dark"] pre .comment { color: #6e6a86; }
+  [data-theme="dark"] pre .keyword { color: #31748f; }
+  [data-theme="dark"] pre .string { color: #f6c177; }
+  [data-theme="dark"] pre .function { color: #ebbcba; }
+  [data-theme="dark"] pre .number { color: #9ccfd8; }
+  
+  /* ============================================================================
+     17. MATHEMATICAL FORMULAS
+     ============================================================================ */
+  
+  /* Inline Math */
+  .math-inline,
+  span.math {
+    font-family: var(--font-math);
+    font-style: italic;
+  }
+  
+  /* Display Math */
+  .math-display,
+  div.math {
+    font-family: var(--font-math);
+    font-style: italic;
+    display: block;
+    text-align: center;
+    margin: 2rem auto;
+    overflow-x: auto;
+  }
+  
+  /* KaTeX/MathJax Container Support */
+  .katex,
+  .MathJax {
+    font-size: 1.1em;
+  }
+  
+  .katex-display,
+  .MathJax_Display {
+    margin: 2rem 0;
+  }
+  
+  /* ============================================================================
+     18. TABLES
+     ============================================================================ */
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.9em;
+  }
+  
+  th,
+  td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid var(--accent-color);
+  }
+  
+  th {
+    font-weight: bold;
+    font-family: var(--font-heading);
+    border-bottom-width: 2px;
+  }
+  
+  tr:last-child td {
+    border-bottom: none;
+  }
+  
+  /* ============================================================================
+     19. IMAGES & FIGURES
+     ============================================================================ */
+  
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 2rem auto;
+  }
+  
+  figure {
+    margin: 2rem 0;
+  }
+  
+  figcaption {
+    font-size: 0.85em;
+    font-style: italic;
+    text-align: center;
+    margin-top: 0.5rem;
+    color: var(--text-color);
+    opacity: 0.8;
+  }
+  
+  /* ============================================================================
+     20. HORIZONTAL RULES
+     ============================================================================ */
+  
+  hr {
+    border: none;
+    border-top: 2px solid var(--accent-color);
+    margin: 3rem 0;
+    opacity: 0.5;
+  }
+  
+  /* ============================================================================
+     21. FORMS & INPUTS (Optional - for future use)
+     ============================================================================ */
+  
+  input,
+  textarea,
+  select {
+    font-family: var(--font-body);
+    font-size: 1em;
+    padding: 0.5rem;
+    border: 2px solid var(--accent-color);
+    border-radius: 4px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+  
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+    border-color: var(--text-color);
+  }
+  
+  button {
+    font-family: var(--font-heading);
+    font-size: 1em;
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--accent-color);
+    border-radius: 4px;
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  button:hover {
+    background-color: var(--bg-color);
+    color: var(--accent-color);
+  }
+  
+  /* ============================================================================
+     22. ACCESSIBILITY ENHANCEMENTS
+     ============================================================================ */
+  
+  /* Skip to Content Link */
+  .skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--accent-color);
+    color: var(--bg-color);
+    padding: 8px;
+    text-decoration: none;
+    z-index: 100;
+  }
+  
+  .skip-link:focus {
+    top: 0;
+  }
+  
+  /* Focus Visible for Keyboard Navigation */
+  :focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+  }
+  
+  /* Reduced Motion Support */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+  
+  /* High Contrast Mode Support */
+  @media (prefers-contrast: high) {
+    :root {
+      --text-light: #000000;
+      --bg-light: #FFFFFF;
+      --text-dark: #FFFFFF;
+      --bg-dark: #000000;
+    }
+  }
+  
+  /* ============================================================================
+     23. PRINT STYLES
+     ============================================================================ */
+  
+  @media print {
+    body {
+      background-color: white;
+      color: black;
+      font-size: 12pt;
+    }
+    
+    a[href^="http"]::after {
+      content: " (" attr(href) ")";
+      font-size: 0.8em;
+      color: inherit;
+    }
+    
+    .popover,
+    .sidenote,
+    nav,
+    .no-print {
+      display: none;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+      page-break-after: avoid;
+    }
+    
+    p, blockquote, pre {
+      page-break-inside: avoid;
+    }
+  }
+  
+  /* ============================================================================
+     24. UTILITY CLASSES
+     ============================================================================ */
+  
+  .text-center { text-align: center; }
+  .text-right { text-align: right; }
+  .text-left { text-align: left; }
+  
+  .mt-0 { margin-top: 0; }
+  .mt-1 { margin-top: 1rem; }
+  .mt-2 { margin-top: 2rem; }
+  .mb-0 { margin-bottom: 0; }
+  .mb-1 { margin-bottom: 1rem; }
+  .mb-2 { margin-bottom: 2rem; }
+  
+  .hidden { display: none; }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+  
+  /* Error Styling */
+  .error {
+    color: var(--color-error);
+    font-weight: bold;
+  }
+  
+  /* Landing Page Specific */
+  .landing-page {
+    background-color: var(--color-cyan);
+    color: var(--text-light);
+  }
+  
+  
