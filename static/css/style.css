@@ -1173,12 +1173,17 @@
 .search-input,
 .mobile-search-input {
   border: none;
-  padding: 0.2rem 0.5rem;
+  padding: 0.2rem 0.2rem;
   font-family: var(--font-body);
   font-size: 1rem;
   width: 100%;
   outline: none;
   color: #111; /* Always dark text inside the colored input for contrast */
+}
+
+/* Desktop Search Input - Centered Text */
+.search-input {
+  text-align: center;
 }
 
 /* Light Mode: Pink Input */
@@ -1205,7 +1210,7 @@
 /* Desktop State */
 .mobile-only { display: none; }
 .mobile-search-overlay { display: none; }
-.desktop-only { display: block; width: 200px; } /* Fixed width for search bar */
+.desktop-only { display: block; width: 300px; } /* Fixed width for search bar */
 
 /* Search Icon - General Styling */
 .search-icon {
