@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <input type="text" class="search-input" placeholder="Search..." aria-label="Search">
         </div>
   
-        <a href="/blog" class="nav-item">BLOG</a>
+        <a href="/blog" class="nav-item">INDEX</a>
         <a href="/logs" class="nav-item">LOGS</a>
   
         <button class="mobile-search-btn mobile-only" aria-label="Open Search">
