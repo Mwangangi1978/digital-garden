@@ -1,0 +1,78 @@
+/* ============================================================================
+   INDEX PAGE SPECIFIC STYLES
+   ============================================================================ */
+
+/* 1. Typography: Indentation vs. Spacing 
+   Logic: Desktop = Indent, No margin. Mobile = Margin, No indent.
+*/
+
+/* Desktop Overrides (min-width: 768px matches your breakpoints) */
+@media (min-width: 768px) {
+    .index-content p {
+        text-indent: 2rem;       /* The indent */
+        margin-bottom: 0;        /* Remove skip line */
+        margin-top: 0;
+        line-height: var(--line-height-desktop);
+    }
+
+    /* The first paragraph typically is not indented in classic typography */
+    .index-content p:first-of-type {
+        text-indent: 0;
+    }
+
+    /* Add a little breathing room after the hidden H1 */
+    .index-content p:first-of-type {
+        margin-top: 2rem;
+    }
+}
+
+/* 2. Interactive Spans (Features) 
+   Styling for [AUTO] and [Search site] text
+*/
+.interactive-text {
+  cursor: pointer;
+  color: var(--accent-color);
+  font-weight: bold;
+  user-select: none; /* Prevents highlighting text when clicking fast */
+  transition: opacity 0.2s ease;
+}
+
+
+.interactive-text:hover {
+  opacity: 0.7;
+  text-decoration: underline;
+}
+/* 3. Full Bleed Background Image 
+   Logic: Pushed to very bottom, full width, behind text.
+*/
+.full-bleed-bg {
+    position: fixed; /* Stick to the viewport */
+    bottom: 0;
+    left: 0;
+    width: 100vw;    /* Full bleed width */
+    height: auto;
+    z-index: -1;     /* Place behind the text */
+    pointer-events: none; /* Allow clicking text even if image covers it */
+    
+    /* Flex settings to align image to bottom-center or bottom-right */
+    display: flex;
+    justify-content: center; /* Change to flex-end for bottom-right alignment */
+    align-items: flex-end;
+}
+
+.full-bleed-bg img {
+    width: 100%;     /* Adjust this if you want the image smaller/larger */
+    max-width: 1200px; /* Optional: Stop it from getting absurdly huge on 4k screens */
+    height: auto;
+    display: block;
+    margin: 0;      /* Override main CSS margin on images */
+    opacity: 0.5;   /* Optional: Adjust transparency so text is readable */
+}
+
+/* Mobile Adjustment for Image */
+@media (max-width: 767px) {
+    .full-bleed-bg {
+        position: relative; /* On mobile, let it sit naturally at the bottom of the scroll */
+        margin-top: 2rem;
+    }
+}
