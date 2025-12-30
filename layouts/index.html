@@ -1,80 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ page.title }} | Denis Mwangangi</title>
-    
-    <link rel="stylesheet" href="/style.css">
-    
-    <link rel="stylesheet" href="/indexpage.css">
-</head>
-<body>
+  <meta charset="UTF-8">
+  <title>{{ .Title }}</title>
 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+  <link rel="stylesheet" href="{{ "css/indexpage.css" | relURL }}">
+</head>
+
+<body class="landing-page"> 
+    
     <div class="page-container">
-        <main class="index-content">
-            {{ content }}
+        <main class="home-content">
+        {{ .Content }}
         </main>
     </div>
 
-    <div class="full-bleed-bg">
-        <img src="/static/images/hero-image.png" alt="Decorative Background">
-    </div>
-
-    <script src="/static/js/header.js"></script>
-
-    <script>
-        document.getElementById('search-trigger')?.addEventListener('click', () => {
-            // Check if mobile view
-            if(window.innerWidth < 768) {
-                document.querySelector('.mobile-search-btn').click();
-            } else {
-                document.querySelector('.search-input').focus();
-            }
-        });
         
-        document.addEventListener('DOMContentLoaded', () => {
-            const toggleButton = document.getElementById('mode-toggle');
-            const rootElem = document.documentElement;
+    <div class="full-bleed-bg">
+        <img src="{{ "images/hero-image.png" | relURL }}" alt="Decorative Background">
+    </div>
+    
 
-            // 1. Define the Cycle Order
-            const modes = ['auto', 'dark', 'light'];
-
-            // 2. Function to apply the visual changes
-            function applyMode(mode) {
-                // Update the text inside the brackets
-                toggleButton.innerText = `[${mode.toUpperCase()}]`;
-
-                // Apply the CSS attribute logic
-                if (mode === 'auto') {
-                    // Remove override, let @media (prefers-color-scheme) in CSS take over
-                    rootElem.removeAttribute('data-theme');
-                } else {
-                    // Force 'dark' or 'light' using your CSS [data-theme="..."] selectors
-                    rootElem.setAttribute('data-theme', mode);
-                }
-            }
-
-            // 3. Initialize: Check LocalStorage or default to Auto
-            let currentMode = localStorage.getItem('theme-preference') || 'auto';
-            applyMode(currentMode);
-
-            // 4. Click Event Listener
-            toggleButton.addEventListener('click', () => {
-                // Find current index and calculate next index
-                const currentIndex = modes.indexOf(currentMode);
-                const nextIndex = (currentIndex + 1) % modes.length;
-                
-                // Update State
-                currentMode = modes[nextIndex];
-                
-                // Save to browser storage so it remembers on refresh
-                localStorage.setItem('theme-preference', currentMode);
-                
-                // Apply changes
-                applyMode(currentMode);
-            });
-        });
-    </script>
+  <script src="{{ "js/header.js" | relURL }}" defer></script>
+  <script src="{{ "js/theme.js" | relURL }}" defer class="jim"></script>
 </body>
 </html>
