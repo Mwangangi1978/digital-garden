@@ -1100,4 +1100,133 @@
     color: var(--text-light);
   }
   
+  /* ============================================================================
+   25. HEADER & NAVIGATION
+   ============================================================================ */
+
+/* The Header Container */
+.site-header {
+  width: 100%;
+  margin-bottom: var(--heading-bottom-spacing);
+  border: 2px solid var(--text-color); /* Requested border */
+  padding: 0.5rem 1rem;
+  background-color: var(--bg-color);
+  position: relative; /* Context for mobile overlay */
+  overflow: hidden;   /* Keeps sliding overlay contained */
+}
+
+/* Flexbox Layout for the Items */
+.site-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-heading); /* Your H1 Font */
+  font-weight: 700; /* H1 Weight */
+  font-size: 1.5rem; /* Large text like H1 */
+  text-transform: uppercase;
+}
+
+/* Navigation Links */
+.nav-item {
+  color: var(--text-color);
+  text-decoration: none;
+  /* Remove the superscript icons for header links as they clutter the nav */
+}
+.nav-item::after {
+  content: none !important; 
+}
+
+/* --- Search Input Styling (Desktop & Mobile) --- */
+.search-input,
+.mobile-search-input {
+  border: none;
+  padding: 0.2rem 0.5rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  width: 100%;
+  outline: none;
+  color: #111; /* Always dark text inside the colored input for contrast */
+}
+
+/* Light Mode: Pink Input */
+.search-input,
+.mobile-search-input {
+  background-color: #F7CAC9; /* Pink */
+}
+
+/* Dark Mode: Cyan Input */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .search-input,
+  :root:not([data-theme="light"]) .mobile-search-input {
+    background-color: var(--color-cyan);
+  }
+}
+[data-theme="dark"] .search-input,
+[data-theme="dark"] .mobile-search-input {
+  background-color: var(--color-cyan);
+}
+
+/* --- Responsive Logic --- */
+
+/* Desktop State */
+.mobile-only { display: none; }
+.mobile-search-overlay { display: none; }
+.desktop-only { display: block; width: 200px; } /* Fixed width for search bar */
+
+/* Mobile State (Matches your breakpoint < 767px) */
+@media (max-width: 767px) {
+  .desktop-only { display: none; }
+  .mobile-only { display: block; }
   
+  /* Mobile Search Icon Button */
+  .mobile-search-btn {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-family: var(--font-heading);
+    font-weight: bold;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  .mobile-search-btn:hover {
+    background: none;
+    color: var(--accent-color);
+  }
+
+  /* Sliding Overlay */
+  .mobile-search-overlay {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+    align-items: center;
+    padding: 0 1rem;
+    z-index: 10;
+    
+    /* Animation Slide Setup */
+    transform: translateX(100%); 
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .mobile-search-overlay.active {
+    transform: translateX(0); /* Slides in from right */
+  }
+
+  /* Close 'X' button in overlay */
+  .close-search {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 2rem;
+    margin-left: 1rem;
+    cursor: pointer;
+    line-height: 1;
+  }
+}
+  
+
