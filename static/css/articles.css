@@ -1,0 +1,281 @@
+/* ==========================================================================
+   ARTICLE LAYOUT
+   ========================================================================== */
+
+.page-container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: var(--central-column-max);
+}
+
+@media (max-width: 767px) {
+  .page-container {
+    margin-left: var(--mobile-margin);
+    margin-right: var(--mobile-margin);
+    max-width: calc(100vw - (var(--mobile-margin) * 2));
+  }
+}
+
+.article-page {
+  position: relative;
+}
+
+/* Header spacing for article pages */
+.page-container .site-header {
+  margin-top: 1rem;
+  margin-bottom: 4rem;
+}
+
+/* Desktop grid */
+@media (min-width: 768px) {
+  .article-layout {
+    display: grid;
+    grid-template-columns: 11rem 2rem 1fr;
+    align-items: start;
+  }
+
+  .article-layout.no-sidebar-title {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Sidebar */
+.article-sidebar {
+  position: relative;
+  grid-column: 1;
+  text-align: left;
+}
+
+.article-content h1 {
+  font-family: var(--font-body);
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-top: var(--heading-top-spacing);
+  margin-bottom: var(--heading-bottom-spacing);
+}
+
+.article-content h2 {
+  font-family: var(--font-body);
+  font-weight: bold;
+  font-size: var(--base-font-size);
+  margin-top: var(--heading-top-spacing);
+  margin-bottom: var(--heading-bottom-spacing);
+}
+
+/* Empty gap column */
+.article-gap {
+  grid-column: 2;
+  /* Ensure it's empty and doesn't interfere */
+  min-width: 0;
+  width: 2rem;
+}
+
+@media (max-width: 767px) {
+  .article-gap {
+    display: none;
+  }
+}
+
+/* Main column - ensure it's in the right grid column */
+.article-main {
+  position: relative;
+  grid-column: 3;
+}
+
+@media (min-width: 768px) {
+  .article-layout.no-sidebar-title .article-main {
+    grid-column: 1;
+  }
+}
+
+.article-title-sidebar {
+  /* Use default h1 styling from style.css */
+  text-align: left;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+/* Metadata in sidebar */
+.article-meta-sidebar {
+  font-size: 0.75rem;
+  font-style: italic;
+  opacity: 0.7;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.article-meta-sidebar time {
+  display: block;
+  margin-bottom: 0.25rem;
+  cursor: help;
+}
+
+.article-meta-sidebar .status {
+  display: block;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+/* Epistemic status styling */
+.article-epistemic {
+  font-size: 0.75rem;
+  font-style: italic;
+  opacity: 0.7;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+/* Title above content (mobile & long titles) - use default h1 styling */
+.article-title-main {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: var(--heading-bottom-spacing);
+}
+
+/* Horizontal rule above title - thick, black, bold, no margin above */
+.article-main > hr.article-title-hr {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  border: none;
+  border-top: 4px solid #000000;
+  font-weight: bold;
+  opacity: 1;
+}
+
+/* Mobile-only title for short titles */
+.mobile-only {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .mobile-only {
+    display: block;
+  }
+  
+  /* Hide sidebar and gap on mobile */
+  .article-sidebar {
+    display: none;
+  }
+  
+  .article-gap {
+    display: none;
+  }
+  
+  /* Main column takes full width on mobile */
+  .article-main {
+    grid-column: 1;
+  }
+}
+
+/* Metadata (for long titles and mobile) */
+.article-meta {
+  font-style: italic;
+  opacity: 0.7;
+  margin-bottom: 2rem;
+  text-align: left;
+  font-size: 0.75rem;
+}
+
+/* Content wrapper for sidenote anchoring */
+.article-content {
+  position: relative;
+}
+
+/* ==========================================================================
+   SIDENOTE ALIGNMENT
+   ========================================================================== */
+
+/* Desktop sidenotes - positioned in the left sidebar column */
+@media (min-width: 768px) {
+  /* Make paragraphs relative so they can anchor sidenotes */
+  .article-content p {
+    position: relative;
+  }
+  
+  /* Override global sidenote styles for article pages */
+  .article-content .sidenote,
+  .article-content aside.sidenote {
+    position: absolute;
+    right: calc(100% + 2rem); /* Position to the left of the paragraph, accounting for the 2rem gap */
+    width: 11rem; /* Match the sidebar width */
+    font-family: var(--font-heading);
+    font-weight: 300;
+    text-align: right;
+    font-size: 0.85em;
+    line-height: 1.4;
+    top: 0; /* Align with the top of the paragraph */
+    margin: 0;
+    padding: 0;
+    /* Override global styles */
+    left: auto;
+  }
+  
+  /* When sidenote is a sibling following a paragraph */
+  .article-content p + .sidenote,
+  .article-content p + aside.sidenote {
+    position: absolute;
+    right: calc(100% + 2rem);
+    top: 0;
+  }
+}
+
+/* Mobile sidenotes - displayed as blocks */
+@media (max-width: 767px) {
+  .article-content .sidenote,
+  .article-content aside.sidenote {
+    position: relative;
+    background-color: rgba(150, 150, 150, 0.05);
+    border-left: 2px solid var(--accent-color);
+    padding: 0.75rem 1rem;
+    margin: 1.5rem 0;
+    text-align: left;
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: 0.85em;
+    line-height: 1.4;
+    width: 100%;
+    right: auto;
+  }
+}
+
+/* ==========================================================================
+   BACKLINKS
+   ========================================================================== */
+
+.backlinks {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--accent-color);
+}
+
+/* Article page specific heading styles - h1 uses default, h2 is body size and bold */
+.article-content h1 {
+  /* Use default h1 styling from style.css */
+  margin-top: var(--heading-top-spacing);
+  margin-bottom: var(--heading-bottom-spacing);
+}
+
+.article-content h2 {
+  font-family: var(--font-body);
+  font-weight: bold;
+  font-size: var(--base-font-size);
+  margin-top: var(--heading-top-spacing);
+  margin-bottom: var(--heading-bottom-spacing);
+}
+
+.backlinks h2 {
+  font-family: var(--font-body);
+  font-weight: bold;
+  font-size: var(--base-font-size);
+  margin-bottom: 1rem;
+}
+
+.backlinks ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.backlinks li {
+  margin-bottom: 0.5rem;
+}
+  

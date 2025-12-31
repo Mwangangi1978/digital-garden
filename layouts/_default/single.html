@@ -1,0 +1,108 @@
+{{ define "stylesheets" }}
+  <link rel="stylesheet" href="{{ "css/articles.css" | relURL }}">
+{{ end }}
+
+{{ define "main" }}
+
+<div class="page-container">
+  <article class="article-page">
+
+    {{/* word count for title */}}
+    {{ $titleWords := len (split .Title " ") }}
+    {{ $shortTitle := le $titleWords 3 }}
+
+    {{/* Check if dates are different */}}
+    {{ $hasUpdate := ne .Date .Lastmod }}
+    {{ $dateFormat := "02 Jan 2006" }}
+
+    <div class="article-layout {{ if $shortTitle }}has-sidebar-title{{ else }}no-sidebar-title{{ end }}">
+
+      {{ if $shortTitle }}
+      <!-- Sidebar (desktop only) -->
+      <aside class="article-sidebar">
+        <h1 class="article-title-sidebar">{{ .Title }}</h1>
+        <!-- Metadata in sidebar -->
+        <div class="article-meta-sidebar">
+          {{ if $hasUpdate }}
+          <time title="Published: {{ .Date.Format $dateFormat }}">{{ .Date.Format $dateFormat }}</time>
+          —
+          <time title="Last modified: {{ .Lastmod.Format $dateFormat }}">{{ .Lastmod.Format $dateFormat }}</time>
+          {{ else }}
+          <time title="Published: {{ .Date.Format $dateFormat }}">{{ .Date.Format $dateFormat }}</time>
+          {{ end }}
+          <span class="status">status: [{{ .Params.status | title }}]</span>
+        </div>
+      </aside>
+      <!-- Empty gap column -->
+      <div class="article-gap"></div>
+      {{ end }}
+
+      <div class="article-main">
+
+        {{ if not $shortTitle }}
+        <hr class="article-title-hr">
+        <h1 class="article-title-main">{{ .Title }}</h1>
+        <!-- Metadata for long titles -->
+        <div class="article-meta">
+          {{ if $hasUpdate }}
+          <time title="Published: {{ .Date.Format $dateFormat }}">{{ .Date.Format $dateFormat }}</time>
+          —
+          <time title="Last modified: {{ .Lastmod.Format $dateFormat }}">{{ .Lastmod.Format $dateFormat }}</time>
+          {{ else }}
+          <time title="Published: {{ .Date.Format $dateFormat }}">{{ .Date.Format $dateFormat }}</time>
+          {{ end }}
+          <span class="status">status: [{{ .Params.status | title }}]</span>
+        </div>
+        {{ else }}
+        <!-- Mobile: show title even if short -->
+        <hr class="article-title-hr mobile-only">
+        <h1 class="article-title-main mobile-only">{{ .Title }}</h1>
+        <!-- Mobile metadata -->
+        <div class="article-meta mobile-only">
+          {{ if $hasUpdate }}
+          <time title="Published: {{ .Date.Format $dateFormat }}">{{ .Date.Format $dateFormat }}</time>
+          —
+          <time title="Last modified: {{ .Lastmod.Format $dateFormat }}">{{ .Lastmod.Format $dateFormat }}</time>
+          {{ else }}
+          <time title="Published: {{ .Date.Format $dateFormat }}">{{ .Date.Format $dateFormat }}</time>
+          {{ end }}
+          <span class="status">[{{ .Params.status | title }}]</span>
+        </div>
+        {{ end }}
+
+        {{/* Epistemic status - above content */}}
+        {{ if .Params.epistemic }}
+        {{ $epistemic := .Params.epistemic }}
+        {{ if $epistemic.narrative }}
+        <div class="article-epistemic">
+          {{ $epistemic.narrative }}
+        </div>
+        {{ end }}
+        {{ end }}
+
+        <!-- Content -->
+        <div class="article-content">
+          {{ .Content }}
+        </div>
+
+        <!-- Backlinks -->
+        <section class="backlinks">
+          <h2>Backlinks</h2>
+          <ul>
+            {{ $current := .RelPermalink }}
+            {{ range site.RegularPages }}
+              {{ if and (ne .RelPermalink $current) (in .Content $current) }}
+                <li>
+                  <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                </li>
+              {{ end }}
+            {{ end }}
+          </ul>
+        </section>
+
+      </div>
+    </div>
+  </article>
+</div>
+
+{{ end }}
