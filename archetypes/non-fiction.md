@@ -1,8 +1,11 @@
 ---
-title: ""
-date: 2024-12-01          # publication date
-lastmod: 2025-12-29       # intentional update
-status: note | draft | complete | archived
+title: " "
+date: {{ .Date }}
+lastmod: {{ .Date }}
+
+status:  note | draft | complete | archived
+
+category: social   # social/political/economic/tech
 
 epistemic:
   narrative: ""
@@ -19,5 +22,4 @@ epistemic:
     count: 0
     summary: ""
   conflicts: ""
-
 ---
