@@ -13,7 +13,7 @@
 
     {{/* Check if dates are different */}}
     {{ $hasUpdate := ne .Date .Lastmod }}
-    {{ $dateFormat := "02 Jan 2006" }}
+    {{ $dateFormat := "02.01.2006" }}
 
     <div class="article-layout {{ if $shortTitle }}has-sidebar-title{{ else }}no-sidebar-title{{ end }}">
 
@@ -60,9 +60,7 @@
         <!-- Mobile metadata -->
         <div class="article-meta mobile-only">
           {{ if $hasUpdate }}
-          <time title="Published: {{ .Date.Format $dateFormat }}">{{ .Date.Format $dateFormat }}</time>
-          —
-          <time title="Last modified: {{ .Lastmod.Format $dateFormat }}">{{ .Lastmod.Format $dateFormat }}</time>
+          <time title="Published: {{ .Date.Format $dateFormat }}">{{ .Date.Format $dateFormat }}</time>—<time title="Last modified: {{ .Lastmod.Format $dateFormat }}">{{ .Lastmod.Format $dateFormat }}</time>
           {{ else }}
           <time title="Published: {{ .Date.Format $dateFormat }}">{{ .Date.Format $dateFormat }}</time>
           {{ end }}

@@ -1,14 +1,10 @@
 ---
-title: "is done this way"
+title: "typography constitution"
 date: 2025-12-31T19:52:37+03:00
-lastmod: 2025-12-31T20:00:00+03:00
 
 status: complete
 
 category: social   # social/political/economic/tech
-
-epistemic:
-  narrative: "personal observations, personal preferences extrapolated. Uses one small random sample and one hard data source, but all else is subjective."
 ---
 
 # **Preamble**

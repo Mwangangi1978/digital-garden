@@ -105,8 +105,7 @@
 }
 
 .article-meta-sidebar time {
-  display: block;
-  margin-bottom: 0.25rem;
+  display: inline;
   cursor: help;
 }
 
@@ -137,7 +136,7 @@
   margin-top: 0;
   margin-bottom: 1rem;
   border: none;
-  border-top: 4px solid #000000;
+  border-top: 4px solid var(--accent-color);
   font-weight: bold;
   opacity: 1;
 }
