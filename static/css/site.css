@@ -1,0 +1,413 @@
+/* ==========================================================================
+   SITE PAGE LAYOUT
+   ========================================================================== */
+
+.site-page {
+  position: relative;
+}
+
+/* Header section with title, meta, and description */
+.site-page-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  margin-top: -2rem; /* Reduce space between nav and title */
+}
+
+.site-title {
+  font-family: var(--font-heading);
+  font-weight: bold;
+  font-size: 1.5rem;
+  font-variant: small-caps;
+  margin-bottom: 1rem;
+  margin-top: 0;
+  /* Not an h1, just styled text */
+}
+
+.site-meta {
+  font-size: 0.75rem;
+  font-style: italic;
+  opacity: 0.7;
+  margin-bottom: 1rem;
+}
+
+.site-meta time {
+  display: inline;
+  cursor: help;
+}
+
+.site-meta .status {
+  display: inline;
+  margin-left: 0.5rem;
+}
+
+.site-description {
+  font-size: var(--base-font-size);
+  line-height: var(--base-line-height);
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Desktop grid layout - two columns */
+@media (min-width: 768px) {
+  .site-layout {
+    display: grid;
+    grid-template-columns: 11rem 2rem 1fr;
+    align-items: start;
+  }
+}
+
+/* Table of Contents Sidebar */
+.site-toc {
+  grid-column: 1;
+  position: relative;
+  text-align: left;
+}
+
+/* TOC Toggle Button */
+.toc-toggle {
+  display: none; /* Hidden by default, shown on desktop */
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  background-color: rgba(150, 150, 150, 0.1);
+  border: 1px solid rgba(150, 150, 150, 0.2);
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Cooper Hewitt', var(--font-heading);
+  font-size: 0.85rem;
+  color: var(--text-color);
+  text-align: left;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color 0.2s;
+}
+
+.toc-toggle:hover {
+  background-color: rgba(150, 150, 150, 0.15);
+}
+
+.toc-toggle-icon {
+  transition: transform 0.3s;
+  font-size: 0.75rem;
+}
+
+.toc-toggle[aria-expanded="false"] .toc-toggle-icon {
+  transform: rotate(-90deg);
+}
+
+.toc-nav {
+  position: sticky;
+  top: 2rem;
+  font-family: 'Cooper Hewitt', var(--font-heading);
+  background-color: rgba(150, 150, 150, 0.05);
+  padding: 1rem;
+  border-radius: 4px;
+  transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease, margin 0.3s ease;
+  overflow: hidden;
+  max-height: 2000px; /* Large enough to contain the TOC */
+}
+
+/* Collapsed state */
+.toc-nav.collapsed {
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin: 0;
+  opacity: 0;
+}
+
+.toc-item {
+  margin-bottom: 0.5rem;
+}
+
+.toc-item a {
+  text-decoration: none;
+  color: var(--text-color);
+  transition: background-color 0.2s;
+}
+
+.toc-item a:hover {
+  background-color: var(--accent-hover);
+}
+
+.toc-h1 {
+  font-weight: bold;
+  font-size: var(--base-font-size);
+}
+
+.toc-h2 {
+  font-weight: normal;
+  font-size: 0.85rem;
+  padding-left: 1rem;
+  opacity: 0.8;
+  margin-top: 0.25rem;
+}
+
+/* Gap column */
+.site-gap {
+  grid-column: 2;
+  min-width: 0;
+  width: 2rem;
+}
+
+/* Main content column */
+.site-main {
+  grid-column: 3;
+  position: relative;
+}
+
+/* Content area */
+.site-content {
+  position: relative;
+}
+
+/* h1 styling - always in central column with solid line above */
+.site-content h1 {
+  font-family: var(--font-body);
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-top: var(--heading-top-spacing);
+  margin-bottom: var(--heading-bottom-spacing);
+  position: relative;
+  padding-top: 0.5rem;
+  width: fit-content;
+  max-width: 100%;
+}
+
+/* Solid line above h1 - extends 1rem longer than the h1 text */
+/* For single-line text: extends 0.5rem on each side (1rem total) */
+/* For wrapped text: the line extends 1rem beyond the content width */
+.site-content h1::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: -0.5rem;
+  width: calc(100% + 1rem);
+  height: 4px;
+  background-color: var(--accent-color);
+  border: none;
+  box-sizing: border-box;
+}
+
+/* First h1 needs special handling */
+.site-content > h1:first-of-type {
+  margin-top: 0;
+}
+
+/* h2 styling */
+.site-content h2 {
+  font-family: var(--font-body);
+  font-weight: bold;
+  font-size: var(--base-font-size);
+  margin-top: var(--heading-top-spacing);
+  margin-bottom: var(--heading-bottom-spacing);
+}
+
+/* ==========================================================================
+   SIDENOTE ALIGNMENT (same as articles.css)
+   ========================================================================== */
+
+/* Desktop sidenotes - positioned in the left sidebar column */
+@media (min-width: 768px) {
+  /* Make paragraphs relative so they can anchor sidenotes */
+  .site-content p {
+    position: relative;
+  }
+  
+  /* Override global sidenote styles for site pages */
+  .site-content .sidenote,
+  .site-content aside.sidenote {
+    position: absolute;
+    right: calc(100% + 2rem); /* Position to the left of the paragraph, accounting for the 2rem gap */
+    width: 11rem; /* Match the sidebar width */
+    font-family: var(--font-heading);
+    font-weight: 300;
+    text-align: right;
+    font-size: 0.85em;
+    line-height: 1.4;
+    top: 0; /* Align with the top of the paragraph - starts at same line */
+    margin: 0;
+    padding: 0;
+    /* Override global styles */
+    left: auto;
+    z-index: 1; /* Ensure it appears above background but below TOC */
+  }
+  
+  /* When sidenote is a sibling following a paragraph */
+  .site-content p + .sidenote,
+  .site-content p + aside.sidenote {
+    position: absolute;
+    right: calc(100% + 2rem);
+    top: 0; /* Start at the same line as the paragraph */
+  }
+}
+
+/* Mobile sidenotes - displayed as blocks inline with content */
+@media (max-width: 767px) {
+  /* Reset paragraph positioning on mobile - must be static */
+  .site-content p {
+    position: static !important;
+  }
+  
+  /* Sidenotes appear inline after their paragraph */
+  .site-content .sidenote,
+  .site-content aside.sidenote {
+    position: relative !important;
+    display: block !important;
+    background-color: rgba(150, 150, 150, 0.05);
+    border-left: 2px solid var(--accent-color);
+    padding: 0.75rem 1rem;
+    margin: 1.5rem 0 !important;
+    margin-top: 1rem !important;
+    text-align: left;
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: 0.85em;
+    line-height: 1.4;
+    width: 100% !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    z-index: 1;
+  }
+  
+  /* Ensure sidenotes that follow paragraphs appear inline */
+  .site-content p + .sidenote,
+  .site-content p + aside.sidenote {
+    position: relative !important;
+    display: block !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    margin-top: 1rem !important;
+  }
+}
+
+/* Mobile TOC - shown after description */
+.site-toc-mobile {
+  display: none;
+}
+
+/* ==========================================================================
+   MOBILE RESPONSIVE
+   ========================================================================== */
+
+@media (min-width: 768px) {
+  /* Show toggle button on desktop */
+  .toc-toggle {
+    display: flex;
+  }
+}
+
+@media (max-width: 767px) {
+  /* Hide desktop TOC sidebar on mobile */
+  .site-toc {
+    display: none;
+  }
+  
+  .site-gap {
+    display: none;
+  }
+  
+  /* Show mobile TOC after description */
+  .site-toc-mobile {
+    display: block;
+    margin: 2rem 0;
+    text-align: left;
+  }
+  
+  .site-toc-mobile .toc-nav {
+    position: static;
+    font-family: 'Cooper Hewitt', var(--font-heading);
+    background-color: rgba(150, 150, 150, 0.05);
+    padding: 1rem;
+    border-radius: 4px;
+    /* Two-column layout for mobile TOC */
+    columns: 2;
+    column-gap: 1.5rem;
+    column-fill: balance;
+  }
+  
+  .site-toc-mobile .toc-item {
+    margin-bottom: 0.5rem;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  
+  .site-toc-mobile .toc-h2 {
+    margin-top: 0.1rem;
+  }
+  
+  /* Main column takes full width on mobile */
+  .site-main {
+    grid-column: 1;
+  }
+  
+  /* Mobile layout - single column */
+  .site-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   SCROLL TO TOP BUTTON
+   ========================================================================== */
+
+.scroll-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 3rem;
+  height: 3rem;
+  background-color: var(--accent-color);
+  color: var(--bg-color);
+  border: 2px solid var(--accent-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.5rem;
+  line-height: 1;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s, background-color 0.2s;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.scroll-to-top svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.scroll-to-top svg path {
+  fill: var(--bg-color);
+}
+
+.scroll-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.scroll-to-top:hover {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.scroll-to-top:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 767px) {
+  .scroll-to-top {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.25rem;
+  }
+}
