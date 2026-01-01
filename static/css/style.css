@@ -421,10 +421,10 @@
     font-style: italic;
   }
   
-  /* Small Caps for Citations */
+  /* Italic for Citations */
   .citation,
   cite {
-    font-variant: small-caps;
+    font-style: italic;
   }
   
   /* ============================================================================
@@ -737,15 +737,11 @@
   blockquote .citation {
     display: block;
     text-align: right;
-    font-variant: small-caps;
+    font-style: italic;
     margin-top: 0.5em;
   }
   
-  blockquote cite::before,
-  blockquote .citation::before {
-    content: "—";
-    margin-right: 0.5em;
-  }
+
   
   /* ============================================================================
      14. INLINE QUOTATIONS
@@ -913,7 +909,7 @@
     max-width: 100%;
     height: auto;
     display: block;
-    margin: 2rem auto;
+    margin: 1rem auto 0;
   }
   
   figure {
@@ -924,7 +920,7 @@
     font-size: 0.85em;
     font-style: italic;
     text-align: center;
-    margin-top: 0.5rem;
+    margin-top: 0.25rem;
     color: var(--text-color);
     opacity: 0.8;
   }
