@@ -1,7 +1,7 @@
 ---
 title: ""
-date: 2024-12-01          # publication date
-lastmod: 2025-12-29       # intentional update
+date: {{ .Date }}          # publication date
+lastmod: {{ .Date }}      # intentional update
 status: note | draft | complete | archived
 
 epistemic:
