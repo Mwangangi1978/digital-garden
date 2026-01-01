@@ -1,0 +1,231 @@
+{{ define "stylesheets" }}
+  <link rel="stylesheet" href="{{ "css/articles.css" | relURL }}">
+  <link rel="stylesheet" href="{{ "css/site.css" | relURL }}">
+{{ end }}
+
+{{ define "main" }}
+
+<div class="page-container" id="top">
+  <article class="site-page">
+
+    {{/* Check if dates are different */}}
+    {{ $hasUpdate := ne .Date .Lastmod }}
+    {{ $dateFormat := "02.01.2006" }}
+
+    {{/* Generate table of contents from markdown source */}}
+    {{ $rawContent := .RawContent }}
+    {{ $lines := split $rawContent "\n" }}
+    
+    {{/* First pass: collect all h1 and h2 with their positions */}}
+    {{ $headings := slice }}
+    {{ range $lineNum, $line := $lines }}
+      {{ $trimmed := replaceRE `^\s+|\s+$` "" $line }}
+      {{ if hasPrefix $trimmed "# " }}
+        {{ $h1Title := replaceRE `^#\s+` "" $trimmed }}
+        {{ $h1Title = replaceRE `^\s+|\s+$` "" $h1Title }}
+        {{ $h1Id := $h1Title | anchorize }}
+        {{ $headings = $headings | append (dict "level" 1 "title" $h1Title "id" $h1Id "line" $lineNum) }}
+      {{ else if hasPrefix $trimmed "## " }}
+        {{ $h2Title := replaceRE `^##\s+` "" $trimmed }}
+        {{ $h2Title = replaceRE `^\s+|\s+$` "" $h2Title }}
+        {{ $h2Id := $h2Title | anchorize }}
+        {{ $headings = $headings | append (dict "level" 2 "title" $h2Title "id" $h2Id "line" $lineNum) }}
+      {{ end }}
+    {{ end }}
+    
+    {{/* Second pass: build nested TOC structure */}}
+    {{ $tocItems := slice }}
+    {{ $h1Num := 0 }}
+    {{ $currentH1 := dict }}
+    {{ $currentH1Children := slice }}
+    
+    {{ range $heading := $headings }}
+      {{ if eq $heading.level 1 }}
+        {{/* Save previous h1 with children */}}
+        {{ if gt $h1Num 0 }}
+          {{ $finalH1 := merge $currentH1 (dict "children" $currentH1Children) }}
+          {{ $tocItems = $tocItems | append $finalH1 }}
+        {{ end }}
+        {{/* Start new h1 */}}
+        {{ $h1Num = add $h1Num 1 }}
+        {{ $currentH1 = dict "level" 1 "number" $h1Num "title" $heading.title "id" $heading.id }}
+        {{ $currentH1Children = slice }}
+      {{ else if eq $heading.level 2 }}
+        {{/* Add h2 to current h1 */}}
+        {{ if gt $h1Num 0 }}
+          {{ $h2Num := len $currentH1Children | add 1 }}
+          {{ $h2Item := dict "level" 2 "number" $h2Num "title" $heading.title "id" $heading.id }}
+          {{ $currentH1Children = $currentH1Children | append $h2Item }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+    
+    {{/* Save last h1 with children */}}
+    {{ if gt $h1Num 0 }}
+      {{ $finalH1 := merge $currentH1 (dict "children" $currentH1Children) }}
+      {{ $tocItems = $tocItems | append $finalH1 }}
+    {{ end }}
+
+    {{/* Process content - Hugo's Goldmark should automatically add IDs to headings */}}
+    {{ $processedContent := .Content }}
+
+    <div class="site-page-header">
+      <div class="site-title">{{ .Title }}</div>
+      <div class="site-meta">
+        {{ if $hasUpdate }}
+        <time title="Published: {{ .Date.Format $dateFormat }}">{{ .Date.Format $dateFormat }}</time>
+        —
+        <time title="Last modified: {{ .Lastmod.Format $dateFormat }}">{{ .Lastmod.Format $dateFormat }}</time>
+        {{ else }}
+        <time title="Published: {{ .Date.Format $dateFormat }}">{{ .Date.Format $dateFormat }}</time>
+        {{ end }}
+        <span class="status">status: [{{ .Params.status | title }}]</span>
+      </div>
+      
+      {{/* Description text - extract first paragraph or use description param */}}
+      
+      <div class="site-description">This page covers why I decided to build this site, it's design philosophy and development process.</div>
+      
+    </div>
+
+    {{/* Mobile Table of Contents - shown after description */}}
+    {{ if gt (len $tocItems) 0 }}
+    <aside class="site-toc-mobile">
+      <nav class="toc-nav">
+        {{ range $tocItems }}
+          {{ $parentNum := .number }}
+          <div class="toc-item toc-h1">
+            <a href="#{{ .id }}">{{ .number }}. {{ .title }}</a>
+          </div>
+          {{ if gt (len .children) 0 }}
+            {{ range .children }}
+              <div class="toc-item toc-h2">
+                <a href="#{{ .id }}">{{ $parentNum }}.{{ .number }} {{ .title }}</a>
+              </div>
+            {{ end }}
+          {{ end }}
+        {{ end }}
+      </nav>
+    </aside>
+    {{ end }}
+
+    <div class="site-layout">
+      
+      {{/* Table of Contents Sidebar - Desktop only */}}
+      {{ if gt (len $tocItems) 0 }}
+      <aside class="site-toc">
+        <button class="toc-toggle" id="toc-toggle" aria-label="Toggle table of contents" aria-expanded="true">
+          <span class="toc-toggle-icon">▼</span>
+          <span class="toc-toggle-text">Contents</span>
+        </button>
+        <nav class="toc-nav" id="toc-nav">
+          {{ range $tocItems }}
+            {{ $parentNum := .number }}
+            <div class="toc-item toc-h1">
+              <a href="#{{ .id }}">{{ .number }}. {{ .title }}</a>
+            </div>
+            {{ if gt (len .children) 0 }}
+              {{ range .children }}
+                <div class="toc-item toc-h2">
+                  <a href="#{{ .id }}">{{ $parentNum }}.{{ .number }} {{ .title }}</a>
+                </div>
+              {{ end }}
+            {{ end }}
+          {{ end }}
+        </nav>
+      </aside>
+      <div class="site-gap"></div>
+      {{ end }}
+
+      <div class="site-main">
+        <!-- Content -->
+        <div class="site-content">
+          {{ $processedContent | safeHTML }}
+        </div>
+
+        <!-- Backlinks -->
+        <section class="backlinks">
+          <h2>Backlinks</h2>
+          <ul>
+            {{ $current := .RelPermalink }}
+            {{ range site.RegularPages }}
+              {{ if and (ne .RelPermalink $current) (in .Content $current) }}
+                <li>
+                  <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                </li>
+              {{ end }}
+            {{ end }}
+          </ul>
+        </section>
+      </div>
+    </div>
+  </article>
+</div>
+
+<!-- Scroll to Top Button -->
+<a href="#top" class="scroll-to-top" id="scroll-to-top" aria-label="Scroll to top"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 3C12.2652 3 12.5196 3.10536 12.7071 3.29289L19.7071 10.2929C20.0976 10.6834 20.0976 11.3166 19.7071 11.7071C19.3166 12.0976 18.6834 12.0976 18.2929 11.7071L13 6.41421V20C13 20.5523 12.5523 21 12 21C11.4477 21 11 20.5523 11 20V6.41421L5.70711 11.7071C5.31658 12.0976 4.68342 12.0976 4.29289 11.7071C3.90237 11.3166 3.90237 10.6834 4.29289 10.2929L11.2929 3.29289C11.4804 3.10536 11.7348 3 12 3Z" fill="#000000"></path> </g></svg></a>
+
+<script>
+  // Show/hide scroll to top button based on scroll position
+  (function() {
+    const scrollButton = document.getElementById('scroll-to-top');
+    if (!scrollButton) return;
+    
+    function toggleScrollButton() {
+      if (window.pageYOffset > 300) {
+        scrollButton.classList.add('visible');
+      } else {
+        scrollButton.classList.remove('visible');
+      }
+    }
+    
+    // Check on scroll
+    window.addEventListener('scroll', toggleScrollButton);
+    
+    // Check on load
+    toggleScrollButton();
+    
+    // Smooth scroll to top
+    scrollButton.addEventListener('click', function(e) {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  })();
+
+  // TOC Collapse/Expand functionality
+  (function() {
+    const tocToggle = document.getElementById('toc-toggle');
+    const tocNav = document.getElementById('toc-nav');
+    
+    if (!tocToggle || !tocNav) return;
+    
+    // Check if TOC should be collapsed by default (stored in localStorage)
+    const isCollapsed = localStorage.getItem('toc-collapsed') === 'true';
+    
+    if (isCollapsed) {
+      tocNav.classList.add('collapsed');
+      tocToggle.setAttribute('aria-expanded', 'false');
+    }
+    
+    tocToggle.addEventListener('click', function() {
+      const isExpanded = tocToggle.getAttribute('aria-expanded') === 'true';
+      
+      if (isExpanded) {
+        // Collapse
+        tocNav.classList.add('collapsed');
+        tocToggle.setAttribute('aria-expanded', 'false');
+        localStorage.setItem('toc-collapsed', 'true');
+      } else {
+        // Expand
+        tocNav.classList.remove('collapsed');
+        tocToggle.setAttribute('aria-expanded', 'true');
+        localStorage.setItem('toc-collapsed', 'false');
+      }
+    });
+  })();
+</script>
+
+{{ end }}
