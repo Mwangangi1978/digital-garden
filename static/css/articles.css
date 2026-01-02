@@ -202,38 +202,63 @@
     text-align: right;
     font-size: 0.85em;
     line-height: 1.4;
-    top: 0; /* Align with the top of the paragraph */
+    top: 0; /* Align with the top of the paragraph - starts at same line */
     margin: 0;
     padding: 0;
     /* Override global styles */
     left: auto;
+    z-index: 1; /* Ensure it appears above background but below TOC */
   }
   
-  /* When sidenote is a sibling following a paragraph */
+  /* Fallback: When sidenote is still a sibling following a paragraph (if regex/JS didn't catch it) */
+  /* Position it relative to the preceding paragraph */
   .article-content p + .sidenote,
   .article-content p + aside.sidenote {
     position: absolute;
     right: calc(100% + 2rem);
     top: 0;
+    margin-top: 0;
   }
 }
 
-/* Mobile sidenotes - displayed as blocks */
-@media (max-width: 767px) {
+/* Mobile sidenotes - displayed as blocks inline with content */
+@media (max-width: 1023px) {
+  /* Reset paragraph positioning on mobile - must be static */
+  .article-content p {
+    position: static !important;
+  }
+  
+  /* Sidenotes appear inline after their paragraph */
   .article-content .sidenote,
   .article-content aside.sidenote {
-    position: relative;
+    position: relative !important;
+    display: block !important;
     background-color: rgba(150, 150, 150, 0.05);
     border-left: 2px solid var(--accent-color);
     padding: 0.75rem 1rem;
-    margin: 1.5rem 0;
+    margin: 1.5rem 0 !important;
+    margin-top: 1rem !important;
     text-align: left;
     font-family: var(--font-heading);
     font-weight: 300;
     font-size: 0.85em;
     line-height: 1.4;
-    width: 100%;
-    right: auto;
+    width: 100% !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    z-index: 1;
+  }
+  
+  /* Ensure sidenotes that follow paragraphs appear inline */
+  .article-content p + .sidenote,
+  .article-content p + aside.sidenote {
+    position: relative !important;
+    display: block !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    margin-top: 1rem !important;
   }
 }
 

@@ -80,7 +80,13 @@
 
         <!-- Content -->
         <div class="article-content">
-          {{ .Content }}
+          {{/* Process content to move sidenotes inside preceding paragraphs */}}
+          {{/* This fixes the issue where sidenotes are siblings of paragraphs instead of children */}}
+          {{ $processedContent := .Content }}
+          {{/* Match paragraph, its content, closing tag, optional whitespace/newlines/br, then sidenote */}}
+          {{ $sidenotePattern := `(?s)(<p[^>]*>)(.*?)(</p>)(\s*(?:<br\s*/?>)?\s*)(<aside[^>]*class="[^"]*sidenote[^"]*"[^>]*>.*?</aside>)` }}
+          {{ $processedContent = replaceRE $sidenotePattern `$1$2$5$3` $processedContent }}
+          {{ $processedContent | safeHTML }}
         </div>
 
         <!-- Backlinks -->
@@ -102,5 +108,42 @@
     </div>
   </article>
 </div>
+
+<script>
+  // Fix sidenote positioning - move sidenotes inside their preceding paragraphs
+  // This runs after DOM is loaded to handle cases where regex didn't catch them
+  (function() {
+    function fixSidenotePositioning() {
+      if (window.innerWidth < 1024) return; // Only on desktop
+      
+      const sidenotes = document.querySelectorAll('.article-content aside.sidenote, .article-content .sidenote');
+      
+      sidenotes.forEach(function(sidenote) {
+        // Check if sidenote is already inside a paragraph
+        if (sidenote.closest('p')) {
+          return; // Already inside a paragraph, skip
+        }
+        
+        // Find the preceding paragraph
+        let prevElement = sidenote.previousElementSibling;
+        while (prevElement && prevElement.tagName !== 'P') {
+          prevElement = prevElement.previousElementSibling;
+        }
+        
+        if (prevElement && prevElement.tagName === 'P') {
+          // Move sidenote inside the paragraph
+          prevElement.appendChild(sidenote);
+        }
+      });
+    }
+    
+    // Run on DOM ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', fixSidenotePositioning);
+    } else {
+      fixSidenotePositioning();
+    }
+  })();
+</script>
 
 {{ end }}
