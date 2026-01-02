@@ -74,8 +74,8 @@ Code quotations \- Cascadia Code, Source Code Pro, Courier New, Monaco.
 The base scale serves as the “root note” for the website’s entire harmonic structure.
 
 * Desktop: The base font size is 24px. This large size was chosen to mimic the clarity of cinema title cards and to reduce eye strain during long-form reading.  
-* Mobile: The base font size shifts to  16px on viewports narrower than 768px to accommodate limited screen real estate while maintaining legibility.  
-* Line height: The line height is 130% of the font size on desktop; on screens narrower than 768px, the line height is 145% of the font size to enhance legibility.
+* Mobile: The base font size shifts to  16px on viewports narrower than 1024px to accommodate limited screen real estate while maintaining legibility.  
+* Line height: The line height is 130% of the font size on desktop; on screens narrower than 1024px, the line height is 145% of the font size to enhance legibility.
 
 ## Modular Scale
 

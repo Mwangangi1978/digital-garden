@@ -27,7 +27,7 @@
 }
 
 /* Desktop grid */
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .article-layout {
     display: grid;
     grid-template-columns: 11rem 2rem 1fr;
@@ -82,7 +82,7 @@
   grid-column: 3;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .article-layout.no-sidebar-title .article-main {
     grid-column: 1;
   }
@@ -185,7 +185,7 @@
    ========================================================================== */
 
 /* Desktop sidenotes - positioned in the left sidebar column */
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   /* Make paragraphs relative so they can anchor sidenotes */
   .article-content p {
     position: relative;

@@ -44,8 +44,8 @@ body.landing-page {
    Logic: Desktop = Indent, No margin. Mobile = Margin, No indent.
 */
 
-/* Desktop Overrides (min-width: 768px matches your breakpoints) */
-@media (min-width: 768px) {
+/* Desktop Overrides (min-width: 1024px matches your breakpoints) */
+@media (min-width: 1024px) {
     .index-content p {
         text-indent: 2rem;       /* The indent */
         margin-bottom: 0;        /* Remove skip line */

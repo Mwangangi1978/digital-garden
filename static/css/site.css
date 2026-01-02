@@ -49,7 +49,7 @@
 }
 
 /* Desktop grid layout - two columns */
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .site-layout {
     display: grid;
     grid-template-columns: 11rem 2rem 1fr;
@@ -210,7 +210,7 @@
    ========================================================================== */
 
 /* Desktop sidenotes - positioned in the left sidebar column */
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   /* Make paragraphs relative so they can anchor sidenotes */
   .site-content p {
     position: relative;
@@ -302,7 +302,7 @@
    MOBILE RESPONSIVE
    ========================================================================== */
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   /* Show toggle button on desktop */
   .toc-toggle {
     display: flex;

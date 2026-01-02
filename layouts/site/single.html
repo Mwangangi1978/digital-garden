@@ -238,7 +238,7 @@
   // This runs after DOM is loaded to handle cases where regex didn't catch them
   (function() {
     function fixSidenotePositioning() {
-      if (window.innerWidth < 768) return; // Only on desktop
+      if (window.innerWidth < 1024) return; // Only on desktop
       
       const sidenotes = document.querySelectorAll('.site-content aside.sidenote, .site-content .sidenote');
       
