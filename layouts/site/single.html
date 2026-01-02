@@ -68,6 +68,13 @@
 
     {{/* Process content - Hugo's Goldmark should automatically add IDs to headings */}}
     {{ $processedContent := .Content }}
+    
+    {{/* Post-process content to move sidenotes inside preceding paragraphs */}}
+    {{/* This fixes the issue where sidenotes are siblings of paragraphs instead of children */}}
+    {{/* Match paragraph, its content, closing tag, optional whitespace/newlines/br, then sidenote */}}
+    {{/* The (?s) flag makes . match newlines, and we use non-greedy .*? to match paragraph content */}}
+    {{ $sidenotePattern := `(?s)(<p[^>]*>)(.*?)(</p>)(\s*(?:<br\s*/?>)?\s*)(<aside[^>]*class="[^"]*sidenote[^"]*"[^>]*>.*?</aside>)` }}
+    {{ $processedContent = replaceRE $sidenotePattern `$1$2$5$3` $processedContent }}
 
     <div class="site-page-header">
       <div class="site-title">{{ .Title }}</div>
@@ -225,6 +232,41 @@
         localStorage.setItem('toc-collapsed', 'false');
       }
     });
+  })();
+
+  // Fix sidenote positioning - move sidenotes inside their preceding paragraphs
+  // This runs after DOM is loaded to handle cases where regex didn't catch them
+  (function() {
+    function fixSidenotePositioning() {
+      if (window.innerWidth < 768) return; // Only on desktop
+      
+      const sidenotes = document.querySelectorAll('.site-content aside.sidenote, .site-content .sidenote');
+      
+      sidenotes.forEach(function(sidenote) {
+        // Check if sidenote is already inside a paragraph
+        if (sidenote.closest('p')) {
+          return; // Already inside a paragraph, skip
+        }
+        
+        // Find the preceding paragraph
+        let prevElement = sidenote.previousElementSibling;
+        while (prevElement && prevElement.tagName !== 'P') {
+          prevElement = prevElement.previousElementSibling;
+        }
+        
+        if (prevElement && prevElement.tagName === 'P') {
+          // Move sidenote inside the paragraph
+          prevElement.appendChild(sidenote);
+        }
+      });
+    }
+    
+    // Run on DOM ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', fixSidenotePositioning);
+    } else {
+      fixSidenotePositioning();
+    }
   })();
 </script>
 

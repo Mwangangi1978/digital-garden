@@ -235,12 +235,20 @@
     z-index: 1; /* Ensure it appears above background but below TOC */
   }
   
-  /* When sidenote is a sibling following a paragraph */
+  /* Fallback: When sidenote is still a sibling following a paragraph (if regex/JS didn't catch it) */
+  /* Position it relative to the preceding paragraph */
   .site-content p + .sidenote,
   .site-content p + aside.sidenote {
     position: absolute;
     right: calc(100% + 2rem);
-    top: 0; /* Start at the same line as the paragraph */
+    top: 0;
+    margin-top: 0;
+    /* Make the preceding paragraph the positioning context */
+  }
+  
+  /* Ensure paragraphs are relative for absolute positioning of children */
+  .site-content p {
+    position: relative;
   }
 }
 
