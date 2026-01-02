@@ -202,21 +202,24 @@
     });
   })();
 
-  // TOC Collapse/Expand functionality
+  // TOC Collapse/Expand functionality with auto-collapse on scroll
   (function() {
     const tocToggle = document.getElementById('toc-toggle');
     const tocNav = document.getElementById('toc-nav');
     
     if (!tocToggle || !tocNav) return;
     
-    // Check if TOC should be collapsed by default (stored in localStorage)
-    const isCollapsed = localStorage.getItem('toc-collapsed') === 'true';
+    // Desktop only feature
+    if (window.innerWidth < 1024) return;
     
-    if (isCollapsed) {
-      tocNav.classList.add('collapsed');
-      tocToggle.setAttribute('aria-expanded', 'false');
-    }
+    // Start collapsed by default
+    tocNav.classList.add('collapsed');
+    tocToggle.setAttribute('aria-expanded', 'false');
     
+    let lastScrollY = window.pageYOffset;
+    let isManuallyExpanded = false;
+    
+    // Manual toggle by user
     tocToggle.addEventListener('click', function() {
       const isExpanded = tocToggle.getAttribute('aria-expanded') === 'true';
       
@@ -224,13 +227,31 @@
         // Collapse
         tocNav.classList.add('collapsed');
         tocToggle.setAttribute('aria-expanded', 'false');
-        localStorage.setItem('toc-collapsed', 'true');
+        isManuallyExpanded = false;
       } else {
         // Expand
         tocNav.classList.remove('collapsed');
         tocToggle.setAttribute('aria-expanded', 'true');
-        localStorage.setItem('toc-collapsed', 'false');
+        isManuallyExpanded = true;
       }
+    });
+    
+    // Auto-collapse on scroll down
+    window.addEventListener('scroll', function() {
+      if (window.innerWidth < 1024) return; // Desktop only
+      
+      const currentScrollY = window.pageYOffset;
+      const isExpanded = tocToggle.getAttribute('aria-expanded') === 'true';
+      
+      // If scrolling down and TOC is expanded (and user manually expanded it)
+      if (currentScrollY > lastScrollY && isExpanded && isManuallyExpanded && currentScrollY > 100) {
+        // Auto-collapse
+        tocNav.classList.add('collapsed');
+        tocToggle.setAttribute('aria-expanded', 'false');
+        isManuallyExpanded = false;
+      }
+      
+      lastScrollY = currentScrollY;
     });
   })();
 

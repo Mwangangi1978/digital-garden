@@ -68,7 +68,7 @@
 .toc-toggle {
   display: none; /* Hidden by default, shown on desktop */
   width: 100%;
-  padding: 0.5rem;
+  padding: 0.5rem 0.75rem;
   margin-bottom: 0.5rem;
   background-color: rgba(150, 150, 150, 0.1);
   border: 1px solid rgba(150, 150, 150, 0.2);
@@ -100,12 +100,13 @@
   position: sticky;
   top: 2rem;
   font-family: 'Cooper Hewitt', var(--font-heading);
-  background-color: rgba(150, 150, 150, 0.05);
+  background-color: var(--bg-color);
   padding: 1rem;
   border-radius: 4px;
   transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease, margin 0.3s ease;
   overflow: hidden;
-  max-height: 2000px; /* Large enough to contain the TOC */
+  max-height: 2000px;
+  z-index: 10;
 }
 
 /* Collapsed state */
@@ -232,7 +233,7 @@
     padding: 0;
     /* Override global styles */
     left: auto;
-    z-index: 1; /* Ensure it appears above background but below TOC */
+ /* Ensure it appears above background but below TOC */
   }
   
   /* Fallback: When sidenote is still a sibling following a paragraph (if regex/JS didn't catch it) */
