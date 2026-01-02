@@ -60,8 +60,11 @@
 /* Table of Contents Sidebar */
 .site-toc {
   grid-column: 1;
-  position: relative;
+  position: sticky;
+  top: 1rem;
   text-align: left;
+  align-self: start;
+  z-index: 100;
 }
 
 /* TOC Toggle Button */
@@ -97,8 +100,7 @@
 }
 
 .toc-nav {
-  position: sticky;
-  top: 2rem;
+  position: relative;
   font-family: 'Cooper Hewitt', var(--font-heading);
   background-color: var(--bg-color);
   padding: 1rem;
@@ -106,7 +108,8 @@
   transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease, margin 0.3s ease;
   overflow: hidden;
   max-height: 2000px;
-  z-index: 10;
+  z-index: 100;
+  border: 1px solid rgba(150, 150, 150, 0.2);
 }
 
 /* Collapsed state */
@@ -143,6 +146,17 @@
   padding-left: 1rem;
   opacity: 0.8;
   margin-top: 0.25rem;
+}
+
+/* Show TOC toggle on desktop */
+@media (min-width: 1024px) {
+  .toc-toggle {
+    display: flex;
+    position: sticky;
+    top: 0;
+    background-color: var(--bg-color);
+    z-index: 101;
+  }
 }
 
 /* Gap column */
