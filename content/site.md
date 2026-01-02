@@ -16,7 +16,7 @@ It was mid-November 2025, and I was in distress in the High Dependency ward that
 
 My heart rate was rising rapidly, and I couldn't seem to fill my lungs with any air. I was struggling to breathe. I wanted to use my hands to scoop the oxygen from the air and shove it down my trachea, but we all know that's not how it works.
 
-Soon, I was panicking. Everything the nurses said seemed to be in [Penguinese](https://pingu.fandom.com/wiki/Penguinese), and I wanted to respond with "Noot Noot," but I knew it was just my head playing tricks on me. At that moment, I started thinking this was the end of the road for me. I thought about all the happy times I'd had. The people I said I would reply to, but who had been ghosted in my inbox for months. What colour the lining of my casket would be (I hoped it was a soft pink).
+Soon, I was panicking. Everything the nurses said seemed to be in [Penguinese](https://pingu.fandom.com/wiki/Penguinese), and I wanted to respond with "Noot Noot," but I knew it was just my head playing tricks on me. At that moment, I started thinking this was the end of the road for me. I thought about all the happy times I'd had. The people I said I would reply to, but who had been ghosted in my inbox for months. What colour the lining of my casket would be (I hoped it was a soft pink).{{<sidenote>}}Penguinese (also known as Pinguish) is a fictional language spoken by the characters in [Pingu](https://pingu.fandom.com/wiki/Pingu_(TV_series)). It is uninterpretable to the audience leaving the dialogue up to the viewers imagination.{{</sidenote>}}
 
 
 As I was slowly approaching the event horizon of unconsciousness, I thought about how people would remember me.
