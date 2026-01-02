@@ -73,7 +73,7 @@ Code quotations \- Cascadia Code, Source Code Pro, Courier New, Monaco.
 
 The base scale serves as the “root note” for the website’s entire harmonic structure.
 
-* Desktop: The base font size is 24px. This large size was chosen to mimic the clarity of cinema title cards and to reduce eye strain during long-form reading.  
+* Desktop: The base font size is 22px. This large size was chosen to mimic the clarity of cinema title cards and to reduce eye strain during long-form reading.  
 * Mobile: The base font size shifts to  16px on viewports narrower than 1024px to accommodate limited screen real estate while maintaining legibility.  
 * Line height: The line height is 130% of the font size on desktop; on screens narrower than 1024px, the line height is 145% of the font size to enhance legibility.
 
@@ -82,7 +82,7 @@ The base scale serves as the “root note” for the website’s entire harmonic
 This site utilises a **Perfect Fifth (1.5)** modular scale. This ratio was selected to create a dramatic, high-contrast hierarchy.
 
 * Sub-headings: Same as body text. (More on headings here)  
-* Article headings: 1.5x Base (36px Desktop / 24px Mobile)  
+* Article headings: 1.5x Base (36px Desktop / 22px Mobile)  
 * Page titles: 2.25x Base (54px Desktop / 36px Mobile)
 
 ## Responsive Behaviour

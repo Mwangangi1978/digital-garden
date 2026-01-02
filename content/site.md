@@ -118,7 +118,7 @@ One small criticism: the book doesn't delve deeply into distinguishing good font
 
 ## Typography Constitution
 
-The visual syntax of this website is not a matter of chance; it is strictly governed by the Typographic Constitution. This living document codifies the laws of the digital garden—from the 24px base scale to the specific hex codes of the Zissou Slate—ensuring that design decisions remain durable, consistent, and intentional.
+The visual syntax of this website is not a matter of chance; it is strictly governed by the Typographic Constitution. This living document codifies the laws of the digital garden—from the 22px base scale to the specific hex codes of the Zissou Slate—ensuring that design decisions remain durable, consistent, and intentional.
 
 ## Digital Garden vs Digital Stream
 
