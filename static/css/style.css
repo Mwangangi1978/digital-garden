@@ -1283,5 +1283,194 @@
     line-height: 1;
   }
 }
+
+/* ============================================================================
+   INTERNAL LINK POPOVER PREVIEW SYSTEM
+   ============================================================================ */
+
+/* Main popover window container */
+.popover-window {
+  position: fixed;
+  background-color: var(--bg-color);
+  border: 1px solid var(--text-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  font-family: var(--font-body);
+  color: var(--text-color);
+  
+  width: 400px;
+  height: 500px;
+  
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  
+  /* Smooth transitions */
+  transition: all 0.2s ease-in-out;
+}
+
+/* Minimized state - bottom left corner */
+.popover-window.minimized {
+  height: auto !important;
+  width: 250px !important;
+  position: fixed !important;
+  left: 10px !important;
+  bottom: 10px !important;
+  top: auto !important;
+}
+
+.popover-window.minimized .popover-content-wrapper {
+  display: none;
+}
+
+/* Expanded state */
+.popover-window.expanded {
+  width: 90vw !important;
+  height: 90vh !important;
+}
+
+/* Popover header bar */
+.popover-header {
+  background-color: var(--bg-color);
+  border-bottom: 1px solid var(--text-color);
+  color: var(--text-color);
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  cursor: move;
+  user-select: none;
+  min-height: 36px;
+}
+
+.popover-title {
+  font-weight: normal;
+  font-size: 0.85rem;
+  font-family: var(--font-body);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Control buttons in header */
+.popover-controls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.popover-minimize,
+.popover-expand,
+.popover-pin,
+.popover-close {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+  flex-shrink: 0;
+}
+
+.popover-minimize:hover,
+.popover-expand:hover,
+.popover-pin:hover,
+.popover-close:hover {
+  opacity: 0.6;
+}
+
+.popover-minimize:active,
+.popover-expand:active,
+.popover-pin:active,
+.popover-close:active {
+  transform: scale(0.9);
+}
+
+/* SVG icons inherit color */
+.popover-icon {
+  width: 100%;
+  height: 100%;
+  color: var(--text-color);
+}
+
+/* Content wrapper for iframe */
+.popover-content-wrapper {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  background-color: var(--bg-color);
+}
+
+/* Iframe to load full page with styles */
+.popover-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  background-color: var(--bg-color);
+}
+
+/* Resize handle - bottom right corner */
+.popover-resize-handle {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 16px;
+  height: 16px;
+  cursor: nwse-resize;
+  z-index: 10000;
+}
+
+.popover-resize-handle::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0 16px 16px;
+  border-color: transparent transparent var(--text-color) transparent;
+  opacity: 0.3;
+}
+
+/* Pinned popover - stays in place when scrolling */
+.popover-window.pinned {
+  position: fixed !important;
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .popover-window,
+.dark-mode .popover-window {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .popover-window {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .popover-window {
+    width: 90vw !important;
+    height: 70vh !important;
+    left: 5vw !important;
+    top: 15vh !important;
+  }
+  
+  .popover-window.minimized {
+    width: 200px !important;
+  }
+}
   
 

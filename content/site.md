@@ -116,9 +116,12 @@ One small criticism: the book doesn't delve deeply into distinguishing good font
 {{< figure src="/images/butterick.webp" caption="[Matthew Butterick's Practical Typography](https://practicaltypography.com/)" >}}
 
 
+
+
+
 ## Typography Constitution
 
-The visual syntax of this website is not a matter of chance; it is strictly governed by the Typographic Constitution. This living document codifies the laws of the digital garden—from the 22px base scale to the specific hex codes of the Zissou Slate—ensuring that design decisions remain durable, consistent, and intentional.
+The visual syntax of this website is not a matter of chance; it is strictly governed by the [Typography Constitution]({{< ref "typography-constitution.md" >}}). This living document codifies the laws of the digital garden—from the 22px base scale to the specific hex codes of the Zissou Slate—ensuring that design decisions remain durable, consistent, and intentional.
 
 ## Digital Garden vs Digital Stream
 
@@ -202,6 +205,9 @@ You'll see plenty of my personal opinions here, but I aim to provide context for
 
 I aspire to collect, document, and learn about as many topics as I can. My writing isn't confined to tech, economics, or philosophy—though those do feature prominently. Instead, it spans wherever curiosity leads me.
 
+{{< figure src="/images/in_your_classroom_2x.png" caption="From [xkcd](https://xkcd.com/2466/)" >}}
+
+
 My writing is influenced by my environment, interesting things I find on the internet and in books, problems I think should be looked into, and gaps in my own knowledge or skills that I want to address. These influences manifest in different forms: works of fiction like short stories (most common), screenplays, and poems, as well as non-fiction pieces including quick notes, essays, book reviews, and literature reviews.
 
 ## Publication Process
@@ -217,6 +223,10 @@ To help you identify where each piece stands—how much research I've done and h
 ## Navigating My Writing
 
 This digital garden is topology-based, meaning you can enter at any point and follow trails based on your own interests and understanding. If you need a starting point, visit the central index on the blog page.
+
+I have taken extensive time and research in the designing the metadata for this digital garden. You can view all the considerations I made [here]({{< ref "metadata-design.md" >}}).
+
+However, I have also provided a quick overview below.
 
 I employ two systems to organize and contextualize my work: tags and epistemic statuses.
 
@@ -245,6 +255,8 @@ I was inspired to use epistemic statuses by Devon Zuegel, and I strongly recomme
 According to the Urban Dictionary:
 
 The epistemic status is a short disclaimer at the top of a post that explains how confident the author is in the contents of the post, how much reputation the author is willing to stake on it, what sorts of tests the thesis has passed. It should give readers a sense of how seriously they should take the post.
+
+{{< figure src="/images/xkcd-2440.png" caption="From [xkcd](https://www.explainxkcd.com/wiki/index.php/2440:_Epistemic_Uncer)" >}}
 
 Here are some examples from the [Effective Altruism Forum](https://forum.effectivealtruism.org/posts/bbtvDJtb6YwwWtJm7/epistemic-status-an-explainer-and-some-thoughts#Valuable_information_to_list_in_an_epistemic_status):
 

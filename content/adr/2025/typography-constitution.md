@@ -3,8 +3,7 @@ title: "typography constitution"
 date: 2025-12-31T19:52:37+03:00
 
 status: complete
-
-category: social   # social/political/economic/tech
+category: technical   # social/political/economic/tech
 ---
 
 # **Preamble**
