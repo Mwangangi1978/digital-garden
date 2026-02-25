@@ -198,12 +198,14 @@
     --text-light: #111111;
     --accent-light: #F7CAC9;
     --accent-light-hover: rgba(247, 202, 201, 0.5);
+    --accent-light-rgb: 247, 202, 201;
     
     /* Dark Mode Colors */
     --bg-dark: #556F7A;
     --text-dark: #FDFBF7;
     --accent-dark: #FED766;
     --accent-dark-hover: rgba(254, 215, 102, 0.5);
+    --accent-dark-rgb: 254, 215, 102;
     
     /* Universal Accents */
     --color-error: #FF0000;
@@ -220,6 +222,8 @@
     --text-color: var(--text-light);
     --accent-color: var(--accent-light);
     --accent-hover: var(--accent-light-hover);
+    --accent-color-rgb: var(--accent-light-rgb);
+    --background-color: var(--bg-color);
   }
   
   /* Dark Mode Theme Variables */
@@ -229,6 +233,8 @@
     --text-color: var(--text-dark);
     --accent-color: var(--accent-dark);
     --accent-hover: var(--accent-dark-hover);
+    --accent-color-rgb: var(--accent-dark-rgb);
+    --background-color: var(--bg-color);
   }
   
   /* Automatic Dark Mode Detection */
@@ -238,6 +244,8 @@
       --text-color: var(--text-dark);
       --accent-color: var(--accent-dark);
       --accent-hover: var(--accent-dark-hover);
+      --accent-color-rgb: var(--accent-dark-rgb);
+      --background-color: var(--bg-color);
     }
   }
   

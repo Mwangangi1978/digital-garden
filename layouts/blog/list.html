@@ -1,0 +1,97 @@
+{{ define "main" }}
+<link rel="stylesheet" href="/css/articles.css">
+
+<!-- Empty container for global header.js to hook into -->
+<div class="page-container writing-index-page" id="top"></div>
+
+<div class="writing-index-wrapper">
+    <!-- Hero Section -->
+    <header class="index-hero">
+        <div class="central-column">
+            <h1 class="index-hero-title">WRITING INDEX</h1>
+            <p class="index-hero-description">
+                Use the tabs above to browse essays, fiction, and other experiments. Each entry is a link to the full piece.
+            </p>
+        </div>
+    </header>
+
+    <!-- Filter Navigation (Replicating the Tab Bar) -->
+    <nav class="index-filter-bar" role="navigation">
+        <div class="central-column">
+            <div class="filter-tabs">
+                <button class="filter-tab active" data-filter="all">
+                    <div class="tab-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                    </div>
+                    <span>All Stories</span>
+                </button>
+                
+                <button class="filter-tab" data-filter="social">
+                    <div class="tab-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    </div>
+                    <span>Social</span>
+                </button>
+
+                <button class="filter-tab" data-filter="political">
+                    <div class="tab-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M3 10h18M5 10v11M19 10v11M12 2v8M9 21V10M15 21V10"></path></svg>
+                    </div>
+                    <span>Political</span>
+                </button>
+
+                <button class="filter-tab" data-filter="economic">
+                    <div class="tab-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    </div>
+                    <span>Economic</span>
+                </button>
+
+                <button class="filter-tab" data-filter="technical">
+                    <div class="tab-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                    </div>
+                    <span>Technical</span>
+                </button>
+
+                <button class="filter-tab" data-filter="fiction">
+                    <div class="tab-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                    </div>
+                    <span>Fiction</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content: List View -->
+    <main class="index-content-area">
+        <div class="central-column">
+
+            <div class="articles-list" id="articles-container">
+                {{ $pages := where .Site.RegularPages "Section" "in" (slice "fiction" "non-fiction" "adr" "blog" "poetry" "screenplay") }}
+                {{ range $pages.ByDate.Reverse }}
+                    {{ $cat := lower (default "general" .Params.category) }}
+                    {{ $section := lower .Section }}
+                    <!-- Determine if it's fiction based on section or param -->
+                    {{ $isFiction := or (eq $section "fiction") (eq $section "poetry") (eq $section "screenplay") }}
+                    
+                    <div class="article-item" 
+                         data-category="{{ $cat }}" 
+                         data-is-fiction="{{ $isFiction }}">
+                        <span class="article-bullet">◆</span>
+                        <a href="{{ .Permalink }}" class="article-title">{{ .Title }}</a>
+                        <span class="article-date"><i>{{ .Date.Format "02 Jan 2006" }}</i></span>
+                    </div>
+                {{ end }}
+            </div>
+
+            <div id="no-results" class="empty-state" style="display: none;">
+                <p>No matches found for this category.</p>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="/js/filter.js"></script>
+{{ end }}
