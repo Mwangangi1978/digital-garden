@@ -197,17 +197,18 @@
   }
 
   .tabs-container {
-    flex-wrap: nowrap;
-    gap: 8px;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
   }
 
   .filter-tab.tab {
-    flex: 1 1 0;
+    flex: 0 1 calc(33.333% - 10px);
     min-width: 0;
     padding: 6px 8px;
     gap: 6px;
     font-size: 0.68rem;
+    justify-content: center;
   }
 
   .tab-icon-wrapper {
