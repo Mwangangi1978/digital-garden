@@ -10,8 +10,9 @@
         <header class="blog-index__header">
             <h1 class="blog-index__title">WRITING</h1>
             <p class="blog-index__subtitle">
-                Use the tabs below to browse essays, fiction, and other experiments.<br>
-                Each entry is a link to the full piece.
+                Essays, short stories, film reviews, philosophical tangents, and ADHD-fueled research 
+                on things that probably didn't need researching. This is part digital garden, part second brain—a 
+                reflection of my thoughts, adventures, and passions. Browse by category below.
             </p>
         </header>
 
@@ -60,22 +61,43 @@
         </div>
 
         <main class="index-content-area">
-            <div class="list-container articles-list" id="articles-container">
+            <div class="articles-grid" id="articles-container">
                 {{ $pages := where .Site.RegularPages "Section" "in" (slice "fiction" "non-fiction" "adr" "blog" "poetry" "screenplay") }}
-                {{ range $pages.ByDate.Reverse }}
-                    {{ $cat := lower (default "general" .Params.category) }}
-                    {{ $section := lower .Section }}
+                {{ range $index, $page := $pages.ByDate.Reverse }}
+                    {{ $cat := lower (default "general" $page.Params.category) }}
+                    {{ $section := lower $page.Section }}
                     {{ $isFiction := or (eq $section "fiction") (eq $section "poetry") (eq $section "screenplay") }}
+                    {{/* --- Determine card width: every 4th card (indices 2, 5, 8…) spans 2 cols --- */}}
+                    {{ $widthClass := "aspect-single" }}
+                    {{ if eq (mod $index 4) 2 }}
+                        {{ $widthClass = "aspect-double" }}
+                    {{ end }}
+                    {{/* --- Build the tag label --- */}}
+                    {{ $tagLabel := "" }}
+                    {{ if $isFiction }}
+                        {{/* Show fiction type: short-story, poetry, screenplay */}}
+                        {{ $ftype := default "short-story" $page.Params.type }}
+                        {{ $tagLabel = replace (title $ftype) "-" " " }}
+                    {{ else }}
+                        {{/* Show the category tag */}}
+                        {{ $tagLabel = title (default "general" $page.Params.category) }}
+                    {{ end }}
                     
-                    <div class="list-item article-item" 
-                         data-category="{{ $cat }}" 
-                         data-is-fiction="{{ $isFiction }}">
-                        <div class="item-left">
-                            <span class="diamond-bullet" aria-hidden="true"></span>
-                            <a href="{{ .Permalink }}" class="item-title article-title">{{ .Title }}</a>
-                        </div>
-                        <span class="item-date article-date"><i>{{ .Date.Format "02 Jan 2006" }}</i></span>
-                    </div>
+                    <article class="article-card {{ $widthClass }}" 
+                             data-category="{{ $cat }}" 
+                             data-is-fiction="{{ $isFiction }}">
+                        <a href="{{ $page.Permalink }}" class="card-link">
+                            <div class="card-header">
+                                <span class="card-meta">{{ $tagLabel }}</span>
+                                <span class="card-arrow" aria-hidden="true">↗</span>
+                            </div>
+                            <div class="card-content">
+                                <h2 class="card-title">{{ $page.Title }}</h2>
+                                <time class="card-date">{{ $page.Date.Format "January 2, 2006" }}</time>
+                                <p class="card-excerpt">{{ $page.Summary | plainify | truncate 240 }}</p>
+                            </div>
+                        </a>
+                    </article>
                 {{ end }}
             </div>
 

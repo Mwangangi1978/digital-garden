@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   const tabs = document.querySelectorAll('.filter-tab');
-  const articles = document.querySelectorAll('.article-item');
+  const articles = document.querySelectorAll('.article-card');
   const noResults = document.getElementById('no-results');
 
   tabs.forEach(tab => {

@@ -149,6 +149,158 @@
   min-width: 0;
 }
 
+/* --- Grid Layout for Articles --- */
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+@media (min-width: 640px) {
+  .articles-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .articles-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.article-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: var(--bg-color);
+  border: 1px solid var(--blog-border);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.article-card:hover {
+  border-color: var(--blog-muted-foreground);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .article-card:hover {
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
+.article-card.aspect-single {
+  grid-column: span 1;
+  aspect-ratio: 1 / 1;
+}
+
+.article-card.aspect-double {
+  aspect-ratio: 2 / 1;
+}
+
+@media (min-width: 640px) {
+  .article-card.aspect-double {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 639px) {
+  .article-card.aspect-double {
+    grid-column: span 1;
+  }
+}
+
+.card-link {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+  padding: 18px 18px 8px 18px;
+  gap: 12px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+.card-meta {
+  color: var(--blog-muted-foreground);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.card-arrow {
+  color: var(--accent-color);
+  font-size: 0.9rem;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  opacity: 0.85;
+}
+
+/* Prevent the global link pseudo-icon (° or ↗) from being appended
+   to the card link. The top-right `.card-arrow` is used instead. */
+.article-card .card-link::after,
+.article-card .card-link a::after {
+  content: none !important;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 4px;
+  margin-top: auto;
+}
+
+.card-title {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0 0 4px 0;
+  color: var(--blog-foreground);
+  word-break: break-word;
+}
+
+.article-card.aspect-double .card-title {
+  font-size: 1.5rem;
+}
+
+.card-date {
+  font-size: 0.75rem;
+  color: var(--blog-muted-foreground);
+  font-style: normal;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.card-excerpt {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--blog-muted-foreground);
+  margin: 0 0 2px 0;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  word-break: break-word;
+}
+
+.article-card.aspect-double .card-excerpt {
+  -webkit-line-clamp: 5;
+}
+
 .diamond-bullet {
   width: 6px;
   height: 6px;
@@ -219,14 +371,29 @@
     letter-spacing: 0;
   }
 
-  .list-item {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
+  .articles-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
 
-  .item-date {
-    margin-left: 0;
+  .article-card.aspect-single {
+    aspect-ratio: auto;
+    min-height: 280px;
+  }
+
+  .article-card.aspect-double {
+    aspect-ratio: auto;
+    min-height: 280px;
+    grid-column: span 1;
+  }
+
+  .card-title {
+    font-size: 1.2rem;
+  }
+
+  .card-excerpt {
+    font-size: 0.85rem;
+    -webkit-line-clamp: 3;
   }
 }
 

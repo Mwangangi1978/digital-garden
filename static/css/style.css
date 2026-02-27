@@ -467,6 +467,12 @@
     margin-left: 0.15em;
     vertical-align: super;
   }
+
+  /* Remove external-link icon inside card excerpts (show only top-right card arrow) */
+  .card-excerpt a::after,
+  .article-card .card-excerpt a::after {
+    content: none !important;
+  }
   
   /* Remove icons from specific contexts */
   a.no-icon::after,
