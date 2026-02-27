@@ -24,17 +24,16 @@
 }
 
 .site-header {
-  margin-top: 1rem;
   margin-bottom: 1rem;
 }
 
-.writing-index-page + .site-header {
+.writing-index-page {
   margin-top: 2.5rem;
 }
 
 @media (min-width: 1024px) {
-  .writing-index-page + .site-header {
-    margin-top: 3.5rem;
+  .writing-index-page {
+    margin-top: 1.5rem;
   }
 }
 
