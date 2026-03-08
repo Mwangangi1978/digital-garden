@@ -1,0 +1,319 @@
+{{ define "main" }}
+<link rel="stylesheet" href="/css/blog.css">
+<link rel="stylesheet" href="/css/style.css">
+
+<!-- Empty container for global header.js to hook into -->
+<div class="page-container writing-index-page" id="top"></div>
+
+<div class="blog-index">
+    <div class="blog-index__content">
+        <header class="blog-index__header">
+            <h1 class="blog-index__title">WATERCOLOR</h1>
+            <p class="blog-index__subtitle">
+                A collection of watercolor sketches and visual experiments.
+            </p>
+        </header>
+
+        <main class="index-content-area">
+            <div class="sketches-gallery" id="sketches-container">
+                {{ $pages := where .Site.RegularPages "Section" "watercolor" }}
+                {{ range $index, $page := $pages.ByDate.Reverse }}
+                    <figure class="sketch-item">
+                        <button class="sketch-image-button" data-permalink="{{ $page.Permalink }}" data-image="{{ $page.Params.image }}" data-title="{{ $page.Title }}">
+                            <img src="{{ $page.Params.image }}" alt="{{ $page.Title }}" class="sketch-image">
+                        </button>
+                        <figcaption class="sketch-item-caption">{{ $page.Date.Format "January 2, 2006" }}</figcaption>
+                    </figure>
+                {{ end }}
+            </div>
+
+            {{ if eq (len (where .Site.RegularPages "Section" "watercolor")) 0 }}
+            <div class="empty-state">
+                <p>No watercolor sketches yet. Check back soon!</p>
+            </div>
+            {{ end }}
+        </main>
+    </div>
+</div>
+
+<!-- Full-screen lightbox modal for sketches -->
+<div id="sketch-modal" class="sketch-modal" style="display: none;">
+    <div class="sketch-modal-content">
+        <button class="sketch-modal-close" aria-label="Close">&times;</button>
+        <img id="sketch-modal-image" src="" alt="Full size sketch" class="sketch-modal-image">
+        <div class="sketch-modal-nav">
+            <button id="sketch-modal-prev" class="sketch-modal-button" aria-label="Previous">← Prev</button>
+            <button id="sketch-modal-next" class="sketch-modal-button" aria-label="Next">Next →</button>
+        </div>
+    </div>
+</div>
+
+<style>
+.sketches-gallery {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+}
+
+@media (min-width: 640px) {
+    .sketches-gallery {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .sketches-gallery {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+.sketch-item {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.sketch-image-button {
+    width: 100%;
+    padding: 0;
+    border: none;
+    background: var(--blog-secondary);
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    max-height: 500px;
+    transition: background-color 0.2s ease;
+    flex: 1;
+}
+
+.sketch-image-button:hover {
+    background-color: var(--blog-secondary);
+}
+
+.sketch-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    transition: transform 0.3s ease;
+    display: block;
+}
+
+.sketch-image-button:hover .sketch-image {
+    transform: scale(1.02);
+}
+
+.sketch-item-caption {
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--blog-muted-foreground);
+    text-align: center;
+    font-style: italic;
+}
+
+
+/* Full-screen modal styles */
+.sketch-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 2rem;
+    overflow: auto;
+}
+
+.sketch-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sketch-modal-close {
+    position: absolute;
+    top: -2.5rem;
+    right: 0;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+}
+
+.sketch-modal-close:hover {
+    color: var(--accent-color);
+}
+
+.sketch-modal-image {
+    max-width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+    margin-bottom: 1.5rem;
+    border-radius: 4px;
+}
+
+.sketch-modal-info {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 4px;
+    text-align: center;
+    color: white;
+    margin-bottom: 1.5rem;
+    max-width: 600px;
+}
+
+.sketch-modal-info h2 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+    color: white;
+}
+
+.sketch-modal-info p {
+    margin: 0.25rem 0;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.sketch-modal-nav {
+    display: flex;
+    gap: 1rem;
+}
+
+.sketch-modal-button {
+    padding: 0.75rem 1.5rem;
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: opacity 0.2s ease;
+}
+
+.sketch-modal-button:hover {
+    opacity: 0.8;
+}
+
+.sketch-modal-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    .sketch-modal {
+        padding: 1rem;
+    }
+
+    .sketch-modal-close {
+        top: 0.5rem;
+        right: 0.5rem;
+    }
+
+    .sketch-modal-image {
+        max-height: 50vh;
+    }
+
+    .sketch-modal-nav {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .sketch-modal-button {
+        width: 100%;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('sketch-modal');
+    const modalImage = document.getElementById('sketch-modal-image');
+    const closeBtn = document.querySelector('.sketch-modal-close');
+    const prevBtn = document.getElementById('sketch-modal-prev');
+    const nextBtn = document.getElementById('sketch-modal-next');
+    const sketchButtons = Array.from(document.querySelectorAll('.sketch-image-button'));
+    
+    let currentIndex = -1;
+
+    function openModal(index) {
+        if (index < 0 || index >= sketchButtons.length) return;
+        
+        currentIndex = index;
+        const button = sketchButtons[index];
+        const image = button.querySelector('.sketch-image');
+
+        modalImage.src = image.src;
+        modalImage.alt = image.alt;
+        
+        // Update nav button states
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex === sketchButtons.length - 1;
+        
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        currentIndex = -1;
+    }
+
+    // Open modal on button click
+    sketchButtons.forEach((button, index) => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            openModal(index);
+        });
+    });
+
+    // Close modal
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) closeModal();
+    });
+
+    // Navigation
+    prevBtn.addEventListener('click', function() {
+        if (currentIndex > 0) openModal(currentIndex - 1);
+    });
+
+    nextBtn.addEventListener('click', function() {
+        if (currentIndex < sketchButtons.length - 1) openModal(currentIndex + 1);
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (modal.style.display !== 'flex') return;
+        
+        if (e.key === 'Escape') closeModal();
+        if (e.key === 'ArrowLeft' && currentIndex > 0) openModal(currentIndex - 1);
+        if (e.key === 'ArrowRight' && currentIndex < sketchButtons.length - 1) openModal(currentIndex + 1);
+    });
+});
+</script>
+
+{{ end }}

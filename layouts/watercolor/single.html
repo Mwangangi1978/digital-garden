@@ -1,0 +1,153 @@
+{{ define "main" }}
+<link rel="stylesheet" href="/css/blog.css">
+<link rel="stylesheet" href="/css/style.css">
+
+<div class="page-container writing-index-page" id="top"></div>
+
+<div class="blog-index">
+    <div class="blog-index__content">
+        <article class="sketch-detail">
+            <header class="sketch-detail-header">
+                <a href="/watercolor" class="back-link">← Back to Watercolor</a>
+                <h1 class="sketch-detail-title">{{ .Title }}</h1>
+                <time class="sketch-detail-date">{{ .Date.Format "January 2, 2006" }}</time>
+            </header>
+
+            <div class="sketch-detail-image">
+                <img src="{{ .Params.image }}" alt="{{ .Title }}" class="sketch-full-image">
+            </div>
+
+            <nav class="sketch-detail-nav">
+                {{ $prev := .PrevInSection }}
+                {{ $next := .NextInSection }}
+                
+                {{ if $prev }}
+                <a href="{{ $prev.Permalink }}" class="nav-prev">
+                    <span class="nav-label">← Previous</span>
+                    <span class="nav-title">{{ $prev.Title }}</span>
+                </a>
+                {{ else }}
+                <div class="nav-placeholder"></div>
+                {{ end }}
+                
+                {{ if $next }}
+                <a href="{{ $next.Permalink }}" class="nav-next">
+                    <span class="nav-label">Next →</span>
+                    <span class="nav-title">{{ $next.Title }}</span>
+                </a>
+                {{ else }}
+                <div class="nav-placeholder"></div>
+                {{ end }}
+            </nav>
+        </article>
+    </div>
+</div>
+
+<style>
+.sketch-detail {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.sketch-detail-header {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--blog-border);
+    border-radius: 4px;
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: border-color 0.2s ease;
+}
+
+.back-link:hover {
+    border-color: var(--blog-muted-foreground);
+}
+
+.sketch-detail-title {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin: 1rem 0 0.5rem 0;
+    color: var(--blog-foreground);
+}
+
+.sketch-detail-date {
+    color: var(--blog-muted-foreground);
+    font-style: italic;
+    font-size: 0.95rem;
+}
+
+.sketch-detail-image {
+    margin: 3rem 0;
+    display: flex;
+    justify-content: center;
+}
+
+.sketch-full-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.sketch-detail-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--blog-border);
+}
+
+.nav-prev,
+.nav-next {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    border: 1px solid var(--blog-border);
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.nav-prev:hover,
+.nav-next:hover {
+    border-color: var(--blog-muted-foreground);
+    background-color: var(--blog-secondary);
+}
+
+.nav-label {
+    font-size: 0.85rem;
+    color: var(--blog-muted-foreground);
+    margin-bottom: 0.5rem;
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--blog-foreground);
+}
+
+.nav-placeholder {
+    /* Empty space holder */
+}
+
+@media (max-width: 768px) {
+    .sketch-detail-title {
+        font-size: 1.8rem;
+    }
+
+    .sketch-detail-nav {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+{{ end }}
