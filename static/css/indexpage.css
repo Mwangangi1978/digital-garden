@@ -2,76 +2,85 @@
    INDEX PAGE SPECIFIC STYLES
    ============================================================================ */
 
-/* Flexbox Layout: Text on top, image at bottom with no gap */
+/* Flexbox Layout: Text on top, showcase sections below */
 body.landing-page {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    overflow-x: hidden;
+    
 }
 
 .page-container {
-    flex: 0 0 auto; /* Don't grow, don't shrink */
-    padding-bottom: 0;
-    margin-bottom: 0;
-    margin-top: 1rem;
-    
-}
-  
-
-.full-bleed-bg {
-    flex: 1 0 auto; /* Grow to fill space, don't shrink */
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    width: 100%;
-    margin: 0;
-    padding: 0; /* Space between text and image */
-}
-
-.full-bleed-bg img {
-    width: 100%;
+    flex: 1 0 auto;
+    padding: 2rem;
     max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* ============================================================================
+   HOME CONTENT TYPOGRAPHY - All same font size
+   ============================================================================ */
+
+.home-content p,
+.home-content h1,
+.home-content h2 {
+    font-size: var(--base-font-size);
+    line-height: 1.6;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Keep generic div typography without collapsing layout spacing on section wrappers. */
+.home-content div {
+    font-size: var(--base-font-size);
+    line-height: 1.6;
+}
+
+/* Ensure hero/showcase blocks stay visually separated from adjacent content. */
+.home-content .hero-image-container {
+    margin-top: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.home-content .showcase-container {
+    margin-top: 3.5rem;
+}
+
+/* ============================================================================
+   HERO IMAGE STYLING
+   ============================================================================ */
+
+.hero-image-container {
+    width: 100%;
+    max-height: 200px;
+    overflow: hidden;
+    margin: 2rem 0 1.5rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-image {
+    width: 100%;
     height: auto;
-    display: block;
-    margin: 0;
-    vertical-align: bottom;
+    max-height: 120px;
+    object-fit: cover;
+    object-position: center;
 }
 
-/* 1. Typography: Indentation vs. Spacing 
-   Logic: Desktop = Indent, No margin. Mobile = Margin, No indent.
-*/
+/* ============================================================================
+   INTERACTIVE TEXT STYLING
+   ============================================================================ */
 
-/* Desktop Overrides (min-width: 1024px matches your breakpoints) */
-@media (min-width: 1024px) {
-    .index-content p {
-        text-indent: 2rem;       /* The indent */
-        margin-bottom: 0;        /* Remove skip line */
-        margin-top: 0;
-        line-height: var(--line-height-desktop);
-    }
-
-    /* The first paragraph typically is not indented in classic typography */
-    .index-content p:first-of-type {
-        text-indent: 0;
-    }
-
-    /* Add a little breathing room after the hidden H1 */
-    .index-content p:first-of-type {
-        margin-top: 2rem;
-    }
-}
-
-/* 2. Interactive Spans (Features) 
-   Styling for [AUTO] and [Search site] text
-*/
 .interactive-text {
     cursor: pointer;
     color: var(--accent-color);
     font-weight: bold;
-    user-select: none; /* Prevents highlighting text when clicking fast */
+    user-select: none;
     transition: opacity 0.2s ease;
 }
 
@@ -80,54 +89,379 @@ body.landing-page {
     text-decoration: underline;
 }
 
-/* Mobile adjustments */
-@media (max-width: 767px) {
-    body.landing-page {
-        justify-content: space-between; /* Header at top, image at bottom */
-        padding-top: 0; /* Ensure header stays at top */
-        padding-bottom: 0; /* Ensure image stays at bottom */
-        height: 100vh;
+/* ============================================================================
+   SHOWCASE SECTIONS - 3 COLUMN LAYOUT
+   Articles (2 columns) | Sketches (1 column)
+   ============================================================================ */
+
+.showcase-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1rem;
+    margin-top: 5rem;
+    margin-bottom: 3rem;
+}
+
+.showcase-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.section-title {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0rem;
+    color: var(--text-color);
+}
+
+.section-title .arrow {
+    font-weight: 300;
+    margin-left: 0.25rem;
+}
+
+.section-description {
+    font-size: 0.9rem;
+    color: var(--blog-muted-foreground);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+    margin-top: 0;
+}
+
+.section-link {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.section-link:hover {
+    text-decoration: underline;
+}
+
+.section-link::after {
+    content: none !important;
+}
+
+/* ============================================================================
+   ARTICLES GRID - Blog Card Styling with Transparent Background
+   ============================================================================ */
+
+.articles .articles-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+/* Article cards with transparent background */
+.article-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: transparent;
+    border: 1px solid var(--blog-border);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+.article-card:hover {
+    border-color: var(--blog-muted-foreground);
+}
+
+.article-card.aspect-single {
+    grid-column: span 1;
+    aspect-ratio: 1 / 1;
+}
+
+.card-link {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    height: 100%;
+    text-decoration: none;
+    padding: 18px 18px 8px 18px;
+    gap: 12px;
+    font-variant: normal;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    line-height: 1.2;
+    margin-bottom: 6px;
+}
+
+.card-meta {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--text-color);
+}
+
+.card-arrow {
+    color: var(--accent-color);
+    font-size: 0.9rem;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    opacity: 0.85;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    background-color: transparent;
+    transition: background-color 0.18s ease, color 0.18s ease, transform 0.12s ease, box-shadow 0.18s ease;
+}
+
+.article-card:hover .card-arrow {
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(var(--accent-color-rgb, 0,0,0), 0.12);
+    opacity: 1;
+}
+
+.article-card .card-link::after,
+.article-card .card-link a::after {
+    content: none !important;
+}
+
+.article-card .card-link:hover {
+    background-color: transparent !important;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 4px;
+    margin-top: auto;
+}
+
+/* Use higher specificity (.article-card .card-title) so .home-content h2 cannot
+   override font-size or margins on card titles. */
+.article-card .card-title {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0 0 4px 0;
+  color: var(--blog-foreground, var(--text-color));
+  word-break: break-word;
+  font-variant: normal;
+}
+
+.card-date {
+    font-size: 0.75rem;
+    color: var(--blog-muted-foreground);
+    font: 'Cooper Hewitt', 'Arial Narrow', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-style: normal;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.card-excerpt {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--blog-muted-foreground);
+  margin: 0 0 2px 0;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  word-break: break-word;
+}
+
+/* Reset font-variant and enforce font-size for text inside article cards.
+   Higher specificity (0,2,0) beats .home-content div (0,1,1). */
+.article-card .card-title,
+.article-card .card-meta,
+.article-card .card-date,
+.article-card .card-excerpt {
+    font-variant: normal;
+}
+
+.article-card .card-excerpt {
+    font-size: 0.75rem;
+}
+
+/* ============================================================================
+   SKETCHES SECTION - Images without card borders, full length visible
+   ============================================================================ */
+
+.sketches-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.sketch-card {
+    border: 1px solid var(--blog-border, var(--border-color));
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.2s ease;
+    background-color: var(--bg-color);
+}
+
+.sketch-card:hover {
+    border-color: var(--blog-muted-foreground, var(--text-muted));
+}
+
+.sketch-link {
+    display: block;
+    text-decoration: none;
+}
+
+.sketch-link::after {
+    content: none !important;
+}
+
+.sketch-link:hover {
+    background-color: transparent !important;
+}
+
+.sketch-image-container {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: var(--card-bg);
+}
+
+.sketch-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.sketch-card:hover .sketch-image {
+    transform: scale(1.05);
+}
+
+.sketch-title {
+    padding: 0.75rem 1rem;
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+/* ============================================================================
+   BOTTOM SECTIONS (Patterns & Library)
+   ============================================================================ */
+
+.bottom-sections {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.bottom-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.pattern-card {
+    display: flex;
+    gap: 1rem;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--card-bg);
+}
+
+.pattern-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.pattern-content {
+    flex: 1;
+}
+
+.pattern-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.pattern-description {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+/* ============================================================================
+   ESSAYS SECTION - Use blog card grid
+   ============================================================================ */
+
+.essays .articles-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+/* Override card sizing for landing page essays */
+.essays .article-card {
+    aspect-ratio: auto;
+    min-height: 200px;
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+@media (max-width: 768px) {
+    .showcase-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin-left: auto;
+        margin-right: auto;
     }
 
-    
+    /* Single column, full-width cards on mobile */
+    .articles .articles-grid {
+        grid-template-columns: 1fr;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .articles .article-card {
+        width: 100%;
+        aspect-ratio: auto;
+        min-height: 220px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .bottom-sections {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
     
     .page-container {
-        flex: 1 1 auto; /* Allow it to grow to fill available space */
-        display: flex;
-        flex-direction: column;
-        min-height: 0; /* Allow flex shrinking */
-        margin-top: 1 rem; /* Remove top margin */
-        margin-bottom: 0; /* Remove bottom margin */
+        padding: 1rem;
     }
     
-    /* Keep header at top */
-    .page-container .site-header {
-        flex: 0 0 auto; /* Don't grow, stay at top */
+    .home-content h1 {
+        font-size: 2.5rem;
     }
     
-    /* Center the content area vertically between header and image */
-    .home-content {
-        flex: 1 1 auto; /* Grow to fill available space */
-        display: flex;
-        flex-direction: column;
-        justify-content: center; /* Center content vertically */
-        align-items: flex-start; /* Keep text left-aligned */
-        margin-top: auto; /* Push down to center */
-        margin-bottom: auto; /* Balance from bottom */
-    }
-
-    .homepage {
-        justify-content: center;
-        align-items: center;
+    .hero-image-container {
+        max-height: 80px;
     }
     
-    .full-bleed-bg {
-        flex: 0 0 auto; /* Don't grow, don't shrink */
-        margin-top: 0; /* Remove top margin */
-        margin-bottom: 0; /* Remove bottom margin to keep image at bottom */
-    }
-    
-    .full-bleed-bg img {
-        max-width: 100%; /* Full width on mobile */
+    .hero-image {
+        max-height: 80px;
     }
 }

@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+  <link rel="stylesheet" href="{{ "css/blog.css" | relURL }}">
   <link rel="stylesheet" href="{{ "css/indexpage.css" | relURL }}">
 </head>
 
@@ -15,14 +16,80 @@
     <div class="page-container">
         <main class="home-content">
         {{ .Content }}
+        
+        <!-- Showcase Section -->
+        <div class="showcase-container">
+            <!-- Articles Section -->
+            <section class="showcase-section articles">
+                <h2 class="section-title">Articles <span class="arrow">→</span></h2>
+                <p class="section-description">Opinionated, longform narrative writing. <a href="/blog" class="section-link">Find more articles here</a>.</p>
+                
+                <div class="articles-grid">
+                    {{ range .Params.featured_articles }}
+                        {{ with $.Site.GetPage . }}
+                        <article class="article-card aspect-single">
+                            <a href="{{ .Permalink }}" class="card-link">
+                                <div class="card-header">
+                                    <span class="card-meta">{{ .Params.category | upper }}</span>
+                                    <span class="card-arrow" aria-hidden="true">↗</span>
+                                </div>
+                                <div class="card-content">
+                                    <h2 class="card-title">{{ .Title }}</h2>
+                                    <time class="card-date">{{ .Date.Format "January 2, 2006" }}</time>
+                                    {{ if .Params.description }}
+                                    <p class="card-excerpt">{{ .Params.description }}</p>
+                                    {{ else }}
+                                    <p class="card-excerpt">{{ .Summary | plainify | truncate 180 }}</p>
+                                    {{ end }}
+                                </div>
+                            </a>
+                        </article>
+                        {{ end }}
+                    {{ end }}
+                </div>
+            </section>
+            
+            <!-- Sketches Section -->
+            <section class="showcase-section sketches">
+                <h2 class="section-title">Sketches <span class="arrow">→</span></h2>
+                <p class="section-description">Watercolor sketches and visual experiments. <a href="/watercolor" class="section-link">View more</a>.</p>
+                
+                <div class="sketches-grid">
+                    {{ range .Params.featured_sketches }}
+                    <div class="sketch-item">
+                        <a href="{{ .link }}" class="sketch-name-link">{{ .title }}</a>
+                        <div class="sketch-image-wrapper">
+                            <img src="{{ .image }}" alt="{{ .title }}" class="sketch-image">
+                        </div>
+                    </div>
+                    {{ end }}
+                </div>
+            </section>
+        </div>
+        
+        <!-- Patterns and Library Section -->
+        <div class="bottom-sections">
+            <section class="bottom-section patterns">
+                <h2 class="section-title">Patterns <span class="arrow">→</span></h2>
+                <p class="section-description">Design patterns gathered from my own observations and research.</p>
+                
+                <article class="pattern-card">
+                    <div class="pattern-icon">🔷</div>
+                    <div class="pattern-content">
+                        <h3 class="pattern-title">Ambient Co-presence</h3>
+                        <p class="pattern-description">Creating a subtle, peripheral, and synchronous sense of shared space and context on the web</p>
+                    </div>
+                </article>
+            </section>
+            
+            <section class="bottom-section library">
+                <h2 class="section-title">Library <span class="arrow">→</span></h2>
+                <p class="section-description">Books I've read and books I like the idea of having read.</p>
+            </section>
+        </div>
+        
         </main>
     </div>
-
-        
-    <div class="full-bleed-bg">
-        <img src="{{ "images/hero-image.png" | relURL }}" alt="Decorative Background">
-    </div>
-    
 
   <script src="{{ "js/header.js" | relURL }}" defer></script>
   <script src="{{ "js/theme.js" | relURL }}" defer class="jim"></script>
