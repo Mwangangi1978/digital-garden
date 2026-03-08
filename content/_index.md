@@ -12,6 +12,23 @@ featured_sketches:
   - title: "Blueberries"
     image: "/watercolor/2026/1_3_2026_blueberries.jpeg"
     link: "/watercolor"
+highlights:
+  - title: "The Art of Doing Nothing"
+    type: "article"
+    link: "https://example.com/article"
+    description: "A deep dive into intentional rest and digital minimalism"
+  - title: "Watercolor Techniques"
+    type: "video"
+    link: "https://youtu.be/vbIiehO3AS0?si=1Mo1GUE9XYFq5orL"
+    description: "Professional watercolor artist demonstrates wet-on-wet technique"
+  - title: "Lo-Fi Hip Hop Mix"
+    type: "music"
+    link: "https://music.youtube.com/watch?v=vhd493Fdc3M&si=DYWYMC3RBe846SF8"
+    description: "Perfect background soundtrack for creative work"
+  - title: "Still Life Study"
+    type: "artwork"
+    image: "/watercolor/2026/3_3_2026_seagull.jpeg"
+    description: "Watercolor study from this week's practice session"
 ---
 
 <div class="hero-image-container">

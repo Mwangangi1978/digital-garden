@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ .Title }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+  <link rel="stylesheet" href="{{ "css/blog.css" | relURL }}">
+  <link rel="stylesheet" href="{{ "css/highlights.css" | relURL }}">
+</head>
+
+<body>
+  <div class="page-container">
+    <main class="content">
+      <div class="post-header">
+        <h1>{{ .Title }}</h1>
+        <p class="post-description">{{ .Content }}</p>
+      </div>
+
+      <div class="highlights-history">
+        <!-- Display Archive Weeks -->
+        {{ range .Params.archiveWeeks }}
+          <section class="history-week">
+            <h2 class="week-title">Week {{ .week }} ({{ .week_start }})</h2>
+            
+            {{ if .highlights }}
+              <ul class="week-highlights">
+                {{ range .highlights }}
+                  <li class="highlight-item-history">
+                    <p class="highlight-resource"><strong>{{ .title }}</strong></p>
+
+                    {{ if .link }}
+                      {{ if or (eq .type "video") (eq .type "music") }}
+                        {{ $mediaID := replaceRE `^.*(?:youtu\.be/|v=)([^&?#]+).*$` `$1` .link }}
+                        {{ if and $mediaID (ne $mediaID .link) }}
+                          <div class="highlight-embed {{ if eq .type "music" }}highlight-embed-music{{ else }}highlight-embed-video{{ end }}">
+                            <iframe
+                              src="https://www.youtube.com/embed/{{ $mediaID }}"
+                              title="{{ .title }}"
+                              loading="lazy"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                              referrerpolicy="strict-origin-when-cross-origin"
+                              allowfullscreen>
+                            </iframe>
+                          </div>
+                        {{ else }}
+                          <a href="{{ .link }}" target="_blank" rel="noopener noreferrer">Open resource ↗</a>
+                        {{ end }}
+                      {{ else }}
+                        <a href="{{ .link }}" target="_blank" rel="noopener noreferrer">Open resource ↗</a>
+                      {{ end }}
+                    {{ else if .image }}
+                      <figure class="highlight-image-wrap">
+                        <img src="{{ .image }}" alt="{{ .title }}" class="highlight-inline-image">
+                      </figure>
+                    {{ end }}
+
+                    {{ if .description }}<p class="highlight-description">{{ .description }}</p>{{ end }}
+                  </li>
+                {{ end }}
+              </ul>
+            {{ end }}
+          </section>
+        {{ end }}
+
+        <!-- Placeholder for new highlights -->
+        {{ if eq (len .Params.archiveWeeks) 0 }}
+          <section class="history-week">
+            <h2 class="week-title">No archived weeks yet</h2>
+            <p class="placeholder-text">Start adding highlights on the home page. Each week, your discoveries will be archived here for future browsing.</p>
+            
+            <div class="coming-soon">
+              <p>Check back regularly to see your highlighted discoveries from previous weeks!</p>
+            </div>
+          </section>
+        {{ end }}
+      </div>
+
+      <div class="back-link">
+        <a href="/">← Back to home</a>
+      </div>
+    </main>
+  </div>
+
+  <script src="{{ "js/header.js" | relURL }}" defer></script>
+  <script src="{{ "js/theme.js" | relURL }}" defer></script>
+</body>
+</html>

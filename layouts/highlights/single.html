@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ .Title }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+  <link rel="stylesheet" href="{{ "css/blog.css" | relURL }}">
+  <link rel="stylesheet" href="{{ "css/highlights.css" | relURL }}">
+</head>
+
+<body>
+  <div class="page-container">
+    <main class="content">
+      <div class="post-header">
+        <h1>{{ .Title }}</h1>
+        <p class="post-description">{{ .Content }}</p>
+      </div>
+
+      <div class="highlights-history">
+        {{ $highlights_index := $.Site.GetPage "/highlights" }}
+        
+        {{ if $highlights_index }}
+          <!-- Current Week Highlights -->
+          <section class="history-week">
+            <h2 class="week-title">
+              {{ if $highlights_index.Params.week }}
+                Current Week ({{ $highlights_index.Params.week }})
+              {{ else }}
+                Current Week
+              {{ end }}
+              <a href="/highlights" class="view-link">View current →</a>
+            </h2>
+            
+            {{ if $highlights_index.Params.highlights }}
+              <div class="week-highlights">
+                {{ range $highlights_index.Params.highlights }}
+                  <div class="highlight-item-history">
+                    <h3 class="highlight-title">{{ .title }}</h3>
+                    <span class="highlight-badge">{{ .type }}</span>
+                    {{ if .description }}<p class="highlight-description">{{ .description }}</p>{{ end }}
+                    
+                    {{ if eq .type "article" }}
+                      {{ if .link }}<a href="{{ .link }}" class="highlight-external-link">Read article ↗</a>{{ end }}
+                    {{ else if eq .type "video" }}
+                      {{ if .video_id }}<div class="video-embed"><iframe width="100%" height="250" src="https://www.youtube.com/embed/{{ .video_id }}" frameborder="0" allowfullscreen></iframe></div>{{ end }}
+                    {{ else if eq .type "music" }}
+                      {{ if .music_id }}<div class="music-embed"><iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/{{ .music_id }}?utm_source=generator" width="100%" height="80" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe></div>{{ end }}
+                    {{ else if eq .type "artwork" }}
+                      {{ if .image }}<img src="{{ .image }}" alt="{{ .title }}" class="highlight-artwork-history">{{ end }}
+                      {{ if .description }}<p class="artwork-caption">{{ .description }}</p>{{ end }}
+                    {{ end }}
+                  </div>
+                {{ end }}
+              </div>
+            {{ end }}
+          </section>
+        {{ end }}
+
+        <!-- Placeholder for Historical Archives -->
+        <section class="history-week">
+          <h2 class="week-title">Previous Weeks</h2>
+          <p class="placeholder-text">Historical highlights will appear here as weeks are archived. Each week, your current highlights will be automatically moved to this archive.</p>
+          
+          <div class="coming-soon">
+            <p>Check back weekly to see your highlighted discoveries from previous weeks!</p>
+          </div>
+        </section>
+      </div>
+
+      <div class="back-link">
+        <a href="/">← Back to home</a>
+      </div>
+    </main>
+  </div>
+
+  <script src="{{ "js/header.js" | relURL }}" defer></script>
+  <script src="{{ "js/theme.js" | relURL }}" defer></script>
+</body>
+</html>

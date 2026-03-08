@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
   <link rel="stylesheet" href="{{ "css/blog.css" | relURL }}">
   <link rel="stylesheet" href="{{ "css/indexpage.css" | relURL }}">
+  <link rel="stylesheet" href="{{ "css/highlights.css" | relURL }}">
 </head>
 
 <body class="landing-page"> 
@@ -67,25 +68,57 @@
             </section>
         </div>
         
-        <!-- Patterns and Library Section -->
-        <div class="bottom-sections">
-            <section class="bottom-section patterns">
-                <h2 class="section-title">Patterns <span class="arrow">→</span></h2>
-                <p class="section-description">Design patterns gathered from my own observations and research.</p>
-                
-                <article class="pattern-card">
-                    <div class="pattern-icon">🔷</div>
-                    <div class="pattern-content">
-                        <h3 class="pattern-title">Ambient Co-presence</h3>
-                        <p class="pattern-description">Creating a subtle, peripheral, and synchronous sense of shared space and context on the web</p>
-                    </div>
-                </article>
-            </section>
+        <!-- Literary Highlights Section -->
+        <div class="highlights-section">
+            <h2 class="section-title">Literary Highlights <span class="arrow">→</span></h2>
+            <p class="section-description">Things I have read, looked at (art), watched or listened to this week</p>
             
-            <section class="bottom-section library">
-                <h2 class="section-title">Library <span class="arrow">→</span></h2>
-                <p class="section-description">Books I've read and books I like the idea of having read.</p>
-            </section>
+            <ul class="highlights-list">
+                {{ $homeHighlights := .Params.highlights }}
+                {{ with $.Site.GetPage "/highlights" }}
+                    {{ if .Params.highlights }}
+                        {{ $homeHighlights = .Params.highlights }}
+                    {{ else if and .Params.archiveWeeks (gt (len .Params.archiveWeeks) 0) }}
+                        {{ $homeHighlights = (index .Params.archiveWeeks 0).highlights }}
+                    {{ end }}
+                {{ end }}
+
+                {{ range $homeHighlights }}
+                <li class="highlight-item">
+                    <p class="highlight-resource"><strong>{{ .title }}</strong></p>
+
+                    {{ if .link }}
+                        {{ if or (eq .type "video") (eq .type "music") }}
+                            {{ $mediaID := replaceRE `^.*(?:youtu\.be/|v=)([^&?#]+).*$` `$1` .link }}
+                            {{ if and $mediaID (ne $mediaID .link) }}
+                                <div class="highlight-embed {{ if eq .type "music" }}highlight-embed-music{{ else }}highlight-embed-video{{ end }}">
+                                    <iframe
+                                        src="https://www.youtube.com/embed/{{ $mediaID }}"
+                                        title="{{ .title }}"
+                                        loading="lazy"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        referrerpolicy="strict-origin-when-cross-origin"
+                                        allowfullscreen>
+                                    </iframe>
+                                </div>
+                            {{ else }}
+                                <a href="{{ .link }}" target="_blank" rel="noopener noreferrer">Open resource ↗</a>
+                            {{ end }}
+                        {{ else }}
+                            <a href="{{ .link }}" target="_blank" rel="noopener noreferrer">Open resource ↗</a>
+                        {{ end }}
+                    {{ else if .image }}
+                        <figure class="highlight-image-wrap">
+                            <img src="{{ .image }}" alt="{{ .title }}" class="highlight-inline-image">
+                        </figure>
+                    {{ end }}
+
+                    {{ if .description }}<p class="highlight-description">{{ .description }}</p>{{ end }}
+                </li>
+                {{ end }}
+            </ul>
+            
+            <a href="/highlights/history/" class="history-link">View highlights history ↗</a>
         </div>
         
         </main>

@@ -1,0 +1,256 @@
+/* ============================================================================
+   HIGHLIGHTS SECTION STYLES
+   ============================================================================ */
+
+/* Highlights Section - Full Width on Home Page */
+.highlights-section {
+    width: calc(100% + 4rem);
+    margin-left: -2rem;
+    margin-right: -2rem;
+    padding: 3rem 2rem;
+    background-color: var(--card-bg);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    margin-top: 3rem;
+    margin-bottom: 0;
+}
+
+.highlights-section .section-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+}
+
+.highlights-section .section-description {
+    margin-bottom: 2rem;
+}
+
+/* Highlights List */
+.highlights-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    list-style: none;
+    padding: 0;
+}
+
+/* Individual Highlight Item */
+.highlight-item {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-color);
+    margin-bottom: 1.2rem;
+
+}
+
+.highlight-resource {
+    margin: 0 0 0.45rem 0;
+}
+
+.highlight-item strong {
+    font-weight: 600;
+}
+
+.highlight-description {
+    margin: 0.55rem 0 0 0;
+    color: var(--text-muted);
+}
+
+.highlight-embed {
+    width: 100%;
+    max-width: 720px;
+}
+
+.highlight-embed iframe {
+    width: 100%;
+    border: 0;
+    border-radius: 6px;
+}
+
+.highlight-embed-video iframe {
+    aspect-ratio: 16 / 9;
+    min-height: 220px;
+}
+
+.highlight-embed-music iframe {
+    aspect-ratio: 16 / 9;
+    min-height: 220px;
+}
+
+.highlight-image-wrap {
+    margin: 0;
+}
+
+.highlight-inline-image {
+    width: 100%;
+    max-width: 720px;
+    height: auto;
+    border-radius: 6px;
+    display: block;
+}
+
+.highlight-item a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.highlight-item a:hover {
+    text-decoration: underline;
+}
+
+.highlight-item a::after {
+    content: none !important;
+}
+
+/* History Link */
+.history-link {
+    display: inline-block;
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.history-link:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+.history-link::after {
+    content: none !important;
+}
+
+/* ============================================================================
+   HIGHLIGHTS HISTORY PAGE STYLES
+   ============================================================================ */
+
+.highlights-history {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    margin-top: 2rem;
+}
+
+/* History Week Section */
+.history-week {
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 2rem;
+}
+
+.history-week:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.week-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--text-color);
+}
+
+.week-title .view-link {
+    font-size: 0.9rem;
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.week-title .view-link:hover {
+    text-decoration: underline;
+}
+
+.week-title .view-link::after {
+    content: none !important;
+}
+
+/* Week Highlights List */
+.week-highlights {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    list-style: none;
+    padding: 0;
+}
+
+/* Highlight Item in History */
+.highlight-item-history {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-color);
+    margin-bottom: 1.2rem;
+}
+
+.highlight-item-history strong {
+    font-weight: 600;
+}
+
+.highlight-item-history a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.highlight-item-history a:hover {
+    text-decoration: underline;
+}
+
+.highlight-item-history a::after {
+    content: none !important;
+}
+
+/* Placeholder and Coming Soon */
+.placeholder-text {
+    color: var(--text-muted);
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+
+.coming-soon {
+    padding: 2rem;
+    background-color: rgba(var(--accent-color-rgb, 0, 0, 0), 0.05);
+    border-radius: 8px;
+    border-left: 4px solid var(--accent-color);
+}
+
+.coming-soon p {
+    color: var(--text-muted);
+    margin: 0;
+}
+
+/* Back Link */
+.back-link {
+    margin-top: 3rem;
+}
+
+.back-link a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.back-link a:hover {
+    text-decoration: underline;
+}
+
+.back-link a::after {
+    content: none !important;
+}
+
+@media (max-width: 768px) {
+    .highlights-section {
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .week-title {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+}
