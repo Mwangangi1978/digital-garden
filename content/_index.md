@@ -9,8 +9,8 @@ featured_sketches:
   - title: "Seagull"
     image: "/watercolor/2026/3_3_2026_seagull.jpeg"
     link: "/watercolor"
-  - title: "Blueberries"
-    image: "/watercolor/2026/1_3_2026_blueberries.jpeg"
+  - title: "Conch Street"
+    image: "/watercolor/2026/15_3_2026_Conch_street.png"
     link: "/watercolor"
 highlights:
   - title: "The Art of Doing Nothing"
