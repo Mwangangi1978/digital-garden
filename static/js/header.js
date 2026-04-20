@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // Don't inject if a header is already rendered in the page (e.g. me/about page)
+    if (document.querySelector('.site-header')) return;
+
     const headerHTML = `
       <nav class="site-navbar">
         <a href="/site" class="nav-item">SITE</a>

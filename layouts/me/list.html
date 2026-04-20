@@ -1,0 +1,407 @@
+{{ define "stylesheets" }}
+  <link rel="stylesheet" href="{{ "css/me.css" | relURL }}">
+{{ end }}
+
+{{ define "main" }}
+
+{{ $p := .Params }}
+
+<section class="me-hero" aria-label="About Denis — hero">
+  <img
+    src="{{ $p.hero_gif | default "/images/ascii-art.gif" }}"
+    alt="Full-screen animated background"
+    class="me-hero-img"
+  />
+  <div class="me-hero-overlay" aria-hidden="true"></div>
+
+  <!-- Header overlaid on the gif -->
+  <div class="me-hero-header-wrap">
+    <div class="me-hero-header-inner">
+      <header class="site-header">
+        <nav class="site-navbar">
+          <a href="/site" class="nav-item">SITE</a>
+          <a href="/me"   class="nav-item current">ME</a>
+          <div class="search-wrapper desktop-only">
+            <input type="text" class="search-input" placeholder="Search…" aria-label="Search">
+          </div>
+          <a href="/blog" class="nav-item">INDEX</a>
+          <a href="/logs" class="nav-item">LOGS</a>
+        </nav>
+      </header>
+    </div>
+  </div>
+
+  <!-- Hero content anchored to bottom -->
+  <div class="me-hero-content">
+    <h1 class="me-hero-title">
+      {{ $p.hero_name_line1 | default "Denis" }}<br>
+      {{ $p.hero_name_line2 | default "Mwangangi" }}
+    </h1>
+
+    {{ if $p.hero_meta }}
+    <div class="me-hero-meta-bar">
+      {{ range $p.hero_meta }}
+      <div class="m">
+        <span class="k">{{ .key }}</span>
+        <span class="v {{ if .date }}date{{ end }}">
+          {{ if .italic }}<em>{{ .value }}</em>{{ else }}{{ .value }}{{ end }}
+        </span>
+      </div>
+      {{ end }}
+    </div>
+    {{ end }}
+  </div>
+</section>
+
+<!-- ═══ PAGE CONTENT ════════════════════════════════════════════════════ -->
+<div class="me-page-container" id="top">
+
+  <!-- Metadata strip -->
+  <div class="meta-strip">
+    {{ if $p.meta_tags }}
+    <span>
+      <span class="k">Tags:</span>
+      {{ range $i, $t := $p.meta_tags }}
+        {{ if $i }} · {{ end }}
+        <a href="{{ $t.url | default "#" }}">{{ $t.label }}</a>
+      {{ end }}
+    </span>
+    {{ end }}
+
+    {{ if $p.meta_first_written }}
+    <span>
+      <span class="k">First written:</span>
+      <span class="date">{{ $p.meta_first_written }}
+        {{ with $p.meta_first_written_label }}<span class="yrs" title="approx age">↦{{ . }}</span>{{ end }}
+      </span>
+    </span>
+    {{ end }}
+
+    {{ if $p.meta_backlinks }}
+    <span><span class="k">Backlinks:</span> {{ $p.meta_backlinks }}</span>
+    {{ end }}
+  </div>
+
+  <!-- Lede -->
+  {{ with $p.lede }}
+  <p class="me-lede">{{ . | markdownify }}</p>
+  {{ end }}
+
+
+  <!-- ════════════════════════════════════════════════════════════════ -->
+  <!-- §01  PROFESSIONAL                                               -->
+  <!-- ════════════════════════════════════════════════════════════════ -->
+  <div class="me-layout">
+    <div class="me-sidenotes" aria-hidden="true"></div>
+    <article class="me-content">
+
+      <h1 id="professional"><span class="num">01</span>Professional</h1>
+
+      {{ if $p.professional_epigraph_quote }}
+      <div class="epigraph">
+        <p>{{ $p.professional_epigraph_quote }}</p>
+        <span class="cite">
+          {{ $p.professional_epigraph_cite }}
+          {{ with $p.professional_epigraph_work }} · <em>{{ . }}</em>{{ end }}
+        </span>
+      </div>
+      {{ end }}
+
+      <h2 id="work">Work</h2>
+
+      {{ with $p.work_intro }}
+      <p class="dropcap" style="position:relative;">
+        {{ . | markdownify | safeHTML }}
+        {{ if $p.work_sidenote_1 }}<span class="snref" data-n="1">¹</span>{{ end }}
+      </p>
+      {{ end }}
+
+      {{ with $p.work_sidenote_1 }}
+      <aside class="sidenote" style="top:0;">
+        <span style="color:var(--accent-ink);font-weight:500;">1</span>
+        {{ . }}
+      </aside>
+      {{ end }}
+
+      {{ with $p.work_para_2 }}
+      <p>{{ . | markdownify | safeHTML }}</p>
+      {{ end }}
+
+      {{ with $p.work_para_3 }}
+      <p>{{ . | markdownify | safeHTML }}</p>
+      {{ end }}
+
+      <h2 id="websites">Websites</h2>
+
+      {{ if $p.websites_epigraph_quote }}
+      <div class="epigraph">
+        <p>{{ $p.websites_epigraph_quote }}</p>
+        <span class="cite">
+          {{ $p.websites_epigraph_cite }}
+          {{ with $p.websites_epigraph_work }} · <em>{{ . }}</em>{{ end }}
+        </span>
+      </div>
+      {{ end }}
+
+      {{ with $p.websites_intro }}<p>{{ . }}</p>{{ end }}
+
+      {{ if $p.websites_links }}
+      <ul>
+        {{ range $p.websites_links }}
+        <li>
+          <a href="{{ .url }}">{{ .label }}</a>
+          {{ with .note }} — {{ . | markdownify | safeHTML }}{{ end }}
+        </li>
+        {{ end }}
+      </ul>
+      {{ end }}
+
+      <h2 id="uses-this">Uses This</h2>
+
+      {{ with $p.uses_summary }}
+      <div class="abstract">
+        <div class="label">Summary</div>
+        {{ . | markdownify | safeHTML }}
+      </div>
+      {{ end }}
+
+      <h3>Software</h3>
+
+      {{ with $p.software_intro }}
+      <p class="dropcap" style="position:relative;">
+        {{ . | markdownify | safeHTML }}
+        {{ if $p.software_sidenote_2 }}<span class="snref" data-n="2">²</span>{{ end }}
+      </p>
+      {{ end }}
+
+      {{ with $p.software_sidenote_2 }}
+      <aside class="sidenote" style="top:0;">
+        <span style="color:var(--accent-ink);font-weight:500;">2</span>
+        {{ . }}
+      </aside>
+      {{ end }}
+
+      {{ if $p.software_stack }}
+      <dl class="stack">
+        {{ range $p.software_stack }}
+        <dt>{{ .dt }}</dt>
+        <dd>{{ .dd | markdownify | safeHTML }}</dd>
+        {{ end }}
+      </dl>
+      {{ end }}
+
+      <h3>Hardware</h3>
+      {{ with $p.hardware_para }}<p>{{ . | markdownify | safeHTML }}</p>{{ end }}
+
+    </article>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════════════ -->
+  <!-- §02  PERSONAL                                                   -->
+  <!-- ════════════════════════════════════════════════════════════════ -->
+  <div class="me-layout">
+    <div class="me-sidenotes" aria-hidden="true"></div>
+    <article class="me-content">
+
+      <h1 id="personal"><span class="num">02</span>Personal</h1>
+
+      {{ if $p.personal_epigraph_quote }}
+      <div class="epigraph">
+        <p>{{ $p.personal_epigraph_quote }}</p>
+        <span class="cite">
+          {{ $p.personal_epigraph_cite }}
+          {{ with $p.personal_epigraph_work }} · <em>{{ . }}</em>{{ end }}
+        </span>
+      </div>
+      {{ end }}
+
+      {{ if $p.editorial_image }}
+      <div class="editorial-split">
+        <div class="split-img">
+          <img src="{{ $p.editorial_image }}" alt="{{ $p.editorial_image_alt | default "" }}" loading="lazy"/>
+        </div>
+        <div class="split-text">
+          {{ with $p.editorial_kicker }}<div class="split-kicker">{{ . }}</div>{{ end }}
+          {{ with $p.editorial_quote }}<p class="split-quote">{{ . }}</p>{{ end }}
+          {{ with $p.editorial_body }}<p class="split-body">{{ . | markdownify | safeHTML }}</p>{{ end }}
+        </div>
+      </div>
+      {{ end }}
+
+      <h2 id="personality">Personality &amp; Values</h2>
+
+      {{ with $p.personality_para_1 }}
+      <p class="dropcap">{{ . | markdownify | safeHTML }}</p>
+      {{ end }}
+
+      {{ with $p.personality_para_2 }}
+      <p>{{ . | markdownify | safeHTML }}</p>
+      {{ end }}
+
+      {{ if $p.values }}
+      <div class="values-strip">
+        {{ range $p.values }}
+        <div>
+          <div class="vk">{{ .key }}</div>
+          <div class="vv">{{ .value }}</div>
+        </div>
+        {{ end }}
+      </div>
+      {{ end }}
+
+      {{ if $p.funfact_badge }}
+      <div class="funfact">
+        <div class="badge">
+          {{ $p.funfact_badge }}
+          {{ with $p.funfact_badge_label }}<small>{{ . }}</small>{{ end }}
+        </div>
+        <p>{{ $p.funfact_text | markdownify | safeHTML }}</p>
+      </div>
+      {{ end }}
+
+      {{ if $p.gallery }}
+      <div class="gallery-section">
+        <div class="gallery-label">
+          <span>A few frames</span>
+          <span class="gl"></span>
+          <span style="font-size:.65rem;">scroll →</span>
+        </div>
+        <div class="gallery-scroll" role="region" aria-label="Photo gallery — scroll horizontally">
+          {{ range $p.gallery }}
+          <div class="gallery-item">
+            {{ if .image }}
+              <img src="{{ .image }}" alt="{{ .alt | default "" }}" loading="lazy"/>
+            {{ else if .placeholder }}
+              <div class="gallery-placeholder">{{ .placeholder }}</div>
+            {{ end }}
+            {{ with .caption }}<div class="g-cap">{{ . }}</div>{{ end }}
+          </div>
+          {{ end }}
+        </div>
+      </div>
+      {{ end }}
+
+    </article>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════════════ -->
+  <!-- §03  CONTACT                                                    -->
+  <!-- ════════════════════════════════════════════════════════════════ -->
+  <div class="me-layout">
+    <div class="me-sidenotes" aria-hidden="true"></div>
+    <article class="me-content">
+
+      <h1 id="contact"><span class="num">03</span>Contact</h1>
+
+      {{ with $p.contact_intro }}<p>{{ . }}</p>{{ end }}
+
+      {{ if $p.contact_cards }}
+      <div class="contact-grid">
+        {{ range $p.contact_cards }}
+        <a class="contact-card" href="{{ .url }}">
+          <div class="ck">{{ .type }}</div>
+          <div class="cv">{{ .display }}</div>
+          <div class="arr">→</div>
+        </a>
+        {{ end }}
+      </div>
+      {{ end }}
+
+      {{ if $p.contact_cta_url }}
+      <a class="cta-row" href="{{ $p.contact_cta_url }}">
+        <div class="cta-circle" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span>{{ $p.contact_cta_label | default "Write me an email" }}</span>
+      </a>
+      {{ end }}
+
+    </article>
+  </div>
+
+</div><!-- /me-page-container -->
+
+
+<footer class="me-site-foot">
+  <div class="colophon">
+    <strong style="font-style:normal;font-family:var(--font-heading);font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.4rem;">Colophon</strong>
+    {{ with $p.footer_colophon }}{{ . | markdownify | safeHTML }}{{ end }}
+  </div>
+  <div class="marks">
+    {{ with $p.footer_mark_1 }}<div>{{ . }}</div>{{ end }}
+    {{ with $p.footer_mark_2 }}<div>{{ . }}</div>{{ end }}
+  </div>
+</footer>
+
+
+<div class="tweaks-panel" id="tweaks">
+  <h4>Tweaks</h4>
+  <div class="row">
+    <label>Accent</label>
+    <div class="swatches" id="sw-accent">
+      <div class="sw on"  style="background:#F7CAC9" data-a="#F7CAC9" data-i="#a55e5d"></div>
+      <div class="sw"     style="background:#FED766" data-a="#FED766" data-i="#8a6a14"></div>
+      <div class="sw"     style="background:#8DB2A5" data-a="#8DB2A5" data-i="#3e6659"></div>
+      <div class="sw"     style="background:#c8743f" data-a="#c8743f" data-i="#7a3d14"></div>
+    </div>
+  </div>
+  <div class="row"><label>Dropcaps</label><div class="toggle on" id="t-drop" data-cls="no-dropcap" data-inv="1"></div></div>
+  <div class="row"><label>Divider words</label><div class="toggle on" id="t-div" data-cls="no-dividers" data-inv="1"></div></div>
+  <div class="row"><label>Link icons</label><div class="toggle on" id="t-ico" data-cls="no-icons" data-inv="1"></div></div>
+  <div class="row"><label>Body size</label><input type="range" id="fs" min="17" max="24" value="20" step="1"></div>
+</div>
+
+
+<script>
+const B = document.body;
+document.querySelectorAll('#sw-accent .sw').forEach(s => {
+  s.onclick = () => {
+    document.querySelectorAll('#sw-accent .sw').forEach(x => x.classList.remove('on'));
+    s.classList.add('on');
+    document.documentElement.style.setProperty('--accent', s.dataset.a);
+    document.documentElement.style.setProperty('--accent-ink', s.dataset.i);
+    document.documentElement.style.setProperty('--accent-hover', s.dataset.a + '70');
+  };
+});
+document.querySelectorAll('.toggle').forEach(t => {
+  t.onclick = () => {
+    t.classList.toggle('on');
+    const inv = t.dataset.inv === '1';
+    const on = t.classList.contains('on');
+    B.classList.toggle(t.dataset.cls, inv ? !on : on);
+  };
+});
+document.getElementById('fs').oninput = e =>
+  document.documentElement.style.setProperty('--base-font-size', e.target.value + 'px');
+
+document.querySelectorAll('.snref').forEach(r => {
+  r.addEventListener('mouseenter', () => {
+    const n = r.dataset.n;
+    document.querySelectorAll('.sidenote').forEach(s => {
+      if (s.textContent.trim().startsWith(n))
+        s.style.background = 'rgba(247,202,201,.18)';
+    });
+  });
+  r.addEventListener('mouseleave', () =>
+    document.querySelectorAll('.sidenote').forEach(s => s.style.background = ''));
+});
+
+document.querySelector('.me-hero-header-wrap .search-input')?.addEventListener('keypress', e => {
+  if (e.key === 'Enter' && e.target.value.trim())
+    window.open('https://www.google.com/search?q=site:denismwangangi.com+' +
+      encodeURIComponent(e.target.value.trim()), '_blank');
+});
+
+const panel = document.getElementById('tweaks');
+window.addEventListener('message', ev => {
+  if (ev.data?.type === '__activate_edit_mode')   panel.classList.add('visible');
+  if (ev.data?.type === '__deactivate_edit_mode') panel.classList.remove('visible');
+});
+window.parent?.postMessage({ type: '__edit_mode_available' }, '*');
+</script>
+
+{{ end }}
