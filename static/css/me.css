@@ -1241,14 +1241,21 @@ input[type="range"] { width: 7rem; accent-color: var(--accent-ink); }
     background: var(--accent-hover);
   }
 
-  /* Image: back in normal flow, full width, natural height — no bleed */
-  .me-hero-img {
+  /* Media wrapper: back in normal flow, full width, natural height — no bleed */
+  .me-hero-media {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    order: 2;
+  }
+
+  .me-hero-media-item {
     position: relative;
     inset: auto;
     width: 100%;
     height: auto;
     object-fit: initial;
-    order: 2;
   }
 
   /* Overlay only needed on full-bleed hero — hide it */
