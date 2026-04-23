@@ -68,8 +68,9 @@
     {{ $img := .Params.image | default "/images/denis.png" }}
     {{ $alt := .Params.image_alt | default .Title }}
     {{ $desc := .Params.description | default "" }}
+    {{ $imgLower := lower $img }}
     {{ $mediaType := "image" }}
-    {{ if or (hasSuffix (lower $img) ".mp4") (hasSuffix (lower $img) ".webm") }}
+    {{ if gt (len (findRE `\.(mp4|webm)(\?.*)?$` $imgLower)) 0 }}
       {{ $mediaType = "video" }}
     {{ end }}
     <article class="moment-card"
