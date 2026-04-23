@@ -848,7 +848,7 @@ input[type="range"] { width: 7rem; accent-color: var(--accent-ink); }
   /* Whole hero section is black — nav, image, and caption all sit on it */
   .me-hero {
     overflow: hidden;
-    background: #000;
+    background: transparent;
   }
 
   /* Nav: pulled out of absolute flow, sits at top — no separate box */
@@ -893,7 +893,7 @@ input[type="range"] { width: 7rem; accent-color: var(--accent-ink); }
     left: auto;
     right: auto;
     justify-content: flex-start;
-    background: transparent;
+    background: black;
     padding: .9rem 1.2rem 1.1rem;
     order: 3;
   }
