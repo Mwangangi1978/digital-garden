@@ -1,0 +1,27 @@
+{{ define "stylesheets" }}
+  <link rel="stylesheet" href="{{ "css/moments.css" | relURL }}">
+{{ end }}
+
+{{ define "main" }}
+{{ $p := .Params }}
+
+<div class="moment-single-wrap">
+  <nav class="moment-single-nav">
+    <a href="/moments">← Archive</a>
+  </nav>
+
+  {{ if $p.image }}
+  <div class="moment-single-img-wrap">
+    <img src="{{ $p.image }}" alt="{{ $p.image_alt | default .Title }}" />
+  </div>
+  {{ end }}
+
+  <div class="moment-single-body">
+    <time class="moment-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+    <h1 class="moment-single-title">{{ .Title }}</h1>
+    {{ with $p.description }}<p class="moment-single-desc">{{ . }}</p>{{ end }}
+    {{ with .Content }}{{ . }}{{ end }}
+  </div>
+</div>
+
+{{ end }}

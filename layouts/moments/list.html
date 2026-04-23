@@ -1,0 +1,151 @@
+{{ define "stylesheets" }}
+  <link rel="stylesheet" href="{{ "css/moments.css" | relURL }}">
+{{ end }}
+
+{{ define "main" }}
+
+{{ $allMoments := where .Site.RegularPages "Section" "moments" }}
+{{ $allMoments = sort $allMoments "Date" "desc" }}
+{{ $paginator := .Paginate $allMoments 15 }}
+{{ $latest := index $allMoments 0 }}
+
+<!-- ═══ HERO ══════════════════════════════════════════════════════════════ -->
+<section class="moments-archive-hero" aria-label="Denis moments — hero">
+  {{ with $latest }}
+  <div class="moments-hero-stamp">archive</div>
+  <img
+    id="moments-hero-img"
+    src="{{ .Params.image | default "/images/denis.png" }}"
+    alt="{{ .Params.image_alt | default "Denis moment" }}"
+    class="moments-hero-img"
+  />
+  <div class="moments-hero-overlay" aria-hidden="true"></div>
+
+  <div class="moments-hero-bottom">
+    <div class="moments-hero-caption" id="moments-hero-caption-wrap">
+      <p id="moments-hero-desc" class="moments-hero-desc-text">{{ .Params.description }}</p>
+      <p><strong>These are Deno moments.</strong> Browse {{ len $allMoments }} of them in the archive below.</p>
+    </div>
+  </div>
+  {{ end }}
+</section>
+
+<!-- ═══ BENEATH-HERO NAV (sits flush under the hero, together = 100vh) ══ -->
+<nav class="moments-beneath-nav" aria-label="Site sections">
+  <div class="mbn-inner">
+    <a href="/me">Me</a>
+    <span class="mbn-sep">|</span>
+    <a href="/blog">Writing</a>
+    <span class="mbn-sep">|</span>
+    <a href="/watercolor">Watercolor</a>
+    <span class="mbn-sep">|</span>
+    <a href="/highlights">Highlights</a>
+    <span class="mbn-sep">|</span>
+    <a href="/logs">Logs</a>
+    <span class="mbn-sep">|</span>
+    <a href="/site">About This Site</a>
+    <span class="mbn-sep">|</span>
+    <a href="https://denismwangangi.substack.com/subscribe" target="_blank" rel="noopener">Substack</a>
+  </div>
+</nav>
+
+<!-- ═══ ARCHIVE BODY ══════════════════════════════════════════════════════ -->
+<div class="moments-archive-body">
+
+  <!-- Intro -->
+  <div class="moments-archive-intro">
+    <div class="mai-left">
+      <h2>What is this?</h2>
+    </div>
+    <div class="mai-right">
+      <p class="mai-lead"><strong>This page changes.</strong> Each week (or close to it) I publish a new image — a photograph, a satellite view, a sketch, a found frame.</p>
+      <p>These are small documents. Not essays. Not captions. Just: a moment, a date, a line or two of context. Click any image to load it at the top of the page.</p>
+    </div>
+  </div>
+
+  <!-- Grid -->
+  <div class="moments-grid">
+    {{ range $paginator.Pages }}
+    {{ $img := .Params.image | default "/images/denis.png" }}
+    {{ $alt := .Params.image_alt | default .Title }}
+    {{ $desc := .Params.description | default "" }}
+    <article class="moment-card"
+      data-image="{{ $img }}"
+      data-alt="{{ $alt }}"
+      data-desc="{{ $desc }}"
+    >
+      <div class="moment-card-img-wrap">
+        <div class="moment-card-stamp">archive</div>
+        {{ if .Params.image }}
+        <img src="{{ $img }}" alt="{{ $alt }}" loading="lazy" />
+        {{ else }}
+        <div class="moment-placeholder">{{ .Title }}</div>
+        {{ end }}
+      </div>
+      <div class="moment-card-meta">
+        <time class="moment-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+        <p class="moment-desc">{{ $desc }}</p>
+      </div>
+    </article>
+    {{ end }}
+  </div>
+
+  <!-- Pagination -->
+  {{ if gt $paginator.TotalPages 1 }}
+  <div class="moments-pagination">
+    {{ $pStart := add (mul (sub $paginator.PageNumber 1) 15) 1 }}
+    {{ $pEnd   := mul $paginator.PageNumber 15 }}
+    {{ $pTotal := len $allMoments }}
+    <span class="pag-results">Displaying {{ $pStart }}–{{ if gt $pEnd $pTotal }}{{ $pTotal }}{{ else }}{{ $pEnd }}{{ end }} of {{ $pTotal }} moments.</span>
+    <div class="pag-controls">
+      {{ if $paginator.HasPrev }}
+      <a href="{{ $paginator.Prev.URL }}" class="pag-btn">← Previous</a>
+      {{ end }}
+      {{ range $paginator.Pagers }}
+      <a href="{{ .URL }}" class="pag-num {{ if eq . $paginator }}active{{ end }}">{{ .PageNumber }}</a>
+      {{ end }}
+      {{ if $paginator.HasNext }}
+      <a href="{{ $paginator.Next.URL }}" class="pag-btn">Next →</a>
+      {{ end }}
+    </div>
+  </div>
+  {{ end }}
+
+  <!-- Credit / Inspiration -->
+  <div class="moments-credit">
+    <p>The design of this archive is gratefully stolen from the <a href="https://www.bowdoin.edu/moments/index.html" target="_blank" rel="noopener">Bowdoin College moments archive</a>. Imitation, as they say, is the sincerest form.</p>
+  </div>
+
+</div><!-- /moments-archive-body -->
+
+<script>
+(function () {
+  var heroImg = document.getElementById('moments-hero-img');
+  var heroDesc = document.getElementById('moments-hero-desc');
+
+  document.querySelectorAll('.moment-card').forEach(function (card) {
+    card.addEventListener('click', function () {
+      var img = card.dataset.image;
+      var alt = card.dataset.alt;
+      var desc = card.dataset.desc;
+
+      if (heroImg) {
+        heroImg.style.opacity = '0';
+        setTimeout(function () {
+          heroImg.src = img;
+          heroImg.alt = alt;
+          heroImg.style.opacity = '1';
+        }, 200);
+      }
+
+      if (heroDesc) {
+        heroDesc.textContent = desc;
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+})();
+</script>
+
+{{ end }}

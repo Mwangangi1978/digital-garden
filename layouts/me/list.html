@@ -6,15 +6,32 @@
 
 {{ $p := .Params }}
 
+{{/* Pull the most recent moment for the hero image */}}
+{{ $moments := where .Site.RegularPages "Section" "moments" }}
+{{ $moments = sort $moments "Date" "desc" }}
+{{ $latestMoment := index $moments 0 }}
+{{ $heroImage := $p.hero_gif | default "/images/denis.png" }}
+{{ if and $latestMoment $latestMoment.Params.image }}
+  {{ $heroImage = $latestMoment.Params.image }}
+{{ end }}
+{{ $heroAlt := "Deno moments — a daily image" }}
+{{ if and $latestMoment $latestMoment.Params.image_alt }}
+  {{ $heroAlt = $latestMoment.Params.image_alt }}
+{{ end }}
+{{ $heroCaptionShort := "" }}
+{{ if and $latestMoment $latestMoment.Params.caption_short }}
+  {{ $heroCaptionShort = $latestMoment.Params.caption_short }}
+{{ end }}
+
 <section class="me-hero" aria-label="About Denis — hero">
   <img
-    src="{{ $p.hero_gif | default "/images/denis.png" }}"
-    alt="Full-screen animated background"
+    src="{{ $heroImage }}"
+    alt="{{ $heroAlt }}"
     class="me-hero-img"
   />
   <div class="me-hero-overlay" aria-hidden="true"></div>
 
-  <!-- Header overlaid on the gif -->
+  <!-- Header overlaid on the image -->
   <div class="me-hero-header-wrap">
     <div class="me-hero-header-inner">
       <header class="site-header">
@@ -31,25 +48,14 @@
     </div>
   </div>
 
-  <!-- Hero content anchored to bottom -->
+  <!-- Moments caption anchored to bottom-right -->
   <div class="me-hero-content">
-    <h1 class="me-hero-title">
-      {{ $p.hero_name_line1 | default "Denis" }}<br>
-      {{ $p.hero_name_line2 | default "Mwangangi" }}
-    </h1>
-
-    {{ if $p.hero_meta }}
-    <div class="me-hero-meta-bar">
-      {{ range $p.hero_meta }}
-      <div class="m">
-        <span class="k">{{ .key }}</span>
-        <span class="v {{ if .date }}date{{ end }}">
-          {{ if .italic }}<em>{{ .value }}</em>{{ else }}{{ .value }}{{ end }}
-        </span>
-      </div>
+    <div class="me-moments-caption">
+      {{ if $heroCaptionShort }}
+      <p class="me-moments-caption-desc">{{ $heroCaptionShort }}</p>
       {{ end }}
+      <p><strong>These are Deno moments.</strong> Browse them in the <a href="/moments">moments archive</a> »</p>
     </div>
-    {{ end }}
   </div>
 </section>
 

@@ -130,87 +130,61 @@ html, body {
   color: #111;
 }
 
-/* ── HERO CONTENT (bottom of hero) ─────────────────────────────────────── */
+/* ── HERO CAPTION WRAP — absolute, bottom-right (same as moments page) ─── */
 .me-hero-content {
-  position: relative;
-  z-index: 2;
-  padding: 3rem 3rem 3.5rem;
-  color: #fff;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 2.4rem 2.8rem;
+  pointer-events: none; /* let clicks pass through the transparent area */
 }
 
-@media (max-width: 767px) {
+@media (max-width: 600px) {
   .me-hero-content {
-    padding: 2rem 1.5rem 2.5rem;
+    justify-content: flex-start;
+    padding: 0 1.2rem 2rem;
   }
 }
 
-.me-hero-eyebrow {
-  font-family: var(--font-heading);
-  font-size: .72rem;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.6);
-  margin-bottom: 1.4rem;
-  display: flex;
-  align-items: center;
-  gap: .8rem;
-}
-
-.me-hero-eyebrow .dot {
-  width: 5px;
-  height: 5px;
-  background: #F7CAC9;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.me-hero-title {
-  font-family: var(--font-heading);
-  font-weight: 900;
-  font-size: clamp(3.2rem, 8vw, 8rem);
-  line-height: .92;
-  letter-spacing: -.03em;
-  text-transform: uppercase;
+/* ── MOMENTS CAPTION BOX (matches /moments page exactly) ────────────────── */
+.me-moments-caption {
+  pointer-events: all; /* re-enable clicks on the box itself */
+  background: rgba(0, 0, 0, 0.85);
   color: #fff;
-  margin-bottom: 2.4rem;
-}
-
-.me-hero-title em {
+  padding: 1.1rem 1.5rem;
+  max-width: 24rem;
   font-family: var(--font-body);
+  font-size: .93rem;
+  line-height: 1.48;
+}
+
+.me-moments-caption p { margin: 0 0 .55rem; }
+.me-moments-caption p:last-child { margin-bottom: 0; }
+
+.me-moments-caption-desc {
+  font-size: .82rem;
+  color: rgba(255,255,255,.78);
   font-style: italic;
-  font-weight: 400;
-  font-size: .55em;
-  text-transform: none;
-  letter-spacing: 0;
-  display: block;
-  color: rgba(247,202,201,.9);
-  margin-left: .15em;
+  border-bottom: 1px solid rgba(255,255,255,.2);
+  padding-bottom: .5rem;
+  margin-bottom: .6rem !important;
 }
 
-.me-hero-meta-bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.6rem 2.8rem;
-  border-top: 1px solid rgba(255,255,255,.2);
-  padding-top: 1.2rem;
+.me-moments-caption a {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
-.me-hero-meta-bar .m {
-  font-family: var(--font-heading);
-  font-size: .7rem;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-}
+.me-moments-caption a:hover { color: #F7CAC9; }
 
-.me-hero-meta-bar .m .k {
-  color: rgba(255,255,255,.5);
-  display: block;
-  margin-bottom: .2rem;
-  font-size: .63rem;
+@media (max-width: 600px) {
+  .me-moments-caption { max-width: none; }
 }
-
-.me-hero-meta-bar .m .v { color: #fff; }
-.me-hero-meta-bar .m em { color: #F7CAC9; font-style: italic; }
 
 /* ── PAGE CONTAINER ─────────────────────────────────────────────────────── */
 .me-page-container {
