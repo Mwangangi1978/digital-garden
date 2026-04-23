@@ -8,17 +8,16 @@
 {{ $allMoments = sort $allMoments "Date" "desc" }}
 {{ $paginator := .Paginate $allMoments 15 }}
 {{ $latest := index $allMoments 0 }}
+{{ $latestMedia := $latest.Params.image | default "/images/denis.png" }}
+{{ $latestAlt := $latest.Params.image_alt | default "Denis moment" }}
 
 <!-- ═══ HERO ══════════════════════════════════════════════════════════════ -->
 <section class="moments-archive-hero" aria-label="Denis moments — hero">
   {{ with $latest }}
   <div class="moments-hero-stamp">archive</div>
-  <img
-    id="moments-hero-img"
-    src="{{ .Params.image | default "/images/denis.png" }}"
-    alt="{{ .Params.image_alt | default "Denis moment" }}"
-    class="moments-hero-img"
-  />
+  <div id="moments-hero-media" class="moments-hero-media">
+    {{ partial "moment-media.html" (dict "src" $latestMedia "alt" $latestAlt "class" "moments-hero-media-item") }}
+  </div>
   <div class="moments-hero-overlay" aria-hidden="true"></div>
 
   <div class="moments-hero-bottom">
@@ -58,7 +57,7 @@
       <h2>What is this?</h2>
     </div>
     <div class="mai-right">
-      <p class="mai-lead"><strong>This page changes.</strong> Each week (or close to it) I publish a new image — a photograph, a satellite view, a sketch, a found frame.</p>
+      <p class="mai-lead"><strong>This page changes.</strong> Each month I publish a new image — a photograph, a satellite view, a sketch, a found frame.</p>
       <p>These are small documents. Not essays. Not captions. Just: a moment, a date, a line or two of context. Click any image to load it at the top of the page.</p>
     </div>
   </div>
@@ -69,15 +68,20 @@
     {{ $img := .Params.image | default "/images/denis.png" }}
     {{ $alt := .Params.image_alt | default .Title }}
     {{ $desc := .Params.description | default "" }}
+    {{ $mediaType := "image" }}
+    {{ if or (hasSuffix (lower $img) ".mp4") (hasSuffix (lower $img) ".webm") }}
+      {{ $mediaType = "video" }}
+    {{ end }}
     <article class="moment-card"
-      data-image="{{ $img }}"
-      data-alt="{{ $alt }}"
+      data-media-src="{{ $img }}"
+      data-media-alt="{{ $alt }}"
+      data-media-type="{{ $mediaType }}"
       data-desc="{{ $desc }}"
     >
       <div class="moment-card-img-wrap">
         <div class="moment-card-stamp">archive</div>
         {{ if .Params.image }}
-        <img src="{{ $img }}" alt="{{ $alt }}" loading="lazy" />
+        {{ partial "moment-media.html" (dict "src" $img "alt" $alt "class" "moment-card-media" "loading" "lazy") }}
         {{ else }}
         <div class="moment-placeholder">{{ .Title }}</div>
         {{ end }}
@@ -120,21 +124,60 @@
 
 <script>
 (function () {
-  var heroImg = document.getElementById('moments-hero-img');
+  var heroMediaWrap = document.getElementById('moments-hero-media');
   var heroDesc = document.getElementById('moments-hero-desc');
+
+  function isVideoSrc(src) {
+    return /\.(mp4|webm)(?:$|\?)/i.test(src);
+  }
+
+  function updateHeroMedia(src, alt) {
+    if (!heroMediaWrap) {
+      return;
+    }
+
+    var nextMedia;
+
+    if (isVideoSrc(src)) {
+      nextMedia = document.createElement('video');
+      nextMedia.className = 'moments-hero-media-item';
+      nextMedia.autoplay = true;
+      nextMedia.muted = true;
+      nextMedia.loop = true;
+      nextMedia.playsInline = true;
+      nextMedia.preload = 'metadata';
+      nextMedia.setAttribute('aria-label', alt);
+
+      var source = document.createElement('source');
+      source.src = src;
+      source.type = src.toLowerCase().indexOf('.webm') !== -1 ? 'video/webm' : 'video/mp4';
+      nextMedia.appendChild(source);
+    } else {
+      nextMedia = document.createElement('img');
+      nextMedia.className = 'moments-hero-media-item';
+      nextMedia.src = src;
+      nextMedia.alt = alt;
+    }
+
+    heroMediaWrap.innerHTML = '';
+    heroMediaWrap.appendChild(nextMedia);
+
+    if (nextMedia.tagName === 'VIDEO') {
+      nextMedia.play().catch(function () {});
+    }
+  }
 
   document.querySelectorAll('.moment-card').forEach(function (card) {
     card.addEventListener('click', function () {
-      var img = card.dataset.image;
-      var alt = card.dataset.alt;
+      var img = card.dataset.mediaSrc;
+      var alt = card.dataset.mediaAlt;
       var desc = card.dataset.desc;
 
-      if (heroImg) {
-        heroImg.style.opacity = '0';
+      if (heroMediaWrap) {
+        heroMediaWrap.style.opacity = '0';
         setTimeout(function () {
-          heroImg.src = img;
-          heroImg.alt = alt;
-          heroImg.style.opacity = '1';
+          updateHeroMedia(img, alt);
+          heroMediaWrap.style.opacity = '1';
         }, 200);
       }
 

@@ -24,11 +24,9 @@
 {{ end }}
 
 <section class="me-hero" aria-label="About Denis — hero">
-  <img
-    src="{{ $heroImage }}"
-    alt="{{ $heroAlt }}"
-    class="me-hero-img"
-  />
+  <div class="me-hero-media">
+    {{ partial "moment-media.html" (dict "src" $heroImage "alt" $heroAlt "class" "me-hero-media-item") }}
+  </div>
   <div class="me-hero-overlay" aria-hidden="true"></div>
 
   <!-- Header overlaid on the image -->
@@ -137,6 +135,52 @@
       <p>{{ . | markdownify | safeHTML }}</p>
       {{ end }}
 
+      {{ with $p.work_para_4 }}
+      <p>{{ . | markdownify | safeHTML }}</p>
+      {{ end }}
+
+      <!-- Career Timeline -->
+      {{ if $p.career_timeline }}
+      <div class="career-timeline" id="career-timeline" aria-label="Career history">
+        <div class="ct-header">
+          <span class="ct-header-label">Career</span>
+          <span class="ct-header-rule"></span>
+        </div>
+        {{ range $i, $item := $p.career_timeline }}
+        <div class="ct-item ct-animate" data-index="{{ $i }}">
+          <div class="ct-date">{{ $item.period }}</div>
+          <div class="ct-connector">
+            <div class="ct-dot {{ if eq $i 0 }}ct-dot-current{{ end }}"></div>
+          </div>
+          <div class="ct-body">
+            <div class="ct-title">{{ $item.title }}</div>
+            <div class="ct-org">{{ $item.org }}</div>
+            {{ with $item.desc }}<p class="ct-desc">{{ . | markdownify | safeHTML }}</p>{{ end }}
+          </div>
+        </div>
+        {{ end }}
+      </div>
+      {{ end }}
+
+      <!-- Resume Download -->
+      {{ if $p.resume_download_url }}
+      <div class="resume-download">
+        <div class="rd-left">
+          <div class="rd-eyebrow">Curriculum Vitae</div>
+          <div class="rd-tagline">Full work history, skills &amp; references</div>
+        </div>
+        <div class="rd-right">
+          <a class="rd-btn no-icon" href="{{ $p.resume_download_url }}" download>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M12 3v13M7 11l5 5 5-5M5 21h14" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Download résumé
+          </a>
+          {{ with $p.resume_updated }}<div class="rd-meta">PDF · Updated {{ . }}</div>{{ end }}
+        </div>
+      </div>
+      {{ end }}
+
       <h2 id="websites">Websites</h2>
 
       {{ if $p.websites_epigraph_quote }}
@@ -235,8 +279,6 @@
       </div>
       {{ end }}
 
-      <h2 id="personality">Personality &amp; Values</h2>
-
       {{ with $p.personality_para_1 }}
       <p class="dropcap">{{ . | markdownify | safeHTML }}</p>
       {{ end }}
@@ -245,27 +287,42 @@
       <p>{{ . | markdownify | safeHTML }}</p>
       {{ end }}
 
-      {{ if $p.values }}
-      <div class="values-strip">
-        {{ range $p.values }}
-        <div>
-          <div class="vk">{{ .key }}</div>
-          <div class="vv">{{ .value }}</div>
-        </div>
+      <!-- Life Stage: Mang'u High School -->
+      {{ if $p.mangu_intro }}
+      <h2 id="mangu" class="life-stage-heading">
+        {{ with $p.mangu_period }}<span class="ls-period">{{ . }}</span>{{ end }}
+        Mang'u High School
+      </h2>
+      <p class="dropcap">{{ $p.mangu_intro | markdownify | safeHTML }}</p>
+      {{ with $p.mangu_para_2 }}<p>{{ . | markdownify | safeHTML }}</p>{{ end }}
+      {{ with $p.mangu_para_3 }}<p>{{ . | markdownify | safeHTML }}</p>{{ end }}
+      {{ with $p.mangu_para_4 }}<p>{{ . | markdownify | safeHTML }}</p>{{ end }}
+      {{ end }}
+
+      <!-- Life Stage: Baret Scholars -->
+      {{ if $p.baret_intro }}
+      <h2 id="baret" class="life-stage-heading">
+        {{ with $p.baret_period }}<span class="ls-period">{{ . }}</span>{{ end }}
+        Baret Scholars
+      </h2>
+      <p class="dropcap">{{ $p.baret_intro | markdownify | safeHTML }}</p>
+      {{ with $p.baret_para_2 }}<p>{{ . | markdownify | safeHTML }}</p>{{ end }}
+      {{ with $p.baret_para_3 }}<p>{{ . | markdownify | safeHTML }}</p>{{ end }}
+      {{ end }}
+
+      <!-- Fragile World Project Card -->
+      {{ if $p.fragile_world_title }}
+      <div class="project-card">
+        {{ with $p.fragile_world_kicker }}<div class="pc-kicker">{{ . }}</div>{{ end }}
+        <div class="pc-title">{{ $p.fragile_world_title }}</div>
+        {{ with $p.fragile_world_body }}<p class="pc-body">{{ . | markdownify | safeHTML }}</p>{{ end }}
+        {{ if $p.fragile_world_url }}
+        <a class="pc-link no-icon" href="{{ $p.fragile_world_url }}">{{ $p.fragile_world_url_label | default "Visit →" }}</a>
         {{ end }}
       </div>
       {{ end }}
 
-      {{ if $p.funfact_badge }}
-      <div class="funfact">
-        <div class="badge">
-          {{ $p.funfact_badge }}
-          {{ with $p.funfact_badge_label }}<small>{{ . }}</small>{{ end }}
-        </div>
-        <p>{{ $p.funfact_text | markdownify | safeHTML }}</p>
-      </div>
-      {{ end }}
-
+      <!-- Photo Gallery -->
       {{ if $p.gallery }}
       <div class="gallery-section">
         <div class="gallery-label">
@@ -285,6 +342,27 @@
           </div>
           {{ end }}
         </div>
+      </div>
+      {{ end }}
+
+      {{ if $p.funfact_badge }}
+      <div class="funfact">
+        <div class="badge">
+          {{ $p.funfact_badge }}
+          {{ with $p.funfact_badge_label }}<small>{{ . }}</small>{{ end }}
+        </div>
+        <p>{{ $p.funfact_text | markdownify | safeHTML }}</p>
+      </div>
+      {{ end }}
+
+      {{ if $p.values }}
+      <div class="values-strip">
+        {{ range $p.values }}
+        <div>
+          <div class="vk">{{ .key }}</div>
+          <div class="vv">{{ .value }}</div>
+        </div>
+        {{ end }}
       </div>
       {{ end }}
 
@@ -333,9 +411,17 @@
 
 
 <footer class="me-site-foot">
-  <div class="colophon">
-    <strong style="font-style:normal;font-family:var(--font-heading);font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.4rem;">Colophon</strong>
-    {{ with $p.footer_colophon }}{{ . | markdownify | safeHTML }}{{ end }}
+  <div class="backlinks-section">
+    <div class="bl-label">Backlinks</div>
+    {{ if $p.backlinks }}
+    <ul class="bl-list">
+      {{ range $p.backlinks }}
+      <li><a href="{{ .url }}">{{ .title }}</a></li>
+      {{ end }}
+    </ul>
+    {{ else }}
+    <p class="bl-empty">No backlinks yet.</p>
+    {{ end }}
   </div>
   <div class="marks">
     {{ with $p.footer_mark_1 }}<div>{{ . }}</div>{{ end }}
@@ -401,6 +487,19 @@ document.querySelector('.me-hero-header-wrap .search-input')?.addEventListener('
     window.open('https://www.google.com/search?q=site:denismwangangi.com+' +
       encodeURIComponent(e.target.value.trim()), '_blank');
 });
+
+/* Timeline entrance animation via IntersectionObserver */
+if ('IntersectionObserver' in window) {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('ct-visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.ct-animate').forEach(el => obs.observe(el));
+}
 
 const panel = document.getElementById('tweaks');
 window.addEventListener('message', ev => {

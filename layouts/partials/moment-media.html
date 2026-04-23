@@ -1,0 +1,12 @@
+{{- $src := .src -}}
+{{- $alt := .alt | default "" -}}
+{{- $class := .class | default "" -}}
+{{- $loading := .loading | default "lazy" -}}
+{{- $isVideo := or (hasSuffix (lower $src) ".mp4") (hasSuffix (lower $src) ".webm") -}}
+{{- if $isVideo -}}
+<video{{ if $class }} class="{{ $class }}"{{ end }} autoplay muted loop playsinline preload="metadata" aria-label="{{ $alt }}">
+  <source src="{{ $src }}" type="{{ if hasSuffix (lower $src) ".webm" }}video/webm{{ else }}video/mp4{{ end }}">
+</video>
+{{- else -}}
+<img src="{{ $src }}" alt="{{ $alt }}"{{ if $class }} class="{{ $class }}"{{ end }}{{ if $loading }} loading="{{ $loading }}"{{ end }} />
+{{- end -}}
