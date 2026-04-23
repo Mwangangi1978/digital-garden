@@ -235,7 +235,19 @@ html, body {
 }
 
 @media (max-width: 540px) {
-  .moments-grid { grid-template-columns: 1fr; }
+  .moments-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+}
+
+/* Mobile: show whole landscape image — no cropping, description beneath */
+@media (max-width: 767px) {
+  .moment-card-img-wrap {
+    aspect-ratio: unset;
+  }
+
+  .moment-card-img-wrap img {
+    height: auto;
+    object-fit: initial;
+  }
 }
 
 /* ── MOMENT CARD ────────────────────────────────────────────────────────── */
@@ -438,6 +450,7 @@ html, body {
   margin: 0 auto;
 }
 
+
 .moment-single-title {
   font-family: var(--font-heading);
   font-weight: 700;
@@ -451,4 +464,45 @@ html, body {
   font-size: 1rem;
   line-height: 1.6;
   color: #ccc;
+}
+
+/* ── MOBILE HERO — image fits screen, caption beneath ──────────────────── */
+/* Must live at end of file so these overrides win over the base rules above */
+@media (max-width: 767px) {
+  .moments-archive-hero {
+    height: auto;
+    min-height: unset;
+    overflow: hidden;
+  }
+
+  /* Image: back in normal flow, full width, natural height — no bleed */
+  .moments-hero-img {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    object-fit: initial;
+  }
+
+  /* Overlay only needed on full-bleed hero — hide it */
+  .moments-hero-overlay {
+    display: none;
+  }
+
+  /* Caption: flows below the image */
+  .moments-hero-bottom {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    justify-content: flex-start;
+    background: rgba(0, 0, 0, .92);
+    padding: .9rem 1.2rem 1.1rem;
+  }
+
+  .moments-hero-caption {
+    max-width: none;
+    background: transparent;
+    padding: 0;
+  }
 }
