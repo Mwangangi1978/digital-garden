@@ -869,6 +869,19 @@ input[type="range"] { width: 7rem; accent-color: var(--accent-ink); }
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     background: transparent;
+    border-color: var(--text-color);
+  }
+
+  .me-hero-header-wrap .nav-item {
+    color: var(--text-color);
+  }
+
+  .me-hero-header-wrap .nav-item.current {
+    color: var(--accent-color);
+  }
+
+  .me-hero-header-wrap .nav-item:hover {
+    background: var(--accent-hover);
   }
 
   /* Image: back in normal flow, full width, natural height — no bleed */
@@ -911,5 +924,11 @@ input[type="range"] { width: 7rem; accent-color: var(--accent-ink); }
 
   .me-moments-caption-desc {
     color: rgba(255, 255, 255, .78);
+  }
+
+  /* Sidenotes are desktop-only; hide mobile refs to prevent left-edge bleed. */
+  .sidenote,
+  .snref {
+    display: none !important;
   }
 }
