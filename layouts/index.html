@@ -78,8 +78,14 @@
                 {{ with $.Site.GetPage "/highlights" }}
                     {{ if .Params.highlights }}
                         {{ $homeHighlights = .Params.highlights }}
-                    {{ else if and .Params.archiveWeeks (gt (len .Params.archiveWeeks) 0) }}
-                        {{ $homeHighlights = (index .Params.archiveWeeks 0).highlights }}
+                    {{ else }}
+                        {{ with .Params.archiveWeeks }}
+                            {{ with index . 0 }}
+                                {{ with .highlights }}
+                                    {{ $homeHighlights = . }}
+                                {{ end }}
+                            {{ end }}
+                        {{ end }}
                     {{ end }}
                 {{ end }}
 
