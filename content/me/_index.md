@@ -2,8 +2,8 @@
 title: "About Denis · denismwangangi.com"
 
 # ── HERO ──────────────────────────────────────────────────────────────────
-# Place the GIF at: static/images/ascii-art.gif
-hero_gif: "/images/ascii-art.gif"
+# Place the GIF at: static/images/denis.png
+hero_gif: "/images/denis.png"
 hero_name_line1: "Denis"
 hero_name_line2: "Mwangangi"
 hero_meta:
