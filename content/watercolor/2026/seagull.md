@@ -1,6 +1,6 @@
 ---
 title: "Seagull"
 date: 2026-03-03
-image: "/watercolor/2026/3_3_2026_seagull.jpeg"
+image: "https://res.cloudinary.com/dxboziyz7/image/upload/v1778017987/3_3_2026_seagull_ahafhd.jpg"
 ---
 

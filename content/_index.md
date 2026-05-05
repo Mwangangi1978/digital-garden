@@ -7,10 +7,10 @@ featured_articles:
   - "adr/2025/typography-constitution"
 featured_sketches:
   - title: "Seagull"
-    image: "/watercolor/2026/3_3_2026_seagull.jpeg"
+    image: "https://res.cloudinary.com/dxboziyz7/image/upload/v1778017987/3_3_2026_seagull_ahafhd.jpg"
     link: "/watercolor"
-  - title: "Conch Street"
-    image: "/watercolor/2026/15_3_2026_Conch_street.png"
+  - title: "Hiking Portrait"
+    image: "https://res.cloudinary.com/dxboziyz7/image/upload/v1778018318/IMG_1072_svcvcq.jpg"
     link: "/watercolor"
 highlights:
   - title: "The Art of Doing Nothing"

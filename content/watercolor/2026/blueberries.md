@@ -1,6 +1,6 @@
 ---
 title: "Blueberries"
 date: 2026-03-01
-image: "/watercolor/2026/1_3_2026_blueberries.jpeg"
+image: "https://res.cloudinary.com/dxboziyz7/image/upload/v1778017988/1_3_2026_blueberries_jhtooa.jpg"
 ---
 
