@@ -1,9 +1,68 @@
 ---
 title: "ABOUT THIS WEBSITE"
-date: 2026-01-01T15:21:27+03:00          # publication date
-lastmod: 2026-01-01T15:21:27+03:00      # intentional update
+date: 2026-01-01T15:21:27+03:00
+lastmod: 2026-01-01T15:21:27+03:00
 status: draft
-
+sections:
+  - id: "beginning"
+    title: "Beginning"
+    description: "How a hospital stay and the fear of being forgotten led to building this digital garden"
+    date: 2026-01-01
+    connections:
+      - path: "/notes/2025/im-20-i-now-write-things"
+        context: "The Substack intro that preceded this digital garden"
+      - path: "/notes/2025/the-window-or-the-screen"
+        context: "Both discuss leaving Substack and the shift toward genuine self-expression"
+      - path: "/watercolor/2026/palermo"
+        context: "Palermo sketch connects to the travel experiences described here"
+      - path: "/notes/2025/chew"
+        context: "Both confront mortality and the fear of being forgotten"
+  - id: "design-philosophy"
+    title: "Design Philosophy"
+    description: "Wes Anderson's recollection, Gwern's architecture, and Butterick's typography shape this site"
+    date: 2026-01-01
+    connections:
+      - path: "/notes/2025/typography-constitution"
+        context: "The typography constitution governs this site's visual syntax"
+      - path: "/notes/2025/life-needs-better-editing"
+        context: "Wes Anderson's cinematic recollection connects to the desire for a curated life"
+      - path: "/notes/2025/concorde"
+        context: "Both reference the dreaminess of recollection and narrative surrealism"
+  - id: "writing"
+    title: "Writing"
+    description: "Publication process, epistemic statuses, and how to navigate this digital garden"
+    date: 2026-01-01
+    connections:
+      - path: "/notes/2026/metadata-design"
+        context: "Metadata design decisions for navigating this digital garden"
+      - path: "/notes/2025/typography-constitution"
+        context: "The typography constitution informs the writing presentation"
+      - path: "/notes/2025/you-will-always-be-poor-aemilianus"
+        context: "An example of epistemic exploration across disciplines"
+connections:
+  - path: "/notes/2025/typography-constitution"
+    context: "The typography constitution governs this site's visual syntax"
+  - path: "/notes/2026/metadata-design"
+    context: "Metadata design decisions for this digital garden"
+  - path: "/notes/2025/the-window-or-the-screen"
+    context: "Both discuss leaving Substack and the shift toward genuine self-expression"
+  - path: "/notes/2025/im-20-i-now-write-things"
+    context: "The Substack intro that preceded this digital garden"
+  - path: "/notes/2025/life-needs-better-editing"
+    context: "The cinematic quality of recollection connects to Wes Anderson's influence on this site"
+  - path: "/watercolor/2026/palermo"
+    context: "Palermo sketch connects to the travel experiences described in the beginning section"
+inspired_by:
+  - title: "Gwern.net"
+    url: "https://gwern.net/"
+  - title: "Practical Typography by Matthew Butterick"
+    url: "https://practicaltypography.com/"
+  - title: "Wes Anderson"
+    url: "https://en.wikipedia.org/wiki/Wes_Anderson"
+  - title: "As We May Think by Vannevar Bush"
+    url: "https://en.wikipedia.org/wiki/As_We_May_Think"
+  - title: "A Brief History & Ethos of the Digital Garden by Maggie Appleton"
+    url: "https://maggieappleton.com/garden-history"
 ---
 
 # beginning

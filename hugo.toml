@@ -12,7 +12,7 @@ enableRobotsTXT = true
 [permalinks]
   fiction     = "/:year/:month/:day/:slug/"
   non-fiction = "/:year/:month/:day/:slug/"
-  adr         = "/:year/:month/:day/:slug/"
+  notes       = "/:year/:month/:day/:slug/"
 
 [taxonomies]
   category = "categories"   # non-fiction only

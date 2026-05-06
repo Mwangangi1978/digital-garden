@@ -8,7 +8,7 @@
 <div class="blog-index">
     <div class="blog-index__content">
         <header class="blog-index__header">
-            <h1 class="blog-index__title">WRITING</h1>
+            <h1 class="blog-index__title">NOTES</h1>
             <p class="blog-index__subtitle">
                 Essays, short stories, technical decisions and impulse-fueled research 
                 on things that probably didn't need researching. This is part digital garden, part second brain—a 
@@ -62,7 +62,7 @@
 
         <main class="index-content-area">
             <div class="articles-grid" id="articles-container">
-                {{ $pages := where .Site.RegularPages "Section" "in" (slice "fiction" "non-fiction" "adr" "blog" "poetry" "screenplay") }}
+                {{ $pages := where .Site.RegularPages "Section" "in" (slice "fiction" "non-fiction" "notes" "poetry" "screenplay") }}
                 {{ range $index, $page := $pages.ByDate.Reverse }}
                     {{ $cat := lower (default "general" $page.Params.category) }}
                     {{ $section := lower $page.Section }}
@@ -100,6 +100,28 @@
                     </article>
                 {{ end }}
             </div>
+
+                {{/* ── Site sections shown as note cards ── */}}
+                {{ $sitePage := .Site.GetPage "/site" }}
+                {{ with $sitePage }}
+                  {{ range .Params.sections }}
+                    <article class="article-card aspect-single"
+                             data-category="social"
+                             data-is-fiction="false">
+                        <a href="{{ $sitePage.Permalink }}#{{ .id }}" class="card-link">
+                            <div class="card-header">
+                                <span class="card-meta">Site</span>
+                                <span class="card-arrow" aria-hidden="true">↗</span>
+                            </div>
+                            <div class="card-content">
+                                <h2 class="card-title">{{ .title }}</h2>
+                                <time class="card-date">{{ $sitePage.Date.Format "January 2, 2006" }}</time>
+                                <p class="card-excerpt">{{ .description }}</p>
+                            </div>
+                        </a>
+                    </article>
+                  {{ end }}
+                {{ end }}
 
             <div id="no-results" class="empty-state" style="display: none;">
                 <p>No matches found for this category.</p>

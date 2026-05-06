@@ -1,0 +1,188 @@
+{{ define "stylesheets" }}
+  <link rel="stylesheet" href="{{ "css/graph.css" | relURL }}">
+{{ end }}
+
+{{ define "main" }}
+<div class="page-container graph-page" id="top"></div>
+
+<div class="graph-container">
+  <header class="graph-header">
+    <h1 class="graph-title">GRAPH</h1>
+    <p class="graph-subtitle">
+      A visual map of the connections between notes, sketches, and ideas in this digital garden.
+      Each node is a piece of content; each edge is an explicit relationship.
+      Click a node to visit it. Hover to see its connections.
+    </p>
+  </header>
+
+  <div class="graph-controls">
+    <div class="graph-legend">
+      <span class="legend-item"><span class="legend-dot legend-dot--notes"></span> Notes</span>
+      <span class="legend-item"><span class="legend-dot legend-dot--watercolor"></span> Watercolor</span>
+      <span class="legend-item"><span class="legend-dot legend-dot--moments"></span> Moments</span>
+      <span class="legend-item"><span class="legend-dot legend-dot--site"></span> Site pages</span>
+    </div>
+    <div class="graph-actions">
+      <button id="graph-reset" class="graph-btn">Reset view</button>
+    </div>
+  </div>
+
+  <div id="graph-canvas" class="graph-canvas"></div>
+
+  <div id="graph-tooltip" class="graph-tooltip" style="display:none;">
+    <div class="tooltip-title"></div>
+    <div class="tooltip-section"></div>
+    <div class="tooltip-date"></div>
+    <div class="tooltip-context"></div>
+    <img class="tooltip-image" style="display:none;" alt="">
+  </div>
+</div>
+
+<script>
+window.__graphData = (function() {
+  var nodes = [];
+  var links = [];
+  var nodeMap = {};
+
+  function addNode(id, title, section, date, image, permalink) {
+    if (nodeMap[id]) return;
+    nodeMap[id] = true;
+    nodes.push({ id: id, title: title, section: section, date: date, image: image || null, permalink: permalink });
+  }
+
+  function addLink(source, target, context) {
+    links.push({ source: source, target: target, context: context || "" });
+  }
+
+  {{/* ── Helper: resolve a connection path to its RelPermalink ── */}}
+  {{/* Build a map from content paths to RelPermalinks */}}
+  var _resolve = {
+    {{- range .Site.RegularPages }}
+      {{ .Path | jsonify }}: {{ .RelPermalink | jsonify }},
+      {{- $slug := .File.BaseFileName }}
+      {{- $section := .Section }}
+      {{ printf "/%s/%s" $section $slug | jsonify }}: {{ .RelPermalink | jsonify }},
+      {{- if .File }}
+        {{- $dir := .File.Dir }}
+        {{ printf "/%s%s" $dir $slug | jsonify }}: {{ .RelPermalink | jsonify }},
+      {{- end }}
+    {{- end }}
+    {{ with .Site.GetPage "/site" }}
+      "/site": {{ .RelPermalink | jsonify }},
+    {{ end }}
+    "": ""
+  };
+
+  function resolveLink(path) {
+    if (_resolve[path]) return _resolve[path];
+    var trimmed = path.replace(/\/$/, "");
+    if (_resolve[trimmed]) return _resolve[trimmed];
+    var slug = trimmed.split("/").pop();
+    for (var k in _resolve) {
+      if (_resolve[k] && k.indexOf(slug) !== -1 && slug.length > 2) return _resolve[k];
+    }
+    return path;
+  }
+
+  {{/* ── Notes ── */}}
+  {{ range $p := where .Site.RegularPages "Section" "in" (slice "notes" "fiction" "non-fiction" "poetry" "screenplay") }}
+    addNode(
+      {{ $p.RelPermalink | jsonify }},
+      {{ $p.Title | jsonify }},
+      "notes",
+      {{ $p.Date.Format "Jan 2, 2006" | jsonify }},
+      null,
+      {{ $p.Permalink | jsonify }}
+    );
+    {{ range $p.Params.connections }}
+      addLink({{ $p.RelPermalink | jsonify }}, resolveLink({{ .path | jsonify }}), {{ .context | jsonify }});
+    {{ end }}
+  {{ end }}
+
+  {{/* ── Watercolor ── */}}
+  {{ range $p := where .Site.RegularPages "Section" "watercolor" }}
+    addNode(
+      {{ $p.RelPermalink | jsonify }},
+      {{ $p.Title | jsonify }},
+      "watercolor",
+      {{ $p.Date.Format "Jan 2, 2006" | jsonify }},
+      {{ $p.Params.image | jsonify }},
+      {{ $p.Permalink | jsonify }}
+    );
+    {{ range $p.Params.connections }}
+      addLink({{ $p.RelPermalink | jsonify }}, resolveLink({{ .path | jsonify }}), {{ .context | jsonify }});
+    {{ end }}
+  {{ end }}
+
+  {{/* ── Moments ── */}}
+  {{ range $p := where .Site.RegularPages "Section" "moments" }}
+    addNode(
+      {{ $p.RelPermalink | jsonify }},
+      {{ $p.Title | jsonify }},
+      "moments",
+      {{ $p.Date.Format "Jan 2, 2006" | jsonify }},
+      {{ $p.Params.image | jsonify }},
+      {{ $p.Permalink | jsonify }}
+    );
+    {{ range $p.Params.connections }}
+      addLink({{ $p.RelPermalink | jsonify }}, resolveLink({{ .path | jsonify }}), {{ .context | jsonify }});
+    {{ end }}
+  {{ end }}
+
+  {{/* ── Site sections (each section is its own node) ── */}}
+  {{ $sitePage := .Site.GetPage "/site" }}
+  {{ with $sitePage }}
+    {{ $sitePermalink := .Permalink }}
+    {{ $siteRelPermalink := .RelPermalink }}
+    {{ range .Params.sections }}
+      {{ $sectionId := printf "%s#%s" $siteRelPermalink .id }}
+      {{ $sectionPermalink := printf "%s#%s" $sitePermalink .id }}
+      addNode(
+        {{ $sectionId | jsonify }},
+        {{ .title | jsonify }},
+        "site",
+        {{ $sitePage.Date.Format "Jan 2, 2006" | jsonify }},
+        null,
+        {{ $sectionPermalink | jsonify }}
+      );
+      {{ range .connections }}
+        addLink({{ $sectionId | jsonify }}, resolveLink({{ .path | jsonify }}), {{ .context | jsonify }});
+      {{ end }}
+      {{/* Link sections to each other */}}
+      addLink({{ $sectionId | jsonify }}, {{ $siteRelPermalink | jsonify }}, "Part of the site page");
+    {{ end }}
+    {{/* Keep the site page itself as a hub node */}}
+    addNode(
+      {{ .RelPermalink | jsonify }},
+      {{ .Title | jsonify }},
+      "site",
+      {{ .Date.Format "Jan 2, 2006" | jsonify }},
+      null,
+      {{ .Permalink | jsonify }}
+    );
+    {{ range .Params.connections }}
+      addLink({{ $sitePage.RelPermalink | jsonify }}, resolveLink({{ .path | jsonify }}), {{ .context | jsonify }});
+    {{ end }}
+  {{ end }}
+
+  {{/* ── Deduplicate links and filter invalid ── */}}
+  var nodeIds = {};
+  nodes.forEach(function(n) { nodeIds[n.id] = true; });
+  links = links.filter(function(l) {
+    return nodeIds[l.source] && nodeIds[l.target] && l.source !== l.target;
+  });
+
+  var seen = {};
+  links = links.filter(function(l) {
+    var key = [l.source, l.target].sort().join("||");
+    if (seen[key]) return false;
+    seen[key] = true;
+    return true;
+  });
+
+  return { nodes: nodes, links: links };
+})();
+</script>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="{{ "js/graph.js" | relURL }}" defer></script>
+{{ end }}

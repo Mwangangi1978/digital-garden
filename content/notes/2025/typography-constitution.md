@@ -3,7 +3,20 @@ title: "typography constitution"
 date: 2025-12-31T19:52:37+03:00
 
 status: complete
-category: technical   # social/political/economic/tech
+category: technical
+adr: true
+connections:
+  - path: "/site"
+    context: "This constitution governs the site's visual syntax"
+  - path: "/notes/2026/metadata-design"
+    context: "Both are architecture decision records for the digital garden"
+  - path: "/notes/2025/the-window-or-the-screen"
+    context: "Hopper's visual composition principles parallel the typography decisions here"
+inspired_by:
+  - title: "Practical Typography by Matthew Butterick"
+    url: "https://practicaltypography.com/"
+  - title: "Gwern.net"
+    url: "https://gwern.net/"
 ---
 
 # **Preamble**
@@ -165,7 +178,7 @@ The pop-up is designed not as a static tooltip, but as a fully functional operat
 Pop-ups are recursive; links inside a pop-up can spawn *child* pop-ups (a pop-up within a pop-up).  
 To prevent infinite regression or visual clutter, a control icon (👁️) in the window header allows the user to disable this recursive behaviour, rendering links inside the window as standard navigation targets.
 
-(Sidenote: For a breakdown of the underlying architecture, including the Backlink ID system and Transclusion logic, see the [Technical Implementation Notes](https://www.google.com/search?q=/logs/technical-implementation%23popups).)
+(Sidenote: For a breakdown of the underlying architecture, including the Backlink ID system and Transclusion logic, see the [Technical Implementation Notes](/graph).)
 
 # **Block Elements**
 

@@ -5,6 +5,12 @@ lastmod: 2026-02-22T16:46:53+03:00
 
 status: complete
 category: technical
+adr: true
+connections:
+  - path: "/site"
+    context: "Metadata design decisions documented for the digital garden"
+  - path: "/notes/2025/typography-constitution"
+    context: "Both are architecture decision records for the digital garden"
 ---
 # **Intro**
 

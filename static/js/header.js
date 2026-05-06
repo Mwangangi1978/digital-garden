@@ -11,8 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
           <input type="text" class="search-input" placeholder="Search..." aria-label="Search">
         </div>
   
-        <a href="/blog" class="nav-item">INDEX</a>
-        <a href="/logs" class="nav-item">LOGS</a>
+        <a href="/notes" class="nav-item">NOTES</a>
+        <a href="/graph" class="nav-item">GRAPH</a>
   
         <button class="mobile-search-btn mobile-only" aria-label="Open Search">
           <svg class="search-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.879 119.799" width="122.879" height="119.799">
