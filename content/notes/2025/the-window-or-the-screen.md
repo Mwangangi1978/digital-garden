@@ -3,6 +3,7 @@ title: "The window or the screen"
 date: 2025-07-19T17:00:00+03:00
 status: complete
 category: social
+featured: true
 substack: true
 image: "https://res.cloudinary.com/dxboziyz7/image/upload/q_auto/f_auto/v1778499894/hopper_j7vwch.webp"
 connections:

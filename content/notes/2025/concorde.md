@@ -4,6 +4,7 @@ date: 2025-06-06T18:00:00+03:00
 status: complete
 category: fiction
 type: short-story
+featured: true
 substack: true
 image: "https://res.cloudinary.com/dxboziyz7/image/upload/q_auto/f_auto/v1778499742/abe1ba25-6c92-45a8-8b4f-fc0deb7c4035_1000x570_yqeypo.webp"
 connections:

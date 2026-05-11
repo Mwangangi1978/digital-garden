@@ -3,6 +3,7 @@ title: "You will always be poor, Aemilianus"
 date: 2025-07-14T17:00:00+03:00
 status: complete
 category: social
+featured: true
 substack: true
 image: "https://res.cloudinary.com/dxboziyz7/image/upload/v1778499799/aemilianus_qysuzk.webp"
 connections:

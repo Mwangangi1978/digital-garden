@@ -3,6 +3,7 @@ title: "Life needs better editing"
 date: 2025-06-14T17:00:00+03:00
 status: complete
 category: social
+featured: true
 substack: true
 image: "https://res.cloudinary.com/dxboziyz7/image/upload/q_auto/f_auto/v1778499582/DSC00360_gjtrcu.jpg"
 connections:

@@ -4,209 +4,120 @@
 {{/* Hook for header.js */}}
 <div class="page-container writing-index-page" id="top"></div>
 
+<main class="main">
+
 {{/* ═══════════════════════════════════ HERO ═══════════════════════════════════ */}}
-<section class="notes-hero">
-  <div class="notes-hero__box">
-    <span class="notes-hero__eyebrow">Read</span>
-    <hr class="notes-hero__rule">
-    <h1 class="notes-hero__title">Notes</h1>
-    <p class="notes-hero__desc">Some of my writing.</p>
+<section class="hero">
+  <div class="hero__panel">
+    <div class="hero__bg" style="background-image: url('https://res.cloudinary.com/dxboziyz7/image/upload/q_auto/f_auto/v1778490894/DSC05237_tdpdnh.jpg')"></div>
+    <div class="hero__navy"></div>
+    <div class="hero__card">
+      <div class="hero__inner">
+        <div class="eyebrow">READ</div>
+        <h1 class="hero__title">Notes</h1>
+        <p class="hero__lede">Some of my writing.</p>
+      </div>
+    </div>
   </div>
 </section>
 
-{{/* ═══════════════════════════ FEATURED CAROUSEL ═══════════════════════════════ */}}
+{{/* ═══════════════════════════════════ FEATURED CAROUSEL ═══════════════════════════════ */}}
 {{ $featured := where .Site.RegularPages "Params.featured" true }}
 {{ if $featured }}
-<section class="carousel-section">
-  <div class="carousel-outer">
-    <div class="carousel-track" id="carousel-track">
-      {{ range $i, $p := $featured }}
-      <article class="carousel-slide" data-index="{{ $i }}">
-        {{ if $p.Params.image }}
-        <img src="{{ $p.Params.image }}" alt="{{ $p.Title }}" class="carousel-bg-img" loading="{{ if eq $i 0 }}eager{{ else }}lazy{{ end }}">
-        {{ end }}
-        <div class="carousel-caption">
-          <div class="carousel-caption__body">
-            <h2 class="carousel-caption__title">{{ $p.Title }}</h2>
-          </div>
-          <p class="carousel-caption__meta">{{ $p.Params.category | default "Note" | title }}, {{ $p.Date.Format "2006" }}</p>
-        </div>
-        <a href="{{ $p.Permalink }}" class="carousel-fullclick" aria-label="Read: {{ $p.Title }}"></a>
-      </article>
-      {{ end }}
+<section class="featured">
+  <div class="featured__frame">
+    <div class="featured__img" id="featImg" style="background-image: url('{{ (index $featured 0).Params.image }}')"></div>
+    <div class="featured__caption">
+      <h2 id="featTitle">{{ (index $featured 0).Title }}</h2>
+      <span id="featDate">{{ (index $featured 0).Date.Format "January 2, 2006" }}</span>
     </div>
-
-    <button class="carousel-btn carousel-btn--prev" id="carousel-prev" aria-label="Previous slide">&#8249;</button>
-    <button class="carousel-btn carousel-btn--next" id="carousel-next" aria-label="Next slide">&#8250;</button>
-
-    <ol class="carousel-pips" id="carousel-pips" aria-label="Slide navigation">
-      {{ range $i, $p := $featured }}
-      <li>
-        <button class="carousel-pip{{ if eq $i 0 }} active{{ end }}"
-                data-slide="{{ $i }}"
-                aria-label="Go to slide {{ add $i 1 }}"></button>
-      </li>
-      {{ end }}
-    </ol>
   </div>
+  <ol class="dots" id="dots"></ol>
 </section>
+
+<script>
+  const FEATURED = [
+    {{ range $featured }}
+    { image: "{{ .Params.image }}", title: "{{ .Title }}", date: "{{ .Date.Format "January 2, 2006" }}", url: "{{ .Permalink }}" },
+    {{ end }}
+  ];
+  const dots = document.getElementById('dots');
+  const featImg = document.getElementById('featImg');
+  const featTitle = document.getElementById('featTitle');
+  const featDate = document.getElementById('featDate');
+  
+  function setFeat(i){
+    const it = FEATURED[i];
+    featImg.style.backgroundImage = `url('${it.image}')`;
+    featTitle.textContent = it.title;
+    featDate.textContent = it.date;
+    [...dots.children].forEach((li, n) => li.firstChild.classList.toggle('is-active', n === i));
+  }
+  
+  FEATURED.forEach((_, n) => {
+    const li = document.createElement('li');
+    const btn = document.createElement('button');
+    btn.textContent = n+1;
+    if (n === 0) btn.classList.add('is-active');
+    btn.addEventListener('click', () => setFeat(n));
+    li.appendChild(btn);
+    dots.appendChild(li);
+  });
+</script>
 {{ end }}
 
-{{/* ═══════════════════════════════ FILTER TABS ═══════════════════════════════ */}}
-<div class="tabs-wrapper">
-  <div class="tabs-container" role="navigation">
-    <button class="filter-tab tab active" data-filter="all">
-      <span class="tab-icon-wrapper">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-      </span>
-      <span class="tab-label">All Stories</span>
-    </button>
-
-    <button class="filter-tab tab" data-filter="social">
-      <span class="tab-icon-wrapper">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-      </span>
-      <span class="tab-label">Social</span>
-    </button>
-
-    <button class="filter-tab tab" data-filter="political">
-      <span class="tab-icon-wrapper">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 21h18M3 10h18M5 10v11M19 10v11M12 2v8M9 21V10M15 21V10"></path></svg>
-      </span>
-      <span class="tab-label">Political</span>
-    </button>
-
-    <button class="filter-tab tab" data-filter="economic">
-      <span class="tab-icon-wrapper">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-      </span>
-      <span class="tab-label">Economic</span>
-    </button>
-
-    <button class="filter-tab tab" data-filter="technical">
-      <span class="tab-icon-wrapper">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-      </span>
-      <span class="tab-label">Technical</span>
-    </button>
-
-    <button class="filter-tab tab" data-filter="fiction">
-      <span class="tab-icon-wrapper">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-      </span>
-      <span class="tab-label">Fiction</span>
-    </button>
-  </div>
-</div>
-
 {{/* ═══════════════════════════════ CARDS GRID ═══════════════════════════════ */}}
-<div class="blog-index">
-  <div class="blog-index__content">
-    <main class="index-content-area">
+<div class="grid" id="articles-container">
 
-      <div class="cards-grid" id="articles-container">
+  {{ $pages := where .Site.RegularPages "Section" "in" (slice "fiction" "non-fiction" "notes" "poetry" "screenplay") }}
+  {{ range $index, $page := $pages.ByDate.Reverse }}
 
-        {{ $pages := where .Site.RegularPages "Section" "in" (slice "fiction" "non-fiction" "notes" "poetry" "screenplay") }}
-        {{ range $index, $page := $pages.ByDate.Reverse }}
+    {{/* ── Image card if image exists ── */}}
+    {{ with $page.Params.image }}
+    <a href="{{ $page.Permalink }}" class="card card--img">
+      <div class="card__img" style="background-image: url('{{ . }}')"></div>
+    </a>
+    {{ end }}
 
-          {{/* ── Category + fiction metadata ── */}}
-          {{ $cat := lower (default "general" $page.Params.category) }}
-          {{ $section := lower $page.Section }}
-          {{ $isFiction := or (eq $section "fiction") (eq $section "poetry") (eq $section "screenplay") }}
+    {{/* ── Text card (title + metadata) ── */}}
+    {{ $cat := lower (default "general" $page.Params.category) }}
+    {{ $section := lower $page.Section }}
+    {{ $isFiction := or (eq $section "fiction") (eq $section "poetry") (eq $section "screenplay") }}
 
-          {{ $tagLabel := "" }}
-          {{ if $isFiction }}
-            {{ $ftype := default "short-story" $page.Params.type }}
-            {{ $tagLabel = replace (title $ftype) "-" " " }}
-          {{ else }}
-            {{ $tagLabel = title (default "general" $page.Params.category) }}
-          {{ end }}
+    {{ $tagLabel := "" }}
+    {{ if $isFiction }}
+      {{ $ftype := default "short-story" $page.Params.type }}
+      {{ $tagLabel = replace (title $ftype) "-" " " }}
+    {{ else }}
+      {{ $tagLabel = title (default "general" $page.Params.category) }}
+    {{ end }}
 
-          {{/* ── Accent pattern: positions 1 and 4 in every group of 5 ── */}}
-          {{ $cardClass := "card-grey" }}
-          {{ if or (eq (mod $index 5) 1) (eq (mod $index 5) 4) }}
-            {{ $cardClass = "card-accent" }}
-          {{ end }}
+    {{ $cardClass := "card" }}
+    {{ if or (eq (mod $index 5) 1) (eq (mod $index 5) 4) }}
+      {{ $cardClass = "card card--navy" }}
+    {{ end }}
 
-          {{/* ── Image: use frontmatter `image` param ── */}}
-          {{ $hasImage := false }}
-          {{ $imgSrc := "" }}
-          {{ with $page.Params.image }}
-            {{ $hasImage = true }}
-            {{ $imgSrc = . }}
-          {{ end }}
+    <a href="{{ $page.Permalink }}" class="{{ $cardClass }}">
+      <p class="card__title">{{ $page.Title }} <span class="card__meta">{{ $tagLabel }}, {{ $page.Date.Format "2006" }}</span></p>
+      <span class="card__read">Read →</span>
+    </a>
 
-          <article class="article-card note-card {{ $cardClass }}{{ if $hasImage }} has-image{{ end }}"
-                   data-category="{{ $cat }}"
-                   data-is-fiction="{{ $isFiction }}">
-            <a href="{{ $page.Permalink }}" class="card-link">
+  {{ end }}
 
-              {{ if $hasImage }}
-              {{/* Image card: text left, image right */}}
-              <div class="card-img-layout">
-                <div class="card-text-col">
-                  <div class="card-header">
-                    <span class="card-meta">{{ $tagLabel }}</span>
-                    <span class="card-arrow" aria-hidden="true">↗</span>
-                  </div>
-                  <div class="card-content">
-                    <h2 class="card-title">{{ $page.Title }}</h2>
-                    <time class="card-date">{{ $page.Date.Format "January 2, 2006" }}</time>
-                  </div>
-                </div>
-                <div class="card-img-col">
-                  <img src="{{ $imgSrc }}" alt="{{ $page.Title }}" loading="lazy">
-                </div>
-              </div>
-              {{ else }}
-              {{/* Text-only card */}}
-              <div class="card-header">
-                <span class="card-meta">{{ $tagLabel }}</span>
-                <span class="card-arrow" aria-hidden="true">↗</span>
-              </div>
-              <div class="card-content">
-                <h2 class="card-title">{{ $page.Title }}</h2>
-                <time class="card-date">{{ $page.Date.Format "January 2, 2006" }}</time>
-              </div>
-              {{ end }}
+  {{/* ── Site sections as text cards ── */}}
+  {{ $sitePage := .Site.GetPage "/site" }}
+  {{ with $sitePage }}
+    {{ range .Params.sections }}
+    <a href="{{ $sitePage.Permalink }}#{{ .id }}" class="card">
+      <p class="card__title">{{ .title }} <span class="card__meta">Site, {{ $sitePage.Date.Format "2006" }}</span></p>
+      <span class="card__read">Read →</span>
+    </a>
+    {{ end }}
+  {{ end }}
 
-            </a>
-          </article>
+</div>{{/* /grid */}}
 
-        {{ end }}
+</main>
 
-        {{/* ── Site sections as note cards ── */}}
-        {{ $sitePage := .Site.GetPage "/site" }}
-        {{ with $sitePage }}
-          {{ range .Params.sections }}
-          <article class="article-card note-card card-grey"
-                   data-category="social"
-                   data-is-fiction="false">
-            <a href="{{ $sitePage.Permalink }}#{{ .id }}" class="card-link">
-              <div class="card-header">
-                <span class="card-meta">Site</span>
-                <span class="card-arrow" aria-hidden="true">↗</span>
-              </div>
-              <div class="card-content">
-                <h2 class="card-title">{{ .title }}</h2>
-                <time class="card-date">{{ $sitePage.Date.Format "January 2, 2006" }}</time>
-                <p class="card-excerpt">{{ .description }}</p>
-              </div>
-            </a>
-          </article>
-          {{ end }}
-        {{ end }}
-
-      </div>{{/* /cards-grid */}}
-
-      <div id="no-results" class="empty-state" style="display: none;">
-        <p>No matches found for this category.</p>
-      </div>
-
-    </main>
-  </div>
-</div>
-
-<script src="/js/filter.js"></script>
-<script src="/js/carousel.js"></script>
+<footer class="footer">© 2026 Denis Mwangangi</footer>
 {{ end }}

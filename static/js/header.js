@@ -5,10 +5,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const headerHTML = `
     <nav class="site-navbar">
 
-      <!-- Brand / site name (left) -->
-      <a href="/" class="nav-brand" aria-label="Denis Mwangangi – home">Denis Mwangangi</a>
+      <!-- Brand / site logo (left) -->
+      <a href="/" class="nav-brand" aria-label="Denis Mwangangi – home">
+        <img src="/images/denislogo.png" alt="Denis Mwangangi" class="nav-logo">
+      </a>
 
-      <!-- Desktop nav links (centre-right) -->
+      <!-- Desktop nav links (centre) -->
       <div class="nav-links desktop-nav-links">
         <a href="/site"   class="nav-item">Site</a>
         <a href="/me"     class="nav-item">Me</a>
@@ -16,9 +18,22 @@ document.addEventListener("DOMContentLoaded", () => {
         <a href="/graph"  class="nav-item">Graph</a>
       </div>
 
-      <!-- Desktop search (right) -->
-      <div class="search-wrapper desktop-only">
-        <input type="text" class="search-input" placeholder="Search…" aria-label="Search site">
+      <!-- Desktop search + social icons (right) -->
+      <div class="nav-right desktop-only">
+        <div class="search-wrapper">
+          <input type="text" class="search-input" placeholder="search" aria-label="Search site">
+        </div>
+        <div class="nav-socials">
+          <a href="https://x.com/byDenisM" target="_blank" rel="noopener noreferrer" class="nav-social-link" aria-label="Twitter / X">
+            <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor"><path d="M12.6 1.7h2.4l-5.3 6 6.2 8.2h-4.9l-3.8-5-4.4 5H.4l5.7-6.5L0 1.7h5l3.5 4.6 4.1-4.6Zm-.9 12.8h1.3L4.4 3.1H3l8.7 11.4Z"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/denis-mwangangi/" target="_blank" rel="noopener noreferrer" class="nav-social-link" aria-label="LinkedIn">
+            <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor"><path d="M3.6 14.5H.8V5.6h2.8v8.9ZM2.2 4.4a1.6 1.6 0 1 1 0-3.3 1.6 1.6 0 0 1 0 3.3Zm13 10.1h-2.7V10c0-1 0-2.4-1.5-2.4S9.4 8.8 9.4 9.9v4.6H6.7V5.6h2.6V7c.4-.7 1.3-1.5 2.7-1.5 2.9 0 3.4 1.9 3.4 4.3v4.7Z"/></svg>
+          </a>
+          <a href="https://github.com/Mwangangi1978" target="_blank" rel="noopener noreferrer" class="nav-social-link" aria-label="GitHub">
+            <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor"><path d="M8 0a8 8 0 0 0-2.5 15.6c.4.1.5-.2.5-.4v-1.4c-2.2.5-2.7-1-2.7-1-.4-1-.9-1.2-.9-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.2 1.9.9 2.4.7.1-.5.3-.9.5-1.1-1.8-.2-3.6-.9-3.6-3.9 0-.9.3-1.6.8-2.1-.1-.2-.4-1 .1-2.1 0 0 .7-.2 2.2.8a7.6 7.6 0 0 1 4 0c1.5-1 2.2-.8 2.2-.8.4 1.1.2 1.9.1 2.1.5.5.8 1.2.8 2.1 0 3-1.8 3.7-3.6 3.9.3.3.5.7.5 1.5v2.2c0 .2.1.5.5.4A8 8 0 0 0 8 0Z"/></svg>
+          </a>
+        </div>
       </div>
 
       <!-- Mobile hamburger button -->
