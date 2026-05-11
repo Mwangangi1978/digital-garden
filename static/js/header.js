@@ -56,16 +56,14 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   `;
 
-  const pageContainer = document.querySelector('.page-container');
-  if (!pageContainer) return;
-
   const headerElement = document.createElement('header');
   headerElement.className = 'site-header';
   headerElement.innerHTML = headerHTML;
-  pageContainer.insertBefore(headerElement, pageContainer.firstChild);
+  document.body.insertBefore(headerElement, document.body.firstChild);
 
   // On writing-index pages: tag <main> so blog.css can make it full-bleed on mobile
-  if (pageContainer.classList.contains('writing-index-page')) {
+  const pageContainer = document.querySelector('.page-container');
+  if (pageContainer && pageContainer.classList.contains('writing-index-page')) {
     const mainEl = document.querySelector('main');
     if (mainEl) mainEl.classList.add('writing-index-main');
   }

@@ -1171,7 +1171,10 @@
   gap: 16px;
   font-family: var(--font-heading);
   min-height: 100px;
-  padding: 0 1.5rem;
+  padding: 0 2rem;
+  max-width: 1140px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* ── Brand / site logo ── */

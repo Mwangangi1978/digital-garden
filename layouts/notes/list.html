@@ -28,8 +28,10 @@
   <div class="featured__frame">
     <div class="featured__img" id="featImg" style="background-image: url('{{ (index $featured 0).Params.image }}')"></div>
     <div class="featured__caption">
-      <h2 id="featTitle">{{ (index $featured 0).Title }}</h2>
-      <span id="featDate">{{ (index $featured 0).Date.Format "January 2, 2006" }}</span>
+      <a href="{{ (index $featured 0).Permalink }}" id="featLink" class="featured__link">
+        <h2 id="featTitle">{{ (index $featured 0).Title }}</h2>
+        <span id="featDate">{{ (index $featured 0).Date.Format "January 2, 2006" }}</span>
+      </a>
     </div>
     <button class="carousel-btn carousel-btn--prev" id="carouselPrev" aria-label="Previous slide">‹</button>
     <button class="carousel-btn carousel-btn--next" id="carouselNext" aria-label="Next slide">›</button>
@@ -47,17 +49,19 @@
   const featImg = document.getElementById('featImg');
   const featTitle = document.getElementById('featTitle');
   const featDate = document.getElementById('featDate');
+  const featLink = document.getElementById('featLink');
   const carouselPrev = document.getElementById('carouselPrev');
   const carouselNext = document.getElementById('carouselNext');
   let currentSlide = 0;
   let autoplayTimer = null;
-  
+
   function setFeat(i){
     currentSlide = (i + FEATURED.length) % FEATURED.length;
     const it = FEATURED[currentSlide];
     featImg.style.backgroundImage = `url('${it.image}')`;
     featTitle.textContent = it.title;
     featDate.textContent = it.date;
+    if (featLink) featLink.href = it.url;
     [...dots.children].forEach((li, n) => li.firstChild.classList.toggle('is-active', n === currentSlide));
   }
 
