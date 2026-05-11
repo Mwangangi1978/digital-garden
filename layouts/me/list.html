@@ -395,26 +395,6 @@
 </div><!-- /me-page-container -->
 
 
-<footer class="me-site-foot">
-  <div class="backlinks-section">
-    <div class="bl-label">Backlinks</div>
-    {{ if $p.backlinks }}
-    <ul class="bl-list">
-      {{ range $p.backlinks }}
-      <li><a href="{{ .url }}">{{ .title }}</a></li>
-      {{ end }}
-    </ul>
-    {{ else }}
-    <p class="bl-empty">No backlinks yet.</p>
-    {{ end }}
-  </div>
-  <div class="marks">
-    {{ with $p.footer_mark_1 }}<div>{{ . }}</div>{{ end }}
-    {{ with $p.footer_mark_2 }}<div>{{ . }}</div>{{ end }}
-  </div>
-</footer>
-
-
 <div class="tweaks-panel" id="tweaks">
   <h4>Tweaks</h4>
   <div class="row">

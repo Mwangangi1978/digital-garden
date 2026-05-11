@@ -1581,5 +1581,65 @@
     width: 200px !important;
   }
 }
+
+/* ============================================================================
+   30. GLOBAL MINIMAL FOOTER
+   ============================================================================ */
+
+.site-footer-minimal {
+  width: 100%;
+  border-top: 1px solid var(--blog-border, rgba(0, 0, 0, 0.12));
+  background: var(--bg-color);
+  color: var(--text-color);
+  margin-top: 2.25rem;
+}
+
+.site-footer-minimal__inner {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.site-footer-minimal__copy {
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.site-footer-minimal__top {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  color: inherit;
+  font-size: 1rem;
+  line-height: 1;
+  text-decoration: none;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.site-footer-minimal__top:hover {
+  transform: translateY(-1px);
+  opacity: 0.8;
+}
+
+@media (max-width: 640px) {
+  .site-footer-minimal__inner {
+    padding: 0.9rem 1rem;
+  }
+
+  .site-footer-minimal__copy {
+    font-size: 0.74rem;
+  }
+}
   
 
