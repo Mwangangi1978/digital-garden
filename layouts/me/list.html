@@ -23,39 +23,24 @@
   {{ $heroCaptionShort = $latestMoment.Params.caption_short }}
 {{ end }}
 
-<section class="me-hero" aria-label="About Denis — hero">
-  <div class="me-hero-media">
-    {{ partial "moment-media.html" (dict "src" $heroImage "alt" $heroAlt "class" "me-hero-media-item") }}
-  </div>
-  <div class="me-hero-overlay" aria-hidden="true"></div>
-
-  <!-- Header overlaid on the image -->
-  <div class="me-hero-header-wrap">
-    <div class="me-hero-header-inner">
-      <header class="site-header">
-        <nav class="site-navbar">
-          <a href="/site" class="nav-item">SITE</a>
-          <a href="/me"   class="nav-item current">ME</a>
-          <div class="search-wrapper desktop-only">
-            <input type="text" class="search-input" placeholder="Search…" aria-label="Search">
-          </div>
-          <a href="/notes" class="nav-item">NOTES</a>
-          <a href="/graph" class="nav-item">GRAPH</a>
-        </nav>
-      </header>
+<div class="me-hero-shell">
+  <section class="me-hero" aria-label="About Denis — hero">
+    <div class="me-hero-media">
+      {{ partial "moment-media.html" (dict "src" $heroImage "alt" $heroAlt "class" "me-hero-media-item") }}
     </div>
-  </div>
+    <div class="me-hero-overlay" aria-hidden="true"></div>
 
-  <!-- Moments caption anchored to bottom-right -->
-  <div class="me-hero-content">
-    <div class="me-moments-caption">
-      {{ if $heroCaptionShort }}
-      <p class="me-moments-caption-desc">{{ $heroCaptionShort }}</p>
-      {{ end }}
-      <p><strong>These are Deno moments.</strong> Browse them in the <a href="/moments">moments archive</a> »</p>
+    <!-- Moments caption anchored to bottom-right -->
+    <div class="me-hero-content">
+      <div class="me-moments-caption">
+        {{ if $heroCaptionShort }}
+        <p class="me-moments-caption-desc">{{ $heroCaptionShort }}</p>
+        {{ end }}
+        <p><strong>These are Deno moments.</strong> Browse them in the <a href="/moments">moments archive</a> »</p>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>
 
 <!-- ═══ PAGE CONTENT ════════════════════════════════════════════════════ -->
 <div class="me-page-container" id="top">
@@ -480,12 +465,6 @@ document.querySelectorAll('.snref').forEach(r => {
   });
   r.addEventListener('mouseleave', () =>
     document.querySelectorAll('.sidenote').forEach(s => s.style.background = ''));
-});
-
-document.querySelector('.me-hero-header-wrap .search-input')?.addEventListener('keypress', e => {
-  if (e.key === 'Enter' && e.target.value.trim())
-    window.open('https://www.google.com/search?q=site:denismwangangi.com+' +
-      encodeURIComponent(e.target.value.trim()), '_blank');
 });
 
 /* Timeline entrance animation via IntersectionObserver */

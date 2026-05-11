@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const isMomentsRoute = /(?:^|\/)moments(?:\/|$)/.test(window.location.pathname);
+  if (isMomentsRoute) return;
+
   // Don't inject if a page already renders its own .site-header (e.g. me/about)
   if (document.querySelector('.site-header')) return;
 
