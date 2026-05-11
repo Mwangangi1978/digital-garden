@@ -4,6 +4,7 @@ date: 2025-06-14T17:00:00+03:00
 status: complete
 category: social
 substack: true
+image: "https://res.cloudinary.com/dxboziyz7/image/upload/q_auto/f_auto/v1778499582/DSC00360_gjtrcu.jpg"
 connections:
   - path: "/notes/2025/the-window-or-the-screen"
     context: "Both examine the tension between performed life and authentic life, cinema vs reality"
@@ -17,6 +18,8 @@ inspired_by:
   - title: "La La Land"
     url: "https://en.wikipedia.org/wiki/La_La_Land"
 ---
+
+![](https://res.cloudinary.com/dxboziyz7/image/upload/q_auto/f_auto/v1778499582/DSC00360_gjtrcu.jpg)
 
 I want my life to be a movie.
 

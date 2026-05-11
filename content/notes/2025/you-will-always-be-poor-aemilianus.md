@@ -4,6 +4,7 @@ date: 2025-07-14T17:00:00+03:00
 status: complete
 category: social
 substack: true
+image: "https://res.cloudinary.com/dxboziyz7/image/upload/v1778499799/aemilianus_qysuzk.webp"
 connections:
   - path: "/notes/2025/the-window-or-the-screen"
     context: "Both explore authenticity vs performance -- abundance through openness vs pretension"
@@ -15,6 +16,8 @@ inspired_by:
   - title: "Martial's Epigrams"
     url: "https://en.wikipedia.org/wiki/Martial"
 ---
+
+![](https://res.cloudinary.com/dxboziyz7/image/upload/v1778499799/aemilianus_qysuzk.webp)
 
 > "For everyone who has, more will be given, and they shall have enough and to spare. But from those who have not, even what they have will be taken away."
 

@@ -5,6 +5,7 @@ status: complete
 category: fiction
 type: short-story
 substack: true
+image: "https://res.cloudinary.com/dxboziyz7/image/upload/q_auto/f_auto/v1778499742/abe1ba25-6c92-45a8-8b4f-fc0deb7c4035_1000x570_yqeypo.webp"
 connections:
   - path: "/notes/2025/you-can-never-travel-the-world-alone"
     context: "Both explore themes of aspiration, rejection, and finding where you belong"
@@ -13,6 +14,8 @@ connections:
   - path: "/notes/2025/life-needs-better-editing"
     context: "Both reference the desire for a cinematic, controlled version of life"
 ---
+
+![](https://res.cloudinary.com/dxboziyz7/image/upload/q_auto/f_auto/v1778499742/abe1ba25-6c92-45a8-8b4f-fc0deb7c4035_1000x570_yqeypo.webp)
 
 I had to open my laptop again. She was five years old and didn't run like she used to. She was basically a desktop - I could barely use her if she wasn't plugged in. But I needed to book a flight, and I no longer had my phone; apparently, it's very easy to lose your phone when it's in your pocket while biking across a busy city.
 

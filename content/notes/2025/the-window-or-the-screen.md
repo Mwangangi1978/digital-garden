@@ -4,6 +4,7 @@ date: 2025-07-19T17:00:00+03:00
 status: complete
 category: social
 substack: true
+image: "https://res.cloudinary.com/dxboziyz7/image/upload/q_auto/f_auto/v1778499894/hopper_j7vwch.webp"
 connections:
   - path: "/notes/2025/little-people-all-the-way-down"
     context: "Both examine the gap between inner life and outer expression"
@@ -21,6 +22,8 @@ inspired_by:
   - title: "Edward Hopper"
     url: "https://en.wikipedia.org/wiki/Edward_Hopper"
 ---
+
+![](https://res.cloudinary.com/dxboziyz7/image/upload/q_auto/f_auto/v1778499894/hopper_j7vwch.webp)
 
 > "Great art is the outward expression of an inner life in the artist, and this inner life will result in his personal vision of the world."
 > -- Edward Hopper
