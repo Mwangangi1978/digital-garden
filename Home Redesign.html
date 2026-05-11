@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Denis Mwangangi · Home (Redesign)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* ---------- design tokens (lifted from /notes blog.css) ---------- */
+  :root {
+    --navy: rgb(45, 42, 80);
+    --navy-90: rgba(45, 42, 80, 0.9);
+    --navy-ink: rgb(31, 28, 60);
+    --grey: rgb(242, 242, 242);
+    --grey-soft: rgb(247, 247, 247);
+    --line: rgb(225, 224, 230);
+    --ink: rgb(20, 20, 22);
+    --mute: rgb(119, 119, 119);
+    --mute2: rgb(102, 102, 102);
+    --white: #fff;
+    --warm: rgb(252, 250, 246);     /* very subtle cream, no cyan */
+    --content: 1140px;
+    --page-pad: 30px;
+    --font-display: 'Fraunces', 'Cooper Hewitt', Georgia, serif;
+    --font-sans: 'Inter', 'Helvetica Neue', system-ui, -apple-system, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--warm); color: var(--ink); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  p, h1, h2, h3, h4 { margin: 0; }
+  h1, h2, h3, h4 { font-weight: 700; }
+
+  /* ============================================================
+     HEADER PLACEHOLDER — keep yours (header.js); shown here just
+     so the page feels real. Will not ship; your existing header
+     stays exactly as-is.
+     ============================================================ */
+  .header-placeholder {
+    border-bottom: 1px solid var(--line);
+    background: var(--white);
+  }
+  .header-placeholder__inner {
+    max-width: var(--content);
+    margin: 0 auto;
+    padding: 22px var(--page-pad);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--mute);
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .header-placeholder__brand { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.01em; text-transform: none; color: var(--ink); font-size: 18px; }
+  .header-placeholder__nav { display: flex; gap: 26px; }
+  .header-placeholder__nav span { font-weight: 600; }
+
+  /* ============================================================
+     PAGE SHELL
+     ============================================================ */
+  .main {
+    max-width: var(--content);
+    margin: 0 auto;
+    padding: 0 var(--page-pad);
+  }
+
+  /* ============================================================
+     1. HERO — adapted directly from /notes hero pattern
+        (navy block + white card with eyebrow rule)
+     ============================================================ */
+  .hero { margin-top: 28px; }
+  .hero__panel {
+    position: relative;
+    width: 100%;
+    min-height: 380px;
+    background: var(--white);
+    overflow: hidden;
+  }
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center 30%;
+    /* placeholder texture — striped scrim so user can drop in their own image */
+    background-image:
+      linear-gradient(135deg, rgba(45,42,80,0.06) 0 12px, transparent 12px 24px),
+      linear-gradient(180deg, #efece6 0%, #d9d3c9 100%);
+  }
+  .hero__navy {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 42%;
+    background: var(--navy);
+  }
+  .hero__card {
+    position: absolute;
+    left: 8.3%;
+    top: 40px;
+    bottom: 40px;
+    width: 56%;
+    background: var(--white);
+    display: flex;
+    align-items: center;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+  }
+  .hero__inner { padding: 36px 48px; width: 100%; }
+
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--navy);
+    position: relative;
+    padding-bottom: 16px;
+    margin-bottom: 10px;
+  }
+  .eyebrow::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: 8px;
+    width: 55px; height: 2px;
+    background: var(--navy);
+  }
+
+  .hero__title {
+    font-family: var(--font-display);
+    font-size: 52px;
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+    color: var(--navy);
+    margin-bottom: 14px;
+  }
+  .hero__lede {
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--mute);
+    max-width: 56ch;
+  }
+  .hero__lede strong { color: var(--ink); font-weight: 600; }
+  .hero__lede a {
+    color: var(--navy);
+    border-bottom: 1px solid rgba(45,42,80,0.3);
+    padding-bottom: 1px;
+  }
+  .hero__lede a:hover { border-bottom-color: var(--navy); }
+
+  /* ============================================================
+     2. NAV STRIP — replaces the inline "NAVIGATION:" paragraph
+        Sharp tiles, same content, no cyan.
+     ============================================================ */
+  .navstrip {
+    margin-top: 36px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .nav-tile {
+    background: var(--grey);
+    padding: 22px 22px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 132px;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .nav-tile:hover { transform: translateY(-2px); }
+  .nav-tile__label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--mute2);
+  }
+  .nav-tile__title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--navy);
+    margin-top: 12px;
+  }
+  .nav-tile__go {
+    margin-top: 14px;
+    font-size: 14px;
+    color: var(--navy);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .nav-tile--navy { background: var(--navy); }
+  .nav-tile--navy .nav-tile__label { color: rgba(255,255,255,0.6); }
+  .nav-tile--navy .nav-tile__title { color: var(--white); }
+  .nav-tile--navy .nav-tile__go { color: var(--white); }
+
+  /* tiny inline feature row (theme + search) */
+  .features-row {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-size: 13px;
+    color: var(--mute);
+    padding: 14px 4px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .features-row__label { font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; font-size: 11px; color: var(--mute2); }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border: 1px solid var(--line);
+    background: var(--white);
+    color: var(--navy);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .chip:hover { background: var(--navy); color: var(--white); border-color: var(--navy); }
+  .chip[aria-pressed="true"] { background: var(--navy); color: var(--white); border-color: var(--navy); }
+
+  /* ============================================================
+     3. SECTION HEADER PATTERN — used by Articles / Sketches / Highlights
+        Eyebrow rule + display title + lede + section link
+     ============================================================ */
+  .section { margin-top: 72px; }
+  .section__head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+  .section__eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--navy);
+    position: relative;
+    padding-bottom: 14px;
+    margin-bottom: 8px;
+  }
+  .section__eyebrow::after {
+    content: ""; position: absolute; left: 0; bottom: 6px;
+    width: 55px; height: 2px; background: var(--navy);
+  }
+  .section__title {
+    font-family: var(--font-display);
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .section__lede {
+    margin-top: 8px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--mute);
+    max-width: 56ch;
+  }
+  .section__link {
+    align-self: end;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--navy);
+    white-space: nowrap;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--navy);
+  }
+
+  /* ============================================================
+     4. ARTICLES GRID — sharp navy/grey cards, Anil-Seth-flavor
+     ============================================================ */
+  .articles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .a-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--grey);
+    padding: 26px 24px 22px;
+    min-height: 240px;
+    transition: transform 0.15s ease, background 0.15s ease;
+    cursor: pointer;
+  }
+  .a-card:hover { transform: translateY(-3px); }
+  .a-card__meta {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mute2);
+  }
+  .a-card__title {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.005em;
+    color: var(--navy);
+    margin-top: 14px;
+  }
+  .a-card__date {
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--mute);
+    letter-spacing: 0.02em;
+  }
+  .a-card__excerpt {
+    margin-top: 12px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--mute2);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .a-card__read {
+    margin-top: 18px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    letter-spacing: 0.04em;
+  }
+  .a-card__arrow {
+    width: 28px; height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--navy);
+    color: var(--navy);
+    font-size: 13px;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .a-card:hover .a-card__arrow { background: var(--navy); color: var(--white); }
+
+  .a-card--navy { background: var(--navy); color: var(--white); }
+  .a-card--navy .a-card__meta { color: rgba(255,255,255,0.55); }
+  .a-card--navy .a-card__title { color: var(--white); }
+  .a-card--navy .a-card__date,
+  .a-card--navy .a-card__excerpt { color: rgba(255,255,255,0.7); }
+  .a-card--navy .a-card__read { color: var(--white); }
+  .a-card--navy .a-card__arrow { border-color: var(--white); color: var(--white); }
+  .a-card--navy:hover .a-card__arrow { background: var(--white); color: var(--navy); }
+
+  /* ============================================================
+     5. SKETCHES — sharp polaroid-feel cards (no rounded corners)
+     ============================================================ */
+  .sketches-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .sketch-card {
+    background: var(--white);
+    padding: 14px 14px 18px;
+    border: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.15s ease;
+  }
+  .sketch-card:hover { transform: translateY(-3px); }
+  .sketch-card__img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background-size: cover;
+    background-position: center;
+    background-color: var(--grey);
+  }
+  .sketch-card__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 14px;
+  }
+  .sketch-card__title {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .sketch-card__tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mute);
+  }
+
+  /* ============================================================
+     6. LITERARY HIGHLIGHTS — sharp navy bordered cards
+        Numbered, with eyebrow rule, professional rhythm
+     ============================================================ */
+  .highlights-band {
+    margin-top: 72px;
+    background: var(--white);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 56px 0 64px;
+  }
+  .highlights-band .main { padding-top: 0; padding-bottom: 0; }
+  .highlights-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .h-item {
+    display: grid;
+    grid-template-columns: 80px 1.1fr 1.4fr;
+    gap: 24px;
+    padding: 22px 0;
+    border-top: 1px solid var(--line);
+    align-items: start;
+  }
+  .h-item:last-child { border-bottom: 1px solid var(--line); }
+  .h-item__num {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .h-item__head {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .h-item__kind {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mute2);
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--navy);
+    width: fit-content;
+  }
+  .h-item__title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .h-item__desc {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--mute2);
+    margin-top: 6px;
+  }
+  .h-item__link {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-top: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+  }
+  .h-item__link::after {
+    content: "↗";
+  }
+
+  .h-item__media {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: var(--grey);
+    overflow: hidden;
+    position: relative;
+  }
+  .h-item__media iframe {
+    width: 100%; height: 100%;
+    border: 0;
+    display: block;
+  }
+  .h-item__media--placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+      linear-gradient(135deg, rgba(45,42,80,0.05) 0 10px, transparent 10px 20px),
+      var(--grey);
+    color: var(--mute);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .history-link {
+    margin-top: 28px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    background: var(--navy);
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transition: background 0.15s ease;
+  }
+  .history-link:hover { background: var(--navy-ink); }
+
+  /* ============================================================
+     FOOTER (existing, lightly styled to match)
+     ============================================================ */
+  .site-footer-minimal {
+    margin-top: 0;
+    padding: 28px 0;
+    background: var(--navy);
+    color: rgba(255,255,255,0.7);
+  }
+  .site-footer-minimal__inner {
+    max-width: var(--content);
+    margin: 0 auto;
+    padding: 0 var(--page-pad);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+  }
+  .site-footer-minimal__contact { border-bottom: 1px solid rgba(255,255,255,0.4); padding-bottom: 1px; }
+  .site-footer-minimal__top {
+    width: 32px; height: 32px;
+    display: inline-flex;
+    align-items: center; justify-content: center;
+    border: 1px solid rgba(255,255,255,0.4);
+    color: var(--white);
+  }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width: 980px) {
+    .hero__panel { aspect-ratio: 1140/420; }
+    .hero__card { width: 70%; }
+    .hero__title { font-size: 38px; }
+    .navstrip { grid-template-columns: repeat(2, 1fr); }
+    .articles-grid { grid-template-columns: repeat(2, 1fr); }
+    .sketches-grid { grid-template-columns: repeat(2, 1fr); }
+    .h-item { grid-template-columns: 60px 1fr; }
+    .h-item__media { grid-column: 1 / -1; margin-left: 60px; }
+  }
+  @media (max-width: 640px) {
+    :root { --page-pad: 18px; }
+    .hero__panel { aspect-ratio: auto; height: 360px; background: var(--navy); }
+    .hero__bg, .hero__navy { display: none; }
+    .hero__card { left: 18px; right: 18px; top: 50%; transform: translateY(-50%); width: auto; height: auto; min-height: 220px; align-items: center; }
+    .hero__inner { padding: 30px 26px; }
+    .hero__title { font-size: 36px; }
+    .navstrip { grid-template-columns: 1fr; }
+    .articles-grid { grid-template-columns: 1fr; }
+    .sketches-grid { grid-template-columns: 1fr; }
+    .section__head { grid-template-columns: 1fr; }
+    .h-item { grid-template-columns: 1fr; }
+    .h-item__num { font-size: 28px; }
+    .h-item__media { margin-left: 0; }
+  }
+
+  /* small visual aid: page label so user sees this is the redesign */
+  .preview-strip {
+    background: var(--navy);
+    color: var(--white);
+    padding: 8px 14px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-align: center;
+  }
+</style>
+</head>
+<body data-screen-label="Home Redesign">
+
+  <!-- Preview ribbon (will not ship) -->
+  <div class="preview-strip">Home page · redesign preview · header kept as-is</div>
+
+  <!-- ============================================================
+       HEADER (placeholder — your existing header.js stays as-is)
+       ============================================================ -->
+  <div class="header-placeholder" aria-hidden="true">
+    <div class="header-placeholder__inner">
+      <span class="header-placeholder__brand">Denis Mwangangi</span>
+      <nav class="header-placeholder__nav">
+        <span>Notes</span><span>Sketches</span><span>Me</span><span>Site</span><span>Graph</span>
+      </nav>
+      <span style="font-size:11px;">Your header — unchanged</span>
+    </div>
+  </div>
+
+  <main class="main-wrap">
+
+    <!-- ============================================================
+         1. HERO
+         ============================================================ -->
+    <section class="main">
+      <div class="hero">
+        <div class="hero__panel">
+          <div class="hero__bg"></div>
+          <div class="hero__navy"></div>
+          <div class="hero__card">
+            <div class="hero__inner">
+              <div class="eyebrow">Digital Garden</div>
+              <h1 class="hero__title">Welcome to Denis<br>Mwangangi's garden.</h1>
+              <p class="hero__lede">
+                By day (and often by night), I'm a writer, developer, and a mediocre watercolor sketch artist. Currently shifting focus toward <strong>GTM engineering</strong> — exploring the art of <a href="#">"internalling"</a>: vibecoding your own internal tools from scratch and finally breaking free from endless SaaS subscriptions.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         2. NAVIGATION STRIP — replaces inline NAVIGATION paragraph
+         ============================================================ -->
+    <section class="main">
+      <div class="navstrip" aria-label="Navigation">
+        <a class="nav-tile nav-tile--navy" href="/me">
+          <span class="nav-tile__label">About</span>
+          <span class="nav-tile__title">About me</span>
+          <span class="nav-tile__go"><span>Personal &amp; professional</span><span>→</span></span>
+        </a>
+        <a class="nav-tile" href="/site">
+          <span class="nav-tile__label">Meta</span>
+          <span class="nav-tile__title">About this site</span>
+          <span class="nav-tile__go"><span>Philosophy &amp; build</span><span>→</span></span>
+        </a>
+        <a class="nav-tile" href="/notes">
+          <span class="nav-tile__label">Read</span>
+          <span class="nav-tile__title">Notes</span>
+          <span class="nav-tile__go"><span>My writing</span><span>→</span></span>
+        </a>
+        <a class="nav-tile nav-tile--navy" href="/graph">
+          <span class="nav-tile__label">Explore</span>
+          <span class="nav-tile__title">Relationship graph</span>
+          <span class="nav-tile__go"><span>How it all connects</span><span>→</span></span>
+        </a>
+      </div>
+
+      <!-- features row: theme + search (replaces inline FEATURES paragraph; no cyan) -->
+      <div class="features-row" role="group" aria-label="Site features">
+        <span class="features-row__label">Features</span>
+        <span style="color:var(--mute2);">Theme</span>
+        <span class="chip" id="theme-auto">Auto</span>
+        <span class="chip" id="theme-light">Light</span>
+        <span class="chip" id="theme-dark">Dark</span>
+        <span style="margin-left:auto; color:var(--mute2);">Site</span>
+        <span class="chip" id="search-trigger">⌕ Search</span>
+        <a href="/help" class="chip" style="text-decoration:none;">Help</a>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         3. ARTICLES
+         ============================================================ -->
+    <section class="main section">
+      <div class="section__head">
+        <div>
+          <div class="section__eyebrow">Articles</div>
+          <h2 class="section__title">Opinionated, longform writing.</h2>
+          <p class="section__lede">Essays on typography, metadata, GTM engineering, and the slow work of building a digital garden in public.</p>
+        </div>
+        <a href="/notes" class="section__link">All notes →</a>
+      </div>
+
+      <div class="articles-grid">
+
+        <a href="/2025/12/31/typography-constitution/" class="a-card">
+          <div>
+            <div class="a-card__meta">Technical</div>
+            <h3 class="a-card__title">typography constitution</h3>
+            <div class="a-card__date">December 31, 2025</div>
+            <p class="a-card__excerpt">A living typographical constitution for denismwangangi.com — originally drafted during the site's development phase as the primary reference for type decisions.</p>
+          </div>
+          <div class="a-card__read"><span>Read</span><span class="a-card__arrow">↗</span></div>
+        </a>
+
+        <a href="/2026/02/22/metadata-design/" class="a-card a-card--navy">
+          <div>
+            <div class="a-card__meta">Technical</div>
+            <h3 class="a-card__title">metadata design</h3>
+            <div class="a-card__date">February 22, 2026</div>
+            <p class="a-card__excerpt">Organizing this digital garden meant solving a fundamental tension: how do I make writing frictionless for myself while keeping navigation intuitive for readers?</p>
+          </div>
+          <div class="a-card__read"><span>Read</span><span class="a-card__arrow">↗</span></div>
+        </a>
+
+        <a href="/2025/12/31/typography-constitution/" class="a-card">
+          <div>
+            <div class="a-card__meta">Technical</div>
+            <h3 class="a-card__title">typography constitution</h3>
+            <div class="a-card__date">December 31, 2025</div>
+            <p class="a-card__excerpt">A living typographical constitution for denismwangangi.com — originally drafted during the site's development phase as the primary reference for type decisions.</p>
+          </div>
+          <div class="a-card__read"><span>Read</span><span class="a-card__arrow">↗</span></div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         4. SKETCHES
+         ============================================================ -->
+    <section class="main section">
+      <div class="section__head">
+        <div>
+          <div class="section__eyebrow">Sketches</div>
+          <h2 class="section__title">Watercolor &amp; visual experiments.</h2>
+          <p class="section__lede">Loose work from sketchbooks and afternoons outdoors.</p>
+        </div>
+        <a href="/watercolor" class="section__link">View more →</a>
+      </div>
+
+      <div class="sketches-grid">
+        <a href="/watercolor" class="sketch-card">
+          <div class="sketch-card__img" style="background-image:url('https://res.cloudinary.com/dxboziyz7/image/upload/v1778017987/3_3_2026_seagull_ahafhd.jpg')"></div>
+          <div class="sketch-card__meta">
+            <span class="sketch-card__title">Seagull</span>
+            <span class="sketch-card__tag">Watercolor · 2026</span>
+          </div>
+        </a>
+        <a href="/watercolor" class="sketch-card">
+          <div class="sketch-card__img" style="background-image:url('https://res.cloudinary.com/dxboziyz7/image/upload/v1778018318/IMG_1072_svcvcq.jpg')"></div>
+          <div class="sketch-card__meta">
+            <span class="sketch-card__title">Hiking Portrait</span>
+            <span class="sketch-card__tag">Watercolor · 2026</span>
+          </div>
+        </a>
+        <a href="/watercolor" class="sketch-card">
+          <div class="sketch-card__img" style="background:linear-gradient(135deg, rgba(45,42,80,0.06) 0 10px, transparent 10px 20px), #ece8e0; display:flex; align-items:center; justify-content:center; color:var(--mute); font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase;">Next sketch →</div>
+          <div class="sketch-card__meta">
+            <span class="sketch-card__title" style="color:var(--mute);">More in the gallery</span>
+            <span class="sketch-card__tag">→</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       5. LITERARY HIGHLIGHTS — full-bleed band
+       ============================================================ -->
+  <section class="highlights-band">
+    <div class="main">
+      <div class="section__head">
+        <div>
+          <div class="section__eyebrow">This week</div>
+          <h2 class="section__title">Literary highlights.</h2>
+          <p class="section__lede">Things I have read, looked at, watched or listened to this week.</p>
+        </div>
+        <a href="/highlights/history/" class="section__link">History →</a>
+      </div>
+
+      <ul class="highlights-list">
+
+        <li class="h-item">
+          <div class="h-item__num">01</div>
+          <div class="h-item__head">
+            <span class="h-item__kind">Read</span>
+            <h3 class="h-item__title">the burden to be well-spoken</h3>
+            <p class="h-item__desc">A deep dive into eloquence and its social correlation.</p>
+            <a class="h-item__link" href="https://substack.com/@ayushithakkar/note/p-168085628" target="_blank" rel="noopener">Open resource</a>
+          </div>
+          <div></div>
+        </li>
+
+        <li class="h-item">
+          <div class="h-item__num">02</div>
+          <div class="h-item__head">
+            <span class="h-item__kind">Watch</span>
+            <h3 class="h-item__title">Watercolor Techniques</h3>
+            <p class="h-item__desc">Professional watercolor tutorials.</p>
+          </div>
+          <div class="h-item__media">
+            <iframe src="https://www.youtube.com/embed/vbIiehO3AS0" title="Watercolor Techniques" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+        </li>
+
+        <li class="h-item">
+          <div class="h-item__num">03</div>
+          <div class="h-item__head">
+            <span class="h-item__kind">Listen</span>
+            <h3 class="h-item__title">Quik Stop — J. Cole</h3>
+            <p class="h-item__desc">Possibly the best song from his new album, <em>The Fall Off</em>.</p>
+          </div>
+          <div class="h-item__media">
+            <iframe src="https://www.youtube.com/embed/pDcIEs7xLv0" title="Quik Stop by J. Cole" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+        </li>
+
+      </ul>
+
+      <a href="/highlights/history/" class="history-link">View highlights history</a>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER (existing)
+       ============================================================ -->
+  <footer class="site-footer-minimal" aria-label="Footer">
+    <div class="site-footer-minimal__inner">
+      <span>© 2026 Denis Mwangangi</span>
+      <a href="/contact" class="site-footer-minimal__contact">Contact me</a>
+      <a href="#top" class="site-footer-minimal__top" aria-label="Back to top">↑</a>
+    </div>
+  </footer>
+
+</body>
+</html>

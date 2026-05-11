@@ -422,8 +422,9 @@ body.landing-page {
 .site-footer-minimal {
   margin-top: 0;
   padding: 28px 0;
-  background: var(--navy);
-  color: rgba(255, 255, 255, 0.7);
+  background: var(--bg-color);
+  color: var(--text-color);
+  border-top: 1px solid var(--line);
 }
 
 .site-footer-minimal__inner {
@@ -437,8 +438,9 @@ body.landing-page {
 }
 
 .site-footer-minimal__contact {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  border-bottom: 1px solid currentColor;
   padding-bottom: 1px;
+  opacity: 0.7;
 }
 
 .site-footer-minimal__top {
@@ -447,9 +449,10 @@ body.landing-page {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  color: var(--white);
+  border: 1px solid currentColor;
+  color: inherit;
   text-decoration: none;
+  opacity: 0.7;
 }
 
 @media (max-width: 980px) {
@@ -474,7 +477,7 @@ body.landing-page {
 
 @media (max-width: 640px) {
   :root {
-    --page-pad: 18px;
+    --page-pad: 4px;
   }
 
   .home-main {
@@ -482,34 +485,68 @@ body.landing-page {
     padding-top: 18px;
   }
 
-  .hero__panel {
-    aspect-ratio: auto;
-    height: 360px;
-    background: var(--navy);
+  .home-section--hero .hero__panel {
+    aspect-ratio: 3 / 2;
+    height: auto;
+    background: #111;
+    overflow: hidden;
   }
 
-  .hero__bg,
+  /* Show the full landscape image */
+  .home-section--hero .hero__bg {
+    display: block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+
   .hero__navy {
     display: none;
   }
 
+  /* Dark gradient at the bottom for text legibility */
+  .home-section--hero .hero__panel::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 55%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.65) 0%, transparent 100%);
+    z-index: 1;
+  }
+
+  /* Strip the white card — position title at the bottom */
   .hero__card {
-    left: 18px;
-    right: 18px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: auto;
+    background: transparent;
+    box-shadow: none;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: auto;
+    width: 100%;
     height: auto;
-    min-height: 220px;
-    align-items: center;
+    transform: none;
+    align-items: flex-end;
+    z-index: 2;
+    padding: 0 24px 28px;
   }
 
   .hero__inner {
-    padding: 30px 26px;
+    padding: 0;
+  }
+
+  /* Hide everything except the title */
+  .hero__card .eyebrow,
+  .hero__card .hero__lede {
+    display: none;
   }
 
   .hero__title {
-    font-size: 36px;
+    font-size: 28px;
+    color: var(--white);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+    margin: 0;
   }
 
   .home-nav,
