@@ -3,130 +3,176 @@
 <head>
   <meta charset="UTF-8">
   <title>{{ .Title }}</title>
-
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
   <link rel="stylesheet" href="{{ "css/blog.css" | relURL }}">
   <link rel="stylesheet" href="{{ "css/indexpage.css" | relURL }}">
+    <link rel="stylesheet" href="{{ "css/homepage.css" | relURL }}">
   <link rel="stylesheet" href="{{ "css/highlights.css" | relURL }}">
 </head>
 
-<body class="landing-page"> 
-    
-    <div class="page-container" id="top">
-        <main class="home-content">
-        {{ .Content }}
-        
-        <!-- Showcase Section -->
-        <div class="showcase-container">
-            <!-- Articles Section -->
-            <section class="showcase-section articles">
-                <h2 class="section-title">Articles <span class="arrow">→</span></h2>
-                <p class="section-description">Opinionated, longform narrative writing. <a href="/notes" class="section-link">Find more articles here</a>.</p>
-                
-                <div class="articles-grid">
-                    {{ range .Params.featured_articles }}
-                        {{ with $.Site.GetPage . }}
-                        <article class="article-card aspect-single">
-                            <a href="{{ .Permalink }}" class="card-link">
-                                <div class="card-header">
-                                    <span class="card-meta">{{ .Params.category | upper }}</span>
-                                    <span class="card-arrow" aria-hidden="true">↗</span>
-                                </div>
-                                <div class="card-content">
-                                    <h2 class="card-title">{{ .Title }}</h2>
-                                    <time class="card-date">{{ .Date.Format "January 2, 2006" }}</time>
-                                    {{ if .Params.description }}
-                                    <p class="card-excerpt">{{ .Params.description }}</p>
-                                    {{ else }}
-                                    <p class="card-excerpt">{{ .Summary | plainify | truncate 180 }}</p>
-                                    {{ end }}
-                                </div>
-                            </a>
-                        </article>
+<body class="landing-page">
+    <div class="page-container home-page" id="top">
+        <main class="home-main">
+            <section class="hero home-section home-section--hero">
+                <div class="hero__panel">
+                    <div class="hero__bg" style="background-image: url('{{ .Params.hero_image | default "/images/hero-image.png" | relURL }}')"></div>
+                    <div class="hero__navy" aria-hidden="true"></div>
+                    <div class="hero__card">
+                        <div class="hero__inner">
+                            <p class="eyebrow">{{ .Params.hero_eyebrow | default "Digital Garden" }}</p>
+                            <h1 class="hero__title">{{ .Params.hero_title | default "Welcome to Denis' garden." }}</h1>
+                            <p class="hero__lede">By day (and often by night), I'm a writer, developer, and a mediocre watercolor sketch artist.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="home-section home-section--nav" aria-label="Navigation">
+                <div class="home-nav">
+                    <a class="home-nav__tile home-nav__tile--navy" href="/me">
+                        <span class="home-nav__label">About</span>
+                        <span class="home-nav__title">About me</span>
+                        <span class="home-nav__go"><span>Personal &amp; professional</span><span>→</span></span>
+                    </a>
+                    <a class="home-nav__tile home-nav__tile--cv" href="/resume/Denis_K_Mwangangi_Resume.pdf" download>
+                        <span class="home-nav__label">Get</span>
+                        <span class="home-nav__title">Download CV</span>
+                        <span class="home-nav__go"><span>PDF résumé</span><span>↓</span></span>
+                    </a>
+                    <a class="home-nav__tile" href="/site">
+                        <span class="home-nav__label">Meta</span>
+                        <span class="home-nav__title">About this site</span>
+                        <span class="home-nav__go"><span>Philosophy &amp; build</span><span>→</span></span>
+                    </a>
+                    <a class="home-nav__tile home-nav__tile--projects" href="/projects">
+                        <span class="home-nav__label">Work</span>
+                        <span class="home-nav__title">Projects</span>
+                        <span class="home-nav__go"><span>What I've built</span><span>→</span></span>
+                    </a>
+                </div>
+
+                <div class="home-features" role="group" aria-label="Site features">
+                    <span class="home-features__label">Features</span>
+                    <span class="home-features__text">Theme</span>
+                    <span class="chip" id="theme-auto">Auto</span>
+                    <span class="chip" id="theme-light">Light</span>
+                    <span class="chip" id="theme-dark">Dark</span>
+                    <a href="/graph" class="chip home-features__right">Graph</a>
+                    <a href="/help" class="chip">Help</a>
+                </div>
+            </section>
+
+            <section class="home-section">
+                <div class="section__head">
+                    <div>
+                        <div class="section__eyebrow">Articles</div>
+                        <h2 class="section__title">Opinionated, longform writing.</h2>
+                        <p class="section__lede">Essays on typography, metadata, GTM engineering, and the slow work of building a digital garden in public.</p>
+                    </div>
+                    <a href="/notes" class="section__link">All notes →</a>
+                </div>
+
+                <div class="home-card-grid">
+                    {{ range $index, $articleRef := .Params.featured_articles }}
+                        {{ with $.Site.GetPage $articleRef }}
+                        <a href="{{ .RelPermalink }}" class="card{{ if eq $index 1 }} card--navy{{ end }}">
+                            <p class="card__title">{{ .Title }} <span class="card__meta">{{ with .Params.category }}{{ . }}{{ else }}Article{{ end }}, {{ .Date.Format "2006" }}</span></p>
+                            <span class="card__read">Read →</span>
+                        </a>
                         {{ end }}
                     {{ end }}
                 </div>
             </section>
-            
-            <!-- Sketches Section -->
-            <section class="showcase-section sketches">
-                <h2 class="section-title">Sketches <span class="arrow">→</span></h2>
-                <p class="section-description">Watercolor sketches and visual experiments. <a href="/watercolor" class="section-link">View more</a>.</p>
-                
+
+            <section class="home-section">
+                <div class="section__head">
+                    <div>
+                        <div class="section__eyebrow">Sketches</div>
+                        <h2 class="section__title">Watercolor &amp; visual experiments.</h2>
+                        <p class="section__lede">Loose work from sketchbooks and afternoons outdoors.</p>
+                    </div>
+                    <a href="/watercolor" class="section__link">View more →</a>
+                </div>
+
                 <div class="sketches-grid">
                     {{ range .Params.featured_sketches }}
-                    <div class="sketch-item">
-                        <a href="{{ .link }}" class="sketch-name-link">{{ .title }}</a>
-                        <div class="sketch-image-wrapper">
-                            <img src="{{ .image }}" alt="{{ .title }}" class="sketch-image">
-                        </div>
-                    </div>
+                    <a href="{{ .link }}" class="sketch-bare">
+                        <figure>
+                            <img src="{{ .image }}" alt="{{ .title }}">
+                            <figcaption>{{ .title }}</figcaption>
+                        </figure>
+                    </a>
                     {{ end }}
                 </div>
             </section>
-        </div>
-        
-        <!-- Literary Highlights Section -->
-        <div class="highlights-section">
-            <h2 class="section-title">Literary Highlights <span class="arrow">→</span></h2>
-            <p class="section-description">Things I have read, looked at (art), watched or listened to this week</p>
-            
-            <ul class="highlights-list">
-                {{ $homeHighlights := .Params.highlights }}
-                {{ with $.Site.GetPage "/highlights" }}
-                    {{ if .Params.highlights }}
-                        {{ $homeHighlights = .Params.highlights }}
-                    {{ else }}
-                        {{ with .Params.archiveWeeks }}
-                            {{ with index . 0 }}
-                                {{ with .highlights }}
-                                    {{ $homeHighlights = . }}
+
+            <section class="highlights-band">
+                <div class="home-section home-section--wide">
+                    <div class="section__head">
+                        <div>
+                            <div class="section__eyebrow">This week</div>
+                            <h2 class="section__title">Literary highlights.</h2>
+                            <p class="section__lede">Things I have read, looked at, watched or listened to this week.</p>
+                        </div>
+                        <a href="/highlights/history/" class="section__link">History →</a>
+                    </div>
+
+                    <ul class="highlights-list">
+                        {{ $homeHighlights := .Params.highlights }}
+                        {{ with $.Site.GetPage "/highlights" }}
+                            {{ if .Params.highlights }}
+                                {{ $homeHighlights = .Params.highlights }}
+                            {{ else }}
+                                {{ with .Params.archiveWeeks }}
+                                    {{ with index . 0 }}
+                                        {{ with .highlights }}
+                                            {{ $homeHighlights = . }}
+                                        {{ end }}
+                                    {{ end }}
                                 {{ end }}
                             {{ end }}
                         {{ end }}
-                    {{ end }}
-                {{ end }}
 
-                {{ range $homeHighlights }}
-                <li class="highlight-item">
-                    <p class="highlight-resource"><strong>{{ .title }}</strong></p>
+                        {{ range $homeHighlights }}
+                        <li class="highlight-item">
+                            <p class="highlight-resource"><strong>{{ .title }}</strong></p>
 
-                    {{ if .link }}
-                        {{ if or (eq .type "video") (eq .type "music") }}
-                            {{ $mediaID := replaceRE `^.*(?:youtu\.be/|v=)([^&?#]+).*$` `$1` .link }}
-                            {{ if and $mediaID (ne $mediaID .link) }}
-                                <div class="highlight-embed {{ if eq .type "music" }}highlight-embed-music{{ else }}highlight-embed-video{{ end }}">
-                                    <iframe
-                                        src="https://www.youtube.com/embed/{{ $mediaID }}"
-                                        title="{{ .title }}"
-                                        loading="lazy"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                        referrerpolicy="strict-origin-when-cross-origin"
-                                        allowfullscreen>
-                                    </iframe>
-                                </div>
-                            {{ else }}
-                                <a href="{{ .link }}" target="_blank" rel="noopener noreferrer">Open resource ↗</a>
+                            {{ if .link }}
+                                {{ if or (eq .type "video") (eq .type "music") }}
+                                    {{ $mediaID := replaceRE `^.*(?:youtu\.be/|v=)([^&?#]+).*$` `$1` .link }}
+                                    {{ if and $mediaID (ne $mediaID .link) }}
+                                        <div class="highlight-embed {{ if eq .type "music" }}highlight-embed-music{{ else }}highlight-embed-video{{ end }}">
+                                            <iframe
+                                                src="https://www.youtube.com/embed/{{ $mediaID }}"
+                                                title="{{ .title }}"
+                                                loading="lazy"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                referrerpolicy="strict-origin-when-cross-origin"
+                                                allowfullscreen>
+                                            </iframe>
+                                        </div>
+                                    {{ else }}
+                                        <a href="{{ .link }}" target="_blank" rel="noopener noreferrer">Open resource ↗</a>
+                                    {{ end }}
+                                {{ else }}
+                                    <a href="{{ .link }}" target="_blank" rel="noopener noreferrer">Open resource ↗</a>
+                                {{ end }}
+                            {{ else if .image }}
+                                <figure class="highlight-image-wrap">
+                                    <img src="{{ .image }}" alt="{{ .title }}" class="highlight-inline-image">
+                                </figure>
                             {{ end }}
-                        {{ else }}
-                            <a href="{{ .link }}" target="_blank" rel="noopener noreferrer">Open resource ↗</a>
-                        {{ end }}
-                    {{ else if .image }}
-                        <figure class="highlight-image-wrap">
-                            <img src="{{ .image }}" alt="{{ .title }}" class="highlight-inline-image">
-                        </figure>
-                    {{ end }}
 
-                    {{ if .description }}<p class="highlight-description">{{ .description }}</p>{{ end }}
-                </li>
-                {{ end }}
-            </ul>
-            
-            <a href="/highlights/history/" class="history-link">View highlights history ↗</a>
-        </div>
-        
+                            {{ if .description }}<p class="highlight-description">{{ .description }}</p>{{ end }}
+                        </li>
+                        {{ end }}
+                    </ul>
+
+                    <a href="/highlights/history/" class="history-link">View highlights history ↗</a>
+                </div>
+            </section>
         </main>
     </div>
 
@@ -134,11 +180,11 @@
         <div class="site-footer-minimal__inner">
             <span class="site-footer-minimal__copy">© 2026 Denis Mwangangi</span>
             <a href="/contact" class="site-footer-minimal__contact">Contact me</a>
-            <a href="#" class="site-footer-minimal__top" aria-label="Back to top">↑</a>
+            <a href="#top" class="site-footer-minimal__top" aria-label="Back to top">↑</a>
         </div>
     </footer>
 
-  <script src="{{ "js/header.js" | relURL }}" defer></script>
-  <script src="{{ "js/theme.js" | relURL }}" defer class="jim"></script>
+    <script src="{{ "js/header.js" | relURL }}" defer></script>
+    <script src="{{ "js/theme.js" | relURL }}" defer class="jim"></script>
 </body>
 </html>

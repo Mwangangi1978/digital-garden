@@ -1,16 +1,20 @@
 ---
 title: "Home"
 layout: "index"
+hero_image: "https://res.cloudinary.com/dxboziyz7/image/upload/q_auto/f_auto/v1778532521/DSC00586_1_sylotz.jpg"
 featured_articles:
+  - "notes/2025/you-can-never-travel-the-world-alone"
   - "notes/2025/typography-constitution"
-  - "notes/2026/metadata-design"
-  - "notes/2025/typography-constitution"
+  - "notes/2025/you-will-always-be-poor-aemilianus"
 featured_sketches:
   - title: "Seagull"
     image: "https://res.cloudinary.com/dxboziyz7/image/upload/v1778017987/3_3_2026_seagull_ahafhd.jpg"
     link: "/watercolor"
   - title: "Hiking Portrait"
     image: "https://res.cloudinary.com/dxboziyz7/image/upload/v1778018318/IMG_1072_svcvcq.jpg"
+    link: "/watercolor"
+  - title: "Blueberries"
+    image: "https://res.cloudinary.com/dxboziyz7/image/upload/v1778017988/1_3_2026_blueberries_jhtooa.jpg"
     link: "/watercolor"
 highlights:
   - title: "The Art of Doing Nothing"
@@ -35,7 +39,7 @@ highlights:
   <img src="/images/hero-image.png" alt="Digital Garden" class="hero-image">
 </div>
 
-Welcome to **Denis Mwangangi's** digital garden. By day (and often by night), I’m a writer, developer, and a mediocre watercolor sketch artist. Currently, I’m shifting my focus toward **GTM engineering**, exploring the art of **"internalling."** ( Showing you how to vibecode your own internal tools from scratch and finally break free from the weight of endless SaaS subscriptions)
+Welcome to **Denis'** digital garden. By day (and often by night), I’m a writer, developer, and a mediocre watercolor sketch artist. Currently, I’m shifting my focus toward **GTM engineering**, exploring the art of **"internalling."** ( Showing you how to vibecode your own internal tools from scratch and finally break free from the weight of endless SaaS subscriptions)
 
 NAVIGATION: For information about myself, professionally & personally, see the <a href="/me">about-me page</a>; for information about my site’s philosophy, design & development, see the <a href="/site">about page</a>; for my writing, see the <a href="/notes">notes page</a>; for the relationship graph, see the <a href="/graph">graph page</a>.
 

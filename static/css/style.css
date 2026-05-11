@@ -1104,49 +1104,6 @@
     font-weight: bold;
   }
   
-  /* Landing Page Specific */
-  .landing-page {
-    background-color: #00ffff;
-    color: var(--text-light);
-    --accent-color: #242038;
-  }
-  
-  /* Explicit Light Theme - Highest Priority */
-  [data-theme="light"] .landing-page {
-    background-color: #00ffff;
-    color: var(--text-light);
-    --accent-color: #242038;
-  }
-  
-  /* Explicit Dark Theme */
-  [data-theme="dark"] .landing-page {
-    background-color: #242038;
-    color: var(--text-dark);
-    --accent-color: #f6c177;
-  }
-  
-  /* Auto Mode - System Preference Dark */
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]):not([data-theme="dark"]) .landing-page {
-      background-color: #242038;
-      color: var(--text-dark);
-      --accent-color: #f6c177;
-    }
-  }
-  
-  /* Auto Mode - System Preference Light */
-  @media (prefers-color-scheme: light) {
-    :root:not([data-theme="light"]):not([data-theme="dark"]) .landing-page {
-      background-color: #00ffff;
-      color: var(--text-light);
-      --accent-color: #242038;
-    }
-  }
-  
-  /* Landing Page Links - Small Caps */
-  .landing-page a {
-    font-variant: small-caps;
-  }
   
   /* ============================================================================
    25. HEADER & NAVIGATION
