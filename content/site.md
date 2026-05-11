@@ -1,5 +1,6 @@
 ---
 title: "ABOUT THIS WEBSITE"
+type: "site"
 date: 2026-01-01T15:21:27+03:00
 lastmod: 2026-01-01T15:21:27+03:00
 status: draft
