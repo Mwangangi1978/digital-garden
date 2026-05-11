@@ -1157,7 +1157,9 @@
   width: 100%;
   margin-bottom: 0;
   background-color: var(--bg-color);
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   border-bottom: 1px solid var(--blog-border, rgba(0,0,0,0.10));
 }
 
@@ -1168,7 +1170,8 @@
   justify-content: space-between;
   gap: 16px;
   font-family: var(--font-heading);
-  padding: 0.6rem 1.5rem;
+  min-height: 100px;
+  padding: 0 1.5rem;
 }
 
 /* ── Brand / site logo ── */
@@ -1184,7 +1187,7 @@
 
 /* Logo image */
 .nav-logo {
-  height: 20px;
+  height: 60px;
   width: auto;
   display: block;
   margin: 0;
@@ -1203,9 +1206,9 @@
 }
 
 .nav-item {
-  font-size: 1.3rem;
+  font-size: 1rem;
   font-weight: 700;
-  text-transform: uppercase;
+  text-transform: lowercase;
   color: var(--text-color);
   text-decoration: none;
   letter-spacing: 0.04em;
@@ -1240,8 +1243,8 @@
 .nav-social-link:hover  { opacity: 1; background-color: transparent; }
 
 .nav-social-icon {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   display: block;
   margin: 0;
 }
@@ -1359,7 +1362,7 @@
   font-family: var(--font-heading);
   font-size: 1.4rem;
   font-weight: 700;
-  text-transform: uppercase;
+  text-transform: lowercase;
   color: var(--text-color);
   text-decoration: none;
   padding: 0.55rem 0;
@@ -1377,7 +1380,14 @@
   .hamburger-btn         { display: flex; }
   .mobile-nav-menu       { display: block; }
 
-  .site-navbar { padding: 0.4rem 1rem; }
+  .site-navbar {
+    min-height: 72px;
+    padding: 0 1rem;
+  }
+
+  .nav-logo {
+    height: 28px;
+  }
 }
 
 /* ============================================================================

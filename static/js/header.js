@@ -12,10 +12,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <!-- Desktop nav links (centre) -->
       <div class="nav-links desktop-nav-links">
-        <a href="/site"   class="nav-item">Site</a>
-        <a href="/me"     class="nav-item">Me</a>
-        <a href="/notes"  class="nav-item">Notes</a>
-        <a href="/graph"  class="nav-item">Graph</a>
+        <a href="/site"   class="nav-item">site</a>
+        <a href="/me"     class="nav-item">me</a>
+        <a href="/notes"  class="nav-item">notes</a>
+        <a href="/graph"  class="nav-item">graph</a>
       </div>
 
       <!-- Desktop search + social icons (right) -->
@@ -48,10 +48,10 @@ document.addEventListener("DOMContentLoaded", () => {
     <!-- Mobile top-dropdown menu (sibling to nav, inside header, drops from top) -->
     <div class="mobile-nav-menu" role="navigation" aria-hidden="true">
       <nav class="mobile-menu-links">
-        <a href="/site"   class="mobile-nav-item">Site</a>
-        <a href="/me"     class="mobile-nav-item">Me</a>
-        <a href="/notes"  class="mobile-nav-item">Notes</a>
-        <a href="/graph"  class="mobile-nav-item">Graph</a>
+            <a href="/site"   class="mobile-nav-item">site</a>
+            <a href="/me"     class="mobile-nav-item">me</a>
+            <a href="/notes"  class="mobile-nav-item">notes</a>
+            <a href="/graph"  class="mobile-nav-item">graph</a>
       </nav>
     </div>
   `;

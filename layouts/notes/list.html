@@ -31,6 +31,8 @@
       <h2 id="featTitle">{{ (index $featured 0).Title }}</h2>
       <span id="featDate">{{ (index $featured 0).Date.Format "January 2, 2006" }}</span>
     </div>
+    <button class="carousel-btn carousel-btn--prev" id="carouselPrev" aria-label="Previous slide">‹</button>
+    <button class="carousel-btn carousel-btn--next" id="carouselNext" aria-label="Next slide">›</button>
   </div>
   <ol class="dots" id="dots"></ol>
 </section>
@@ -45,24 +47,58 @@
   const featImg = document.getElementById('featImg');
   const featTitle = document.getElementById('featTitle');
   const featDate = document.getElementById('featDate');
+  const carouselPrev = document.getElementById('carouselPrev');
+  const carouselNext = document.getElementById('carouselNext');
+  let currentSlide = 0;
+  let autoplayTimer = null;
   
   function setFeat(i){
-    const it = FEATURED[i];
+    currentSlide = (i + FEATURED.length) % FEATURED.length;
+    const it = FEATURED[currentSlide];
     featImg.style.backgroundImage = `url('${it.image}')`;
     featTitle.textContent = it.title;
     featDate.textContent = it.date;
-    [...dots.children].forEach((li, n) => li.firstChild.classList.toggle('is-active', n === i));
+    [...dots.children].forEach((li, n) => li.firstChild.classList.toggle('is-active', n === currentSlide));
+  }
+
+  function stopAutoplay(){
+    if (autoplayTimer) {
+      window.clearInterval(autoplayTimer);
+      autoplayTimer = null;
+    }
+  }
+
+  function startAutoplay(){
+    stopAutoplay();
+    autoplayTimer = window.setInterval(() => setFeat(currentSlide + 1), 5000);
   }
   
   FEATURED.forEach((_, n) => {
     const li = document.createElement('li');
     const btn = document.createElement('button');
-    btn.textContent = n+1;
+    btn.textContent = '';
+    btn.setAttribute('aria-label', `Go to slide ${n + 1}`);
     if (n === 0) btn.classList.add('is-active');
-    btn.addEventListener('click', () => setFeat(n));
+    btn.addEventListener('click', () => {
+      setFeat(n);
+      startAutoplay();
+    });
     li.appendChild(btn);
     dots.appendChild(li);
   });
+
+  carouselPrev?.addEventListener('click', () => {
+    setFeat(currentSlide - 1);
+    startAutoplay();
+  });
+
+  carouselNext?.addEventListener('click', () => {
+    setFeat(currentSlide + 1);
+    startAutoplay();
+  });
+
+  setFeat(0);
+  startAutoplay();
 </script>
 {{ end }}
 
@@ -74,9 +110,9 @@
 
     {{/* ── Image card if image exists ── */}}
     {{ with $page.Params.image }}
-    <a href="{{ $page.Permalink }}" class="card card--img">
+    <div class="card card--img" aria-hidden="true">
       <div class="card__img" style="background-image: url('{{ . }}')"></div>
-    </a>
+    </div>
     {{ end }}
 
     {{/* ── Text card (title + metadata) ── */}}
