@@ -2,11 +2,159 @@
    SITE PAGE LAYOUT
    ========================================================================== */
 
+/* ==========================================================================
+   SITE HERO SECTION
+   ========================================================================== */
+
+.site-hero {
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: 2.25rem;
+}
+
+.site-hero__panel {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1140 / 330;
+  background: #fff;
+  overflow: hidden;
+}
+
+.site-hero__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: 72% 50%;
+}
+
+.site-hero__navy {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 40%;
+  background: #2d2a50;
+}
+
+.site-hero__card {
+  position: absolute;
+  left: 8.3%;
+  top: 13.8%;
+  width: 41.6%;
+  height: 72.4%;
+  background: #fff;
+  display: flex;
+  align-items: flex-end;
+}
+
+.site-hero__inner {
+  padding: 0 50px 40px;
+  width: 100%;
+}
+
+.site-hero__eyebrow {
+  margin: 0 0 14px;
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: #2d2a50;
+}
+
+.site-hero__eyebrow::after {
+  content: "";
+  display: block;
+  width: 55px;
+  height: 2px;
+  margin-top: 10px;
+  background: #2d2a50;
+}
+
+.site-hero__title {
+  margin: 0 0 12px;
+  font-family: var(--font-heading);
+  font-size: 46px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: #2d2a50;
+}
+
+.site-hero__lede {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.4;
+  color: #777;
+}
+
+/* Responsive: 980px breakpoint */
+@media (max-width: 980px) {
+  .site-hero__panel {
+    aspect-ratio: 980 / 245;
+  }
+
+  .site-hero__card {
+    left: 8.3%;
+    top: 13.8%;
+    width: 41.6%;
+    height: 72.4%;
+  }
+
+  .site-hero__inner {
+    padding: 0 30px 24px;
+  }
+
+  .site-hero__title {
+    font-size: 36px;
+  }
+
+  .site-hero__lede {
+    font-size: 15px;
+  }
+}
+
+/* Responsive: 640px breakpoint (mobile) */
+@media (max-width: 640px) {
+  .site-hero__panel {
+    aspect-ratio: 640 / 180;
+  }
+
+  .site-hero__card {
+    left: 5%;
+    top: 10%;
+    width: 70%;
+    height: 80%;
+  }
+
+  .site-hero__inner {
+    padding: 0 15px 12px;
+  }
+
+  .site-hero__eyebrow {
+    font-size: 12px;
+    margin: 0 0 8px;
+  }
+
+  .site-hero__eyebrow::after {
+    width: 40px;
+    margin-top: 6px;
+  }
+
+  .site-hero__title {
+    font-size: 24px;
+    margin: 0 0 6px;
+  }
+
+  .site-hero__lede {
+    font-size: 13px;
+    line-height: 1.3;
+  }
+}
+
 .site-page {
   position: relative;
 }
 
-/* Header section with title, meta, and description */
 .site-page-header {
   text-align: center;
   margin-bottom: 3rem;
@@ -48,6 +196,14 @@
   text-align: center;
 }
 
+/* Keep the shared header hamburger layout intact on /site.
+   articles.css has a generic `.mobile-only` rule that can turn this button into block. */
+@media (max-width: 767px) {
+  .site-header .hamburger-btn.mobile-only {
+    display: flex;
+  }
+}
+
 /* Desktop grid layout - two columns */
 @media (min-width: 1024px) {
   .site-layout {
@@ -61,7 +217,7 @@
 .site-toc {
   grid-column: 1;
   position: sticky;
-  top: 1rem;
+  top: calc(100px + 0.75rem);
   text-align: left;
   align-self: start;
   z-index: 100;

@@ -6,6 +6,20 @@
 {{ define "main" }}
 
 <div class="page-container" id="top">
+  <section class="site-hero" aria-label="Site hero">
+    <div class="site-hero__panel">
+      <div class="site-hero__bg" style="background-image: url('{{ .Params.hero_image | default "https://res.cloudinary.com/dxboziyz7/image/upload/q_auto/f_auto/v1778516558/DSC09400_1_t3idgs.jpg" }}')"></div>
+      <div class="site-hero__navy" aria-hidden="true"></div>
+      <div class="site-hero__card">
+        <div class="site-hero__inner">
+          <p class="site-hero__eyebrow">ABOUT</p>
+          <h1 class="site-hero__title">This Website</h1>
+          <p class="site-hero__lede">Why I built this site, its design philosophy and development process.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <article class="site-page">
 
     {{/* Check if dates are different */}}
@@ -75,25 +89,6 @@
     {{/* The (?s) flag makes . match newlines, and we use non-greedy .*? to match paragraph content */}}
     {{ $sidenotePattern := `(?s)(<p[^>]*>)(.*?)(</p>)(\s*(?:<br\s*/?>)?\s*)(<aside[^>]*class="[^"]*sidenote[^"]*"[^>]*>.*?</aside>)` }}
     {{ $processedContent = replaceRE $sidenotePattern `$1$2$5$3` $processedContent }}
-
-    <div class="site-page-header">
-      <div class="site-title">{{ .Title }}</div>
-      <div class="site-meta">
-        {{ if $hasUpdate }}
-        <time title="Published: {{ .Date.Format $dateFormat }}">{{ .Date.Format $dateFormat }}</time>
-        —
-        <time title="Last modified: {{ .Lastmod.Format $dateFormat }}">{{ .Lastmod.Format $dateFormat }}</time>
-        {{ else }}
-        <time title="Published: {{ .Date.Format $dateFormat }}">{{ .Date.Format $dateFormat }}</time>
-        {{ end }}
-        <span class="status">status: [{{ .Params.status | title }}]</span>
-      </div>
-      
-      {{/* Description text - extract first paragraph or use description param */}}
-      
-      <div class="site-description">This page covers why I decided to build this site, it's design philosophy and development process.</div>
-      
-    </div>
 
     {{/* Mobile Table of Contents - shown after description */}}
     {{ if gt (len $tocItems) 0 }}

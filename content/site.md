@@ -3,6 +3,7 @@ title: "ABOUT THIS WEBSITE"
 date: 2026-01-01T15:21:27+03:00
 lastmod: 2026-01-01T15:21:27+03:00
 status: draft
+hero_image: "https://res.cloudinary.com/dxboziyz7/image/upload/q_auto/f_auto/v1778516558/DSC09400_1_t3idgs.jpg"
 sections:
   - id: "beginning"
     title: "Beginning"
