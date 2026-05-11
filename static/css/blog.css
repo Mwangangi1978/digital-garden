@@ -1,315 +1,520 @@
-/* --- Variables & Core Layout --- */
+/* =============================================================================
+   BLOG / NOTES INDEX  —  blog.css
+   Styles for the notes list page (layouts/notes/list.html)
+   ============================================================================= */
+
+/* ── Variables ── */
 :root {
-  --blog-background: var(--bg-color);
-  --blog-foreground: var(--text-color);
-  --blog-border: rgba(0, 0, 0, 0.12);
-  --blog-secondary: rgba(0, 0, 0, 0.08);
-  --blog-secondary-foreground: var(--text-color);
-  --blog-muted-foreground: rgba(0, 0, 0, 0.6);
-  --blog-radius: 999px;
+  --blog-border:              rgba(0, 0, 0, 0.12);
+  --blog-secondary:           rgba(0, 0, 0, 0.06);
+  --blog-muted-fg:            rgba(0, 0, 0, 0.55);
+  --blog-radius:              999px;
+  --notes-purple:             #2d2a50;
+  --notes-purple-light:       #3d395e;
+  --notes-grey-card:          #f2f2f2;
+  --notes-grey-card-dark:     rgba(255, 255, 255, 0.07);
 }
 
 [data-theme="dark"] {
-  --blog-border: rgba(255, 255, 255, 0.16);
-  --blog-secondary: rgba(255, 255, 255, 0.12);
-  --blog-muted-foreground: rgba(255, 255, 255, 0.7);
+  --blog-border:    rgba(255, 255, 255, 0.15);
+  --blog-secondary: rgba(255, 255, 255, 0.10);
+  --blog-muted-fg:  rgba(255, 255, 255, 0.60);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --blog-border: rgba(255, 255, 255, 0.16);
-    --blog-secondary: rgba(255, 255, 255, 0.12);
-    --blog-muted-foreground: rgba(255, 255, 255, 0.7);
+    --blog-border:    rgba(255, 255, 255, 0.15);
+    --blog-secondary: rgba(255, 255, 255, 0.10);
+    --blog-muted-fg:  rgba(255, 255, 255, 0.60);
   }
 }
 
-.site-header {
-  margin-bottom: 0rem;
-}
+/* ── Header hook spacing ── */
+.site-header       { margin-bottom: 0; }
+.writing-index-page { margin-top: 0; }
 
-.writing-index-page {
-  margin-top: 2.5rem;
-}
-
-@media (min-width: 1024px) {
-  .writing-index-page {
-    margin-top: 1.5rem;
+/* ── Full-bleed on mobile: override global page-container margins ── */
+@media (max-width: 767px) {
+  main.writing-index-main,
+  main.writing-index-main .page-container {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    max-width: 100% !important;
   }
 }
 
-.blog-index {
-  background-color: var(--blog-background);
-  color: var(--blog-foreground);
-  min-height: 100vh;
-  padding: 48px 0 64px;
-}
+/* =============================================================================
+   1. HERO  (half white-box / half background image — Anil Seth "Articles" style)
+   ============================================================================= */
 
-.blog-index__content {
+.notes-hero {
+  background-image: url('https://res.cloudinary.com/dxboziyz7/image/upload/q_auto/f_auto/v1778490894/DSC05237_tdpdnh.jpg');
+  background-size: cover;
+  background-position: center right;
   width: 100%;
-  padding: 0 24px;
-  margin: 0 auto;
+  min-height: 300px;
+  display: flex;
+  align-items: stretch;
 }
 
-.blog-index__header {
-  margin-bottom: 56px;
-  text-align: center;
+.notes-hero__box {
+  background-color: var(--bg-color);
+  padding: 48px 40px 48px 48px;
+  min-height: 300px;
+  width: 44%;
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
 }
 
-.blog-index__title {
+.notes-hero__eyebrow {
   font-family: var(--font-heading);
-  font-weight: bold;
-  font-size: 1.5rem;
-  font-variant: small-caps;
-  margin-bottom: 1rem;
-  margin-top: 0;
-  
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blog-muted-fg);
+  display: block;
+  margin-bottom: 4px;
 }
 
-.blog-index__subtitle {
-  font-size: var(--base-font-size);
-  line-height: var(--base-line-height);
-  max-width: 800px;
+.notes-hero__rule {
+  width: 55px;
+  border: none;
+  border-top: 2px solid var(--notes-purple);
+  margin: 8px 0 10px;
+}
+
+[data-theme="dark"] .notes-hero__rule {
+  border-top-color: var(--accent-color);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .notes-hero__rule {
+    border-top-color: var(--accent-color);
+  }
+}
+
+.notes-hero__title {
+  font-family: var(--font-heading);
+  font-size: clamp(2.4rem, 5vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--text-color);
+  margin: 0 0 14px;
+  hyphens: none;
+}
+
+.notes-hero__desc {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--blog-muted-fg);
+  margin: 0;
+  max-width: 340px;
+}
+
+@media (max-width: 767px) {
+  .notes-hero {
+    background-position: center center;
+    min-height: auto;
+  }
+  .notes-hero__box {
+    width: 80%;
+    min-height: 260px;
+    padding: 36px 28px;
+  }
+}
+
+@media (max-width: 479px) {
+  .notes-hero__box {
+    width: 88%;
+    padding: 28px 20px;
+  }
+  .notes-hero__title {
+    font-size: 2rem;
+  }
+}
+
+/* =============================================================================
+   2. FEATURED CAROUSEL
+   ============================================================================= */
+
+.carousel-section {
+  width: 100%;
+  padding: 0 0 4px;
+}
+
+.carousel-outer {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  background: #111;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.42s ease;
+  will-change: transform;
+}
+
+.carousel-slide {
+  flex: 0 0 100%;
+  position: relative;
+  min-height: 380px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  .carousel-slide { min-height: 260px; }
+}
+
+/* Full-bleed background image */
+.carousel-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Caption overlay */
+.carousel-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(45, 42, 80, 0.88);
+  color: #fff;
+  padding: 18px 28px 24px;
+  z-index: 2;
+}
+
+.carousel-caption__body { margin-bottom: 2px; }
+
+.carousel-caption__title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.1rem, 3vw, 1.6rem);
+  font-weight: 600;
+  line-height: 1.2;
+  color: #fff;
+  margin: 0;
+}
+
+.carousel-caption__meta {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 0;
+}
+
+/* Full-area click target */
+.carousel-fullclick {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: block;
+}
+
+/* Prev / Next buttons — inside the slider */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(45, 42, 80, 0.70);
+  color: #fff;
+  border: none;
+  font-size: 2.2rem;
+  line-height: 1;
+  padding: 6px 14px 10px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.carousel-btn:hover  { background: rgba(45, 42, 80, 0.95); }
+.carousel-btn--prev  { left: 12px;  border-radius: 0 4px 4px 0; }
+.carousel-btn--next  { right: 12px; border-radius: 4px 0 0 4px; }
+
+/* Pagination dots */
+.carousel-pips {
+  position: absolute;
+  bottom: 14px;
+  right: 20px;
+  display: flex;
+  gap: 6px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  z-index: 10;
+}
+
+.carousel-pip {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.carousel-pip.active,
+.carousel-pip:hover {
+  background: #fff;
+  box-shadow: 0 0 0 2px rgba(45, 42, 80, 0.5);
+}
+
+/* =============================================================================
+   3. FILTER TABS
+   ============================================================================= */
+
+.tabs-wrapper {
+  padding: 32px 24px 0;
+  max-width: 1400px;
   margin: 0 auto;
-  text-align: center;
 }
 
-/* --- Tabs --- */
 .tabs-container {
   display: flex;
   justify-content: center;
-  gap: 12px;
-  margin-bottom: 64px;
+  gap: 10px;
+  margin-bottom: 28px;
   flex-wrap: wrap;
 }
 
 .filter-tab.tab {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
+  gap: 7px;
+  padding: 9px 16px;
   background-color: var(--blog-secondary);
-  color: var(--blog-secondary-foreground);
+  color: var(--text-color);
   border-radius: var(--blog-radius);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  font-family: var(--font-heading);
   font-weight: 500;
   cursor: pointer;
   border: 1px solid var(--blog-border);
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
 }
 
-.filter-tab.tab:hover {
-  border-color: var(--blog-muted-foreground);
+.filter-tab.tab:hover     { border-color: var(--blog-muted-fg); }
+.filter-tab.tab.active    {
+  background-color: var(--notes-purple);
+  color: #fff;
+  border-color: var(--notes-purple);
 }
 
-.filter-tab.tab.active {
-  background-color: var(--blog-foreground);
-  color: var(--blog-background);
-  border-color: var(--blog-foreground);
+[data-theme="dark"] .filter-tab.tab.active {
+  background-color: var(--accent-color);
+  color: var(--text-dark);
+  border-color: var(--accent-color);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .filter-tab.tab.active {
+    background-color: var(--accent-color);
+    color: var(--text-dark);
+    border-color: var(--accent-color);
+  }
 }
 
 .tab-icon-wrapper {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+}
+.tab-icon-wrapper svg { width: 100%; height: 100%; }
+.tab-label { white-space: nowrap; }
+
+/* =============================================================================
+   4. BLOG INDEX WRAPPER
+   ============================================================================= */
+
+.blog-index {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  min-height: 40vh;
+  padding: 0 0 64px;
 }
 
-.tab-icon-wrapper svg {
+.blog-index__content {
   width: 100%;
-  height: 100%;
+  max-width: 1400px;
+  padding: 0 20px;
+  margin: 0 auto;
 }
 
-.tab-label {
-  white-space: nowrap;
-}
+.index-content-area { width: 100%; }
 
-/* --- List --- */
-.list-container {
-  display: flex;
-  flex-direction: column;
-}
+/* =============================================================================
+   5. CARDS GRID  (4 columns → 2 → 1)
+   ============================================================================= */
 
-.list-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 24px 0;
-  border-bottom: 1px solid var(--blog-border);
-}
-
-.list-item:last-child {
-  border-bottom: none;
-}
-
-.item-left {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  min-width: 0;
-}
-
-/* --- Grid Layout for Articles --- */
-.articles-grid {
+.cards-grid {
   display: grid;
-  grid-template-columns: repeat(1, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 12px;
   margin-bottom: 40px;
 }
 
-@media (min-width: 640px) {
-  .articles-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .articles-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-.article-card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 8px;
-  background-color: var(--bg-color);
-  border: 1px solid var(--blog-border);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  cursor: pointer;
-}
-
-.article-card:hover {
-  border-color: var(--blog-muted-foreground);
-}
-
-
-.article-card.aspect-single {
-  grid-column: span 1;
-  aspect-ratio: 1 / 1;
-}
-
-.article-card.aspect-double {
-  aspect-ratio: 2 / 1;
-}
-
-@media (min-width: 640px) {
-  .article-card.aspect-double {
-    grid-column: span 2;
-  }
+@media (max-width: 1023px) {
+  .cards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 639px) {
-  .article-card.aspect-double {
-    grid-column: span 1;
+  .cards-grid { grid-template-columns: 1fr; }
+}
+
+/* =============================================================================
+   6. NOTE CARDS
+   ============================================================================= */
+
+.note-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0;          /* Flush like Anil Seth */
+  transition: opacity 0.18s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  min-height: 190px;
+}
+
+.note-card:hover { opacity: 0.88; }
+
+/* Grey variant */
+.note-card.card-grey {
+  background-color: var(--notes-grey-card);
+  color: #111;
+}
+[data-theme="dark"] .note-card.card-grey {
+  background-color: var(--notes-grey-card-dark);
+  color: var(--text-color);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .note-card.card-grey {
+    background-color: var(--notes-grey-card-dark);
+    color: var(--text-color);
   }
 }
 
-.card-link {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: flex-start;
-  height: 100%;
-  text-decoration: none;
-  padding: 18px 18px 8px 18px;
-  gap: 12px;
+/* Accent / purple variant */
+.note-card.card-accent {
+  background-color: var(--notes-purple);
+  color: #fff;
+}
+.note-card.card-accent .card-meta,
+.note-card.card-accent .card-date,
+.note-card.card-accent .card-excerpt {
+  color: rgba(255, 255, 255, 0.72);
+}
+.note-card.card-accent .card-title,
+.note-card.card-accent .card-arrow {
+  color: #fff;
+}
+.note-card.card-accent .card-arrow {
+  color: rgba(255, 255, 255, 0.85);
+}
+.note-card.card-accent:hover .card-arrow {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
 }
 
+/* Card link resets */
+.note-card .card-link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  text-decoration: none;
+  padding: 20px 20px 16px;
+  gap: 0;
+  color: inherit;
+}
+.note-card .card-link::after,
+.note-card .card-link:hover {
+  content: none !important;
+  background-color: transparent !important;
+}
+
+/* Card internal layout */
 .card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 0.85rem;
-  line-height: 1.2;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .card-meta {
-  font-size: 0.7rem;
-  letter-spacing: 0.15em;
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
+  color: var(--blog-muted-fg);
   white-space: nowrap;
 }
 
-.card-arrow {
-  color: var(--accent-color);
-  font-size: 0.9rem;
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  opacity: 0.85;
-}
-
-/* Make the arrow a small circular badge on hover */
+/* Arrow badge */
 .card-arrow {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 999px;
-  background-color: transparent;
-  transition: background-color 0.18s ease, color 0.18s ease, transform 0.12s ease, box-shadow 0.18s ease;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--blog-muted-fg);
+  font-size: 0.85rem;
+  transition: background 0.18s ease, color 0.18s ease, transform 0.12s ease;
+  flex-shrink: 0;
 }
 
-.article-card:hover .card-arrow {
-  background-color: var(--accent-color);
-  color: var(--bg-color);
+.note-card.card-grey:hover .card-arrow {
+  background-color: var(--notes-purple);
+  color: #fff;
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(var(--accent-color-rgb, 0,0,0), 0.12);
-  opacity: 1;
-}
-
-/* Prevent the global link pseudo-icon (° or ↗) from being appended
-   to the card link. The top-right `.card-arrow` is used instead. */
-.article-card .card-link::after,
-.article-card .card-link a::after {
-  content: none !important;
-}
-
-/* Disable global link hover styling inside article cards so the card
-   doesn't get the accent hover background on link hover. */
-.article-card .card-link:hover {
-  background-color: transparent !important;
 }
 
 .card-content {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  margin-top: 4px;
-  margin-top: auto;
+  gap: 5px;
+  flex: 1;
+  justify-content: flex-end;
 }
 
 .card-title {
   font-family: var(--font-heading);
-  font-size: 1.5rem;
-  font-weight: 600;
-  line-height: 1.2;
-  margin: 0 0 4px 0;
-  color: var(--blog-foreground);
+  font-size: 1.15rem;
+  font-weight: 400;
+  line-height: 1.25;
+  margin: 0 0 4px;
   word-break: break-word;
 }
 
-.article-card.aspect-double .card-title {
-  font-size: 1.5rem;
-}
-
 .card-date {
-  font-size: 0.75rem;
-  color: var(--blog-muted-foreground);
-  font-style: normal;
+  font-size: 0.72rem;
+  color: var(--blog-muted-fg);
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
+  font-style: normal;
 }
 
 .card-excerpt {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   line-height: 1.5;
-  color: var(--blog-muted-foreground);
-  margin: 0 0 2px 0;
+  color: var(--blog-muted-fg);
+  margin: 0;
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 4;
@@ -317,103 +522,80 @@
   word-break: break-word;
 }
 
-.article-card.aspect-double .card-excerpt {
-  -webkit-line-clamp: 5;
+/* =============================================================================
+   7. IMAGE CARD LAYOUT  (text left / image right)
+   ============================================================================= */
+
+.note-card.has-image .card-link {
+  padding: 0;
 }
 
-.diamond-bullet {
-  width: 6px;
-  height: 6px;
-  background-color: var(--blog-muted-foreground);
-  transform: rotate(45deg);
-  flex-shrink: 0;
-}
-
-.item-title {
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: var(--blog-foreground);
+.card-img-layout {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
+  height: 100%;
+  min-height: 190px;
 }
 
-.item-title::after {
-  content: none;
+.card-text-col {
+  flex: 1;
+  padding: 20px 18px 16px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.card-text-col .card-content { flex: 1; justify-content: flex-end; }
+
+.card-img-col {
+  flex: 0 0 42%;
+  max-width: 42%;
+  overflow: hidden;
 }
 
-.item-date {
-  font-size: 0.9rem;
-  color: var(--blog-muted-foreground);
-  font-style: italic;
-  white-space: nowrap;
-  margin-left: 24px;
+.card-img-col img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
+
+@media (max-width: 639px) {
+  .card-img-layout      { flex-direction: column; }
+  .card-img-col         { flex: 0 0 180px; max-width: 100%; }
+  .card-img-col img     { height: 180px; }
+}
+
+/* =============================================================================
+   8. EMPTY STATE
+   ============================================================================= */
 
 .empty-state {
   padding: 4rem 0;
   text-align: center;
-  color: var(--blog-muted-foreground);
+  color: var(--blog-muted-fg);
 }
 
-/* Mobile Adjustments */
-@media (max-width: 768px) {
-  .blog-index {
-    padding: 32px 0 48px;
-  }
+/* =============================================================================
+   9. MOBILE ADJUSTMENTS
+   ============================================================================= */
 
-  .blog-index__header {
-    margin-bottom: 40px;
-  }
-
-  .tabs-container {
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-  }
+@media (max-width: 767px) {
+  .tabs-wrapper      { padding: 20px 8px 0; }
+  .tabs-container    { gap: 6px; margin-bottom: 16px; }
 
   .filter-tab.tab {
-    flex: 0 1 calc(33.333% - 10px);
+    flex: 0 1 calc(33.333% - 6px);
     min-width: 0;
-    padding: 6px 8px;
-    gap: 6px;
-    font-size: 0.68rem;
+    padding: 6px 6px;
+    gap: 4px;
+    font-size: 0.64rem;
     justify-content: center;
   }
+  .tab-icon-wrapper  { width: 11px; height: 11px; }
 
-  .tab-icon-wrapper {
-    width: 12px;
-    height: 12px;
-  }
+  .blog-index        { padding: 0 0 48px; }
+  .blog-index__content { padding: 0 6px; }
 
-  .tab-label {
-    letter-spacing: 0;
-  }
-
-  .articles-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .article-card.aspect-single {
-    aspect-ratio: auto;
-    min-height: 280px;
-  }
-
-  .article-card.aspect-double {
-    aspect-ratio: auto;
-    min-height: 280px;
-    grid-column: span 1;
-  }
-
-  .card-title {
-    font-size: 1.2rem;
-  }
-
-  .card-excerpt {
-    font-size: 0.85rem;
-    -webkit-line-clamp: 3;
-  }
+  .cards-grid        { gap: 8px; }
+  .note-card         { min-height: 140px; }
+  .card-title        { font-size: 1rem; }
 }
-
