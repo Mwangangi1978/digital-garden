@@ -27,4 +27,4 @@ Designing for "consequence" is mostly about feedback timing—players need to se
 
 ## Stack
 
-*(List the engine/framework, languages, and tools used.)*
+Built entirely for the web with Next.js and Chakra UI, backed by a live database for game state and information.

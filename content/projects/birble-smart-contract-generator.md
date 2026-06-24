@@ -29,4 +29,4 @@ We successfully built a tool that lowered the barrier to entry for Web3 developm
 
 ## Stack
 
-Web3 libraries, PlanetScale, Vercel, GitHub, Figma, and Miro.
+Solidity for the smart contracts, Web3 libraries, PlanetScale, Vercel, GitHub, Figma, and Miro.

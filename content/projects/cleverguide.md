@@ -35,4 +35,4 @@ CleverGuide successfully moved out of the MVP stage and into active validation, 
 
 ## Stack
 
-Google Workspace, AI model integrations, front-end dashboard frameworks, and Figma.
+Next.js, Vercel, Azure hosting, Supabase, and Resend.

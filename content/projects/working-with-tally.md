@@ -36,4 +36,4 @@ The Notifications Manager successfully streamlined communication workflows and e
 
 ## Stack
 
-Web3 stack, GitHub, Next.js/React, and Webhooks.
+GraphQL, React, and Chakra UI, with a custom JWT-based authentication process we built ourselves. Plus the Web3 stack, GitHub, and webhooks.

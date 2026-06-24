@@ -36,4 +36,4 @@ By closing the analytics loop, we shifted recruitment from guesswork to evidence
 
 ## Stack
 
-Squarespace, custom JavaScript tracking scripts, Tally (webhooks/hidden fields), CRM integrations, and custom link-software repositories.
+The main tracking dashboard is built with Next.js and connects to TrialMe's existing Squarespace website (which I integrated with rather than built). Rounded out with Tally forms (webhooks/hidden fields), custom JavaScript tracking scripts, and custom link-software repositories.
