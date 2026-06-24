@@ -10,7 +10,7 @@ image_contain: true
 
 ## Overview
 
-[TrialMe](https://www.trialme.com) is a digital platform focused on medical research management and clinical trial patient recruitment. I designed and implemented the attribution infrastructure to provide a single, trustworthy view of where participant signups and conversions actually originate.
+[TrialMe](https://www.trialme.eu) is a digital platform focused on medical research management and clinical trial patient recruitment. I designed and implemented the attribution infrastructure to provide a single, trustworthy view of where participant signups and conversions actually originate.
 
 ## Demo
 
