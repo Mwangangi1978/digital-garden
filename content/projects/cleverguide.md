@@ -2,14 +2,15 @@
 title: "CleverGuide"
 date: 2026-02-14T09:00:00+03:00
 lastmod: 2026-02-14T09:00:00+03:00
-status: draft
+status: published
 category: product
+image: "/images/projects/CleverGuide.png"
+image_contain: true
 ---
-<!-- DRAFT CASE STUDY — replace the placeholder specifics (scope, metrics, links) with the real details. -->
 
 ## Overview
 
-CleverGuide—a case study of what I built, why, and how it turned out.
+[CleverGuide](#) is an AI-powered education consulting platform designed to act as an intelligent compass for globally-minded families navigating complex, longitudinal educational pathways.
 
 ## Demo
 
@@ -19,18 +20,19 @@ CleverGuide—a case study of what I built, why, and how it turned out.
 
 ## The problem
 
-*(What gap did CleverGuide set out to close? Who was stuck, and on what?)*
+The EdTech space is saturated with transactional admissions bots and one-time ranking engines that fail to address the nuance of long-term planning. Families needed a platform that offered deep system translation, pathway clarification, and structured decision support—an infrastructure to manage educational uncertainty over time.
 
 ## What I built
 
-- *(The core feature/flow.)*
-- *(The systems underneath it.)*
-- *(The interface and the experience that made it usable.)*
+- **Market Validation:** As the Go-To-Market (GTM) Engineering Lead, I managed the transition of the MVP from internal development into an active, data-driven market validation phase.
+- **Product Scoping:** Refined the product scope to focus heavily on comprehensive university roadmaps rather than generic chatbot features.
+- **Workflow & UI:** Updated the hypothesis dashboard, integrated time-tracking, and refined UI mockups to effectively scale expert-level guidance.
+- **Research & Iteration:** Drove product iterations based directly on user research calls, ensuring the platform was positioned as a strategic framework rather than a simple search tool.
 
 ## Outcome
 
-*(What changed once it shipped—usage, feedback, results.)*
+CleverGuide successfully moved out of the MVP stage and into active validation, proving its value as a nuanced system translator for international education. The strength of the platform's infrastructure and positioning helped us reach the semifinals of the Oxbridge AI X Challenge.
 
 ## Stack
 
-*(List the languages, frameworks, and services used.)*
+Google Workspace, AI model integrations, front-end dashboard frameworks, and Figma.

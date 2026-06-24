@@ -115,7 +115,7 @@
 
     {{/* ── Image card if image exists ── */}}
     {{ with $page.Params.image }}
-    <div class="card card--img" aria-hidden="true">
+    <div class="card card--img{{ if $page.Params.image_contain }} card--contain{{ end }}" aria-hidden="true">
       <div class="card__img" style="background-image: url('{{ . }}')"></div>
     </div>
     {{ end }}

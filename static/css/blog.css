@@ -355,6 +355,19 @@ h1, h2, h3 { font-weight: 700; }
   min-height: 176px;
 }
 
+/* Logo cards: show the whole mark (no crop) with breathing room on a light field */
+.card--img.card--contain {
+  background: var(--white);
+}
+
+.card--img.card--contain .card__img {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-origin: content-box;
+  padding: 26px;
+}
+
 .card--muted {
   padding: 25px;
 }

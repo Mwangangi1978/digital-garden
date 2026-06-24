@@ -2,14 +2,15 @@
 title: "TrialMe Attribution Dashboard"
 date: 2025-03-18T09:00:00+03:00
 lastmod: 2025-03-18T09:00:00+03:00
-status: draft
+status: published
 category: data
+image: "/images/projects/trialme.webp"
+image_contain: true
 ---
-<!-- DRAFT CASE STUDY — replace the placeholder specifics (dates, scope, metrics, links) with the real details. -->
 
 ## Overview
 
-An attribution dashboard for TrialMe—a single place to see where signups and conversions actually come from, instead of guessing across disconnected tools.
+[TrialMe](https://www.trialme.com) is a digital platform focused on medical research management and clinical trial patient recruitment. I designed and implemented the attribution infrastructure to provide a single, trustworthy view of where participant signups and conversions actually originate.
 
 ## Demo
 
@@ -19,19 +20,20 @@ An attribution dashboard for TrialMe—a single place to see where signups and c
 
 ## The problem
 
-Marketing spend was going out across multiple channels, but there was no trustworthy view of what each channel was returning. Without clean attribution, every budget decision was a hunch.
+Marketing spend was going out across highly fragmented channels—including social media outreach, strategic partnerships, and in-person events. However, the tracking was disconnected. Without clean attribution mapping, we couldn't accurately measure channel performance, conversion rates, or specific user motivations, making it incredibly difficult to scale patient recruitment efficiently.
 
 ## What I did
 
-- Modeled the attribution logic—mapping touchpoints to conversions in a way the team could reason about and trust.
-- Built the data pipeline that pulls, cleans, and joins events from the relevant sources.
-- Designed and built the dashboard: the funnel, per-channel breakdowns, and the views people would actually check daily.
-- Made the numbers legible—clear definitions so "conversions" meant the same thing to everyone.
+- **Attribution Architecture:** Designed and implemented an automated "Attribution Loop" system to track participant motivations and tie offline event traffic directly to online conversions.
+- **Custom QR & Link Generation:** Built a custom link and QR code generator for in-person events, allowing participants to access trial information while cleanly capturing the traffic source.
+- **Product Strategy:** Authored the core Product Requirements Document (PRD), compiled comprehensive CRM comparison materials for the team, and managed tracking links and content variations across campaigns.
+- **Data Capture:** Integrated GDPR-compliant Tally forms using webhooks and hidden fields to securely capture and route user data directly into our attribution analytics system.
+- **Documentation:** Produced detailed video walkthroughs of the tracking dashboard to align the team on how to interpret the incoming data.
 
 ## Outcome
 
-The team could finally tie spend to results and shift budget with evidence behind it. *(Add the concrete impact—decisions made, time saved, accuracy gained.)*
+By closing the analytics loop, we shifted recruitment from guesswork to evidence-based strategy. The team could accurately measure specific channel performance, identify where high-quality signups were originating, and understand user drop-off points, laying the necessary groundwork for their future mobile app recruitment efforts.
 
 ## Stack
 
-*(List the data sources, pipeline tools, and frontend/charting stack used.)*
+Squarespace, custom JavaScript tracking scripts, Tally (webhooks/hidden fields), CRM integrations, and custom link-software repositories.
