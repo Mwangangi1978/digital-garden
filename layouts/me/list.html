@@ -14,6 +14,9 @@
 {{ if and $latestMoment $latestMoment.Params.image }}
   {{ $heroImage = $latestMoment.Params.image }}
 {{ end }}
+{{/* Force a horizontal (landscape) crop so portrait phone photos render wide in the hero.
+     No-op for non-Cloudinary URLs (e.g. the local fallback). */}}
+{{ $heroImage = replace $heroImage "/image/upload/" "/image/upload/c_fill,ar_16:9,g_auto,q_auto,f_auto/" }}
 {{ $heroAlt := "Deno moments — a daily image" }}
 {{ if and $latestMoment $latestMoment.Params.image_alt }}
   {{ $heroAlt = $latestMoment.Params.image_alt }}

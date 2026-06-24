@@ -1,0 +1,141 @@
+{{ define "main" }}
+<link rel="stylesheet" href="/css/blog.css">
+
+{{/* Hook for header.js */}}
+<div class="page-container writing-index-page" id="top"></div>
+
+<main class="main">
+
+{{/* ═══════════════════════════════════ HERO ═══════════════════════════════════ */}}
+<section class="hero">
+  <div class="hero__panel">
+    <div class="hero__bg" style="background-image: url('https://res.cloudinary.com/dxboziyz7/image/upload/v1778513993/DSC00361_nsxuwv.jpg')"></div>
+    <div class="hero__navy"></div>
+    <div class="hero__card">
+      <div class="hero__inner">
+        <div class="eyebrow">WORK</div>
+        <h1 class="hero__title">Projects</h1>
+        <p class="hero__lede">Things I've built, and what I did for each.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{/* ═══════════════════════════════════ FEATURED CAROUSEL ═══════════════════════════════ */}}
+{{/* Scoped to projects + a project-only flag so featured projects don't leak into the notes carousel */}}
+{{ $projects := where .Site.RegularPages "Section" "projects" }}
+{{ $featured := where $projects "Params.featured_project" true }}
+{{ if $featured }}
+<section class="featured">
+  <div class="featured__frame">
+    <div class="featured__img" id="featImg" style="background-image: url('{{ (index $featured 0).Params.image }}')"></div>
+    <div class="featured__caption">
+      <a href="{{ (index $featured 0).Permalink }}" id="featLink" class="featured__link">
+        <h2 id="featTitle">{{ (index $featured 0).Title }}</h2>
+        <span id="featDate">{{ (index $featured 0).Date.Format "January 2, 2006" }}</span>
+      </a>
+    </div>
+    <button class="carousel-btn carousel-btn--prev" id="carouselPrev" aria-label="Previous slide">‹</button>
+    <button class="carousel-btn carousel-btn--next" id="carouselNext" aria-label="Next slide">›</button>
+  </div>
+  <ol class="dots" id="dots"></ol>
+</section>
+
+<script>
+  const FEATURED = [
+    {{ range $featured }}
+    { image: "{{ .Params.image }}", title: "{{ .Title }}", date: "{{ .Date.Format "January 2, 2006" }}", url: "{{ .Permalink }}" },
+    {{ end }}
+  ];
+  const dots = document.getElementById('dots');
+  const featImg = document.getElementById('featImg');
+  const featTitle = document.getElementById('featTitle');
+  const featDate = document.getElementById('featDate');
+  const featLink = document.getElementById('featLink');
+  const carouselPrev = document.getElementById('carouselPrev');
+  const carouselNext = document.getElementById('carouselNext');
+  let currentSlide = 0;
+  let autoplayTimer = null;
+
+  function setFeat(i){
+    currentSlide = (i + FEATURED.length) % FEATURED.length;
+    const it = FEATURED[currentSlide];
+    featImg.style.backgroundImage = `url('${it.image}')`;
+    featTitle.textContent = it.title;
+    featDate.textContent = it.date;
+    if (featLink) featLink.href = it.url;
+    [...dots.children].forEach((li, n) => li.firstChild.classList.toggle('is-active', n === currentSlide));
+  }
+
+  function stopAutoplay(){
+    if (autoplayTimer) {
+      window.clearInterval(autoplayTimer);
+      autoplayTimer = null;
+    }
+  }
+
+  function startAutoplay(){
+    stopAutoplay();
+    autoplayTimer = window.setInterval(() => setFeat(currentSlide + 1), 5000);
+  }
+
+  FEATURED.forEach((_, n) => {
+    const li = document.createElement('li');
+    const btn = document.createElement('button');
+    btn.textContent = '';
+    btn.setAttribute('aria-label', `Go to slide ${n + 1}`);
+    if (n === 0) btn.classList.add('is-active');
+    btn.addEventListener('click', () => {
+      setFeat(n);
+      startAutoplay();
+    });
+    li.appendChild(btn);
+    dots.appendChild(li);
+  });
+
+  carouselPrev?.addEventListener('click', () => {
+    setFeat(currentSlide - 1);
+    startAutoplay();
+  });
+
+  carouselNext?.addEventListener('click', () => {
+    setFeat(currentSlide + 1);
+    startAutoplay();
+  });
+
+  setFeat(0);
+  startAutoplay();
+</script>
+{{ end }}
+
+{{/* ═══════════════════════════════ CARDS GRID ═══════════════════════════════ */}}
+<div class="grid" id="projects-container">
+
+  {{ range $index, $page := $projects.ByDate.Reverse }}
+
+    {{/* ── Image card if image exists ── */}}
+    {{ with $page.Params.image }}
+    <div class="card card--img" aria-hidden="true">
+      <div class="card__img" style="background-image: url('{{ . }}')"></div>
+    </div>
+    {{ end }}
+
+    {{/* ── Text card (title + metadata) ── */}}
+    {{ $tagLabel := title (default "Project" $page.Params.category) }}
+
+    {{ $cardClass := "card" }}
+    {{ if or (eq (mod $index 5) 1) (eq (mod $index 5) 4) }}
+      {{ $cardClass = "card card--navy" }}
+    {{ end }}
+
+    <a href="{{ $page.Permalink }}" class="{{ $cardClass }}">
+      <p class="card__title">{{ $page.Title }} <span class="card__meta">{{ $tagLabel }}, {{ $page.Date.Format "2006" }}</span></p>
+      <span class="card__read">Read →</span>
+    </a>
+
+  {{ end }}
+
+</div>{{/* /grid */}}
+
+</main>
+{{ end }}
