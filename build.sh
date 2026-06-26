@@ -32,6 +32,9 @@ main() {
 
   echo "Building site with baseURL: ${BASE_URL}"
   hugo --gc --minify --baseURL "${BASE_URL}"
+
+  echo "Indexing site with pagefind..."
+  npx -y pagefind --site public
 }
 
 main "$@"

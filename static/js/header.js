@@ -24,7 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
       <!-- Desktop search + social icons (right) -->
       <div class="nav-right desktop-only">
         <div class="search-wrapper">
-          <input type="text" class="search-input" placeholder="search" aria-label="Search site">
+          <input type="text" class="search-input" placeholder="search" aria-label="Search site" autocomplete="off" role="combobox" aria-expanded="false" aria-haspopup="listbox" aria-controls="search-results">
+          <div id="search-results" class="search-results" role="listbox" aria-label="Search results" hidden></div>
         </div>
         <div class="nav-socials">
           <a href="https://x.com/byDenisM" target="_blank" rel="noopener noreferrer" class="nav-social-link" aria-label="Twitter / X">
@@ -111,15 +112,127 @@ function initHeaderLogic() {
     if (e.key === 'Escape') closeMenu();
   });
 
-  // Desktop search: open Google site: search on Enter
+  // Desktop search: pagefind + Option A design
   if (desktopSearch) {
-    desktopSearch.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        const q = desktopSearch.value.trim();
-        if (!q) return;
-        window.open(`https://www.google.com/search?q=site:denismwangangi.com+${encodeURIComponent(q)}`, '_blank');
-        desktopSearch.value = '';
+    const resultsPanel = document.getElementById('search-results');
+    let pagefind = null;
+    let debounceTimer = null;
+    let selectedIndex = -1;
+
+    function esc(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function inlineHighlight(text, q) {
+      if (!q) return esc(text);
+      const i = text.toLowerCase().indexOf(q.toLowerCase());
+      if (i < 0) return esc(text);
+      return esc(text.slice(0, i)) +
+        `<mark>${esc(text.slice(i, i + q.length))}</mark>` +
+        esc(text.slice(i + q.length));
+    }
+
+    function buildUrl(url, q) {
+      if (!q) return url;
+      return url + (url.includes('?') ? '&' : '?') + 'highlight=' + encodeURIComponent(q);
+    }
+
+    async function loadPagefind() {
+      if (pagefind) return pagefind;
+      try {
+        pagefind = await import('/pagefind/pagefind.js');
+        await pagefind.init();
+      } catch { pagefind = null; }
+      return pagefind;
+    }
+
+    function setSelected(idx) {
+      const items = [...resultsPanel.querySelectorAll('.search-result-item')];
+      items.forEach((el, i) => el.classList.toggle('is-selected', i === idx));
+      selectedIndex = idx;
+      items[idx]?.scrollIntoView({ block: 'nearest' });
+    }
+
+    function closeResults() {
+      resultsPanel.hidden = true;
+      resultsPanel.innerHTML = '';
+      desktopSearch.setAttribute('aria-expanded', 'false');
+      selectedIndex = -1;
+    }
+
+    function renderPanel(results, q) {
+      selectedIndex = results.length ? 0 : -1;
+
+      if (!results.length) {
+        resultsPanel.innerHTML =
+          `<div class="search-no-results">No matches for <strong>"${esc(q)}"</strong></div>` +
+          `<div class="search-results-footer"><span>↑↓ navigate · ↵ open</span><span>0 results</span></div>`;
+      } else {
+        const rows = results.map((r, i) =>
+          `<a class="search-result-item${i === 0 ? ' is-selected' : ''}"
+              href="${buildUrl(r.url, q)}"
+              data-index="${i}"
+              role="option"
+              tabindex="-1">
+            <span class="search-result-title">${inlineHighlight(r.meta?.title || r.url, q)}</span>
+            <span class="search-result-excerpt">${r.excerpt}</span>
+          </a>`
+        ).join('');
+        const count = results.length;
+        resultsPanel.innerHTML =
+          `<div class="search-results-list">${rows}</div>` +
+          `<div class="search-results-footer">
+            <span>↑↓ navigate · ↵ open</span>
+            <span>${count} result${count !== 1 ? 's' : ''}</span>
+          </div>`;
       }
+
+      resultsPanel.hidden = false;
+      desktopSearch.setAttribute('aria-expanded', 'true');
+    }
+
+    async function runSearch(q) {
+      const pf = await loadPagefind();
+      if (!pf) return;
+      const { results } = await pf.search(q);
+      const top = await Promise.all(results.slice(0, 7).map(r => r.data()));
+      renderPanel(top, q);
+    }
+
+    desktopSearch.addEventListener('input', () => {
+      clearTimeout(debounceTimer);
+      const q = desktopSearch.value.trim();
+      if (!q) { closeResults(); return; }
+      debounceTimer = setTimeout(() => runSearch(q), 200);
+    });
+
+    desktopSearch.addEventListener('focus', () => {
+      loadPagefind();
+      const q = desktopSearch.value.trim();
+      if (q && resultsPanel.hidden) runSearch(q);
+    });
+
+    desktopSearch.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') { closeResults(); desktopSearch.blur(); return; }
+      const items = [...resultsPanel.querySelectorAll('.search-result-item')];
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (!items.length) return;
+        setSelected(Math.min(selectedIndex + 1, items.length - 1));
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (!items.length) return;
+        setSelected(Math.max(selectedIndex - 1, 0));
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        const item = items[Math.max(selectedIndex, 0)];
+        if (item) window.location.href = item.getAttribute('href');
+      }
+    });
+
+    document.addEventListener('click', (e) => {
+      const wrapper = desktopSearch.closest('.search-wrapper');
+      if (wrapper && !wrapper.contains(e.target)) closeResults();
     });
   }
 }

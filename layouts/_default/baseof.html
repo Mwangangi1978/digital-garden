@@ -29,6 +29,39 @@
   
   <script src="{{ "js/header.js" | relURL }}" defer></script>
   <script src="{{ "js/theme.js" | relURL }}" defer></script>
+  <script>
+    (function () {
+      var term = new URLSearchParams(window.location.search).get('highlight');
+      if (!term) return;
+      history.replaceState(null, '', window.location.pathname);
+      var re = new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+      var skip = /^(script|style|noscript|textarea|select|svg|head|mark)$/i;
+      var first = null;
+      function walk(node) {
+        if (node.nodeType === 3) {
+          var t = node.textContent;
+          if (!re.test(t)) return; re.lastIndex = 0;
+          var f = document.createDocumentFragment(), last = 0, m;
+          while ((m = re.exec(t)) !== null) {
+            f.appendChild(document.createTextNode(t.slice(last, m.index)));
+            var mk = document.createElement('mark');
+            mk.className = 'search-highlight'; mk.textContent = m[0];
+            if (!first) first = mk;
+            f.appendChild(mk); last = m.index + m[0].length;
+          }
+          f.appendChild(document.createTextNode(t.slice(last)));
+          node.parentNode.replaceChild(f, node);
+          return;
+        }
+        if (node.nodeType === 1 && !skip.test(node.tagName))
+          Array.from(node.childNodes).forEach(walk);
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        walk(document.querySelector('main') || document.body);
+        if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    })();
+  </script>
 </body>
 </html>
 
