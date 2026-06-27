@@ -1,6 +1,12 @@
 baseURL = "https://denismwangangi.com/"
 languageCode = "en"
-title = "Denis Mwangangi | Digita Garden"
+title = "Denis Mwangangi | Digital Garden"
+
+[params]
+  description = "Denis Mwangangi's digital garden — essays, moments, watercolors, and projects from Nairobi."
+  author      = "Denis Mwangangi"
+  twitterHandle = "@byDenisM"
+  defaultImage = "https://res.cloudinary.com/dxboziyz7/image/upload/q_auto,f_auto,w_1200,h_630,c_fill/v1778532521/DSC00586_1_sylotz.jpg"
 enableRobotsTXT = true
 
 [markup]

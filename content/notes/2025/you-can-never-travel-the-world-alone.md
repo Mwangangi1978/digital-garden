@@ -1,6 +1,7 @@
 ---
 title: "You can never travel the world alone"
 date: 2025-06-07T17:00:00+03:00
+description: "On The Grand Tour, Jeremy Clarkson, and why every journey worth taking has always been shared with someone else."
 status: complete
 category: social
 substack: true
