@@ -1,0 +1,199 @@
+{{ define "stylesheets" }}
+  <link rel="stylesheet" href="{{ "css/help.css" | relURL }}">
+{{ end }}
+
+{{ define "main" }}
+<div class="help-page" id="top">
+
+  <!-- ── Hero ─────────────────────────────────────────────────────────────── -->
+  <header class="help-hero">
+    <div class="help-hero__inner">
+      <p class="help-eyebrow">Reference</p>
+      <h1 class="help-title">Navigating this garden.</h1>
+      <p class="help-lede">What each section holds, how the features work, and how content is organised. Start anywhere — nothing here requires reading in order.</p>
+      <div class="help-hero__nav">
+        <a href="#pages"    class="help-anchor-chip">Pages</a>
+        <a href="#features" class="help-anchor-chip">Features</a>
+        <a href="#content"  class="help-anchor-chip">Content system</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="help-container">
+
+    <!-- ── 01: The Pages ─────────────────────────────────────────────────── -->
+    <section class="help-section" id="pages">
+      <div class="help-section-head">
+        <span class="help-num">01</span>
+        <h2 class="help-h2">The pages</h2>
+      </div>
+      <p class="help-intro">The garden is loosely structured — you can enter from anywhere and follow connections outward. Each section has a distinct purpose.</p>
+
+      <div class="help-pages-grid">
+
+        {{/* ── Image cards ── */}}
+
+        <a href="/notes" class="hpc hpc--img" style="--hpc-img: url('https://res.cloudinary.com/dxboziyz7/image/upload/q_auto,f_auto,w_800,h_600,c_fill/v1776978302/DSC00530_k9dcml.jpg')">
+          <div class="hpc__top">
+            <span class="hpc__name">Notes</span>
+            <span class="hpc__path">/notes</span>
+          </div>
+          <p class="hpc__desc">Long-form essays on typography, travel, mortality, and the slow work of making things carefully.</p>
+          <span class="hpc__go">Read →</span>
+        </a>
+
+        <a href="/moments" class="hpc hpc--img" style="--hpc-img: url('https://res.cloudinary.com/dxboziyz7/image/upload/q_auto,f_auto,w_800,h_600,c_fill/v1776976712/DSC07685_yzeo28.jpg')">
+          <div class="hpc__top">
+            <span class="hpc__name">Moments</span>
+            <span class="hpc__path">/moments</span>
+          </div>
+          <p class="hpc__desc">A running photo diary. One image per month, captioned. The archive goes back to September 2024.</p>
+          <span class="hpc__go">Browse →</span>
+        </a>
+
+        <a href="/watercolor" class="hpc hpc--img" style="--hpc-img: url('https://res.cloudinary.com/dxboziyz7/image/upload/q_auto,f_auto,w_800,h_600,c_fill/v1778017987/28_2_2026_Palermo_hjosep.jpg')">
+          <div class="hpc__top">
+            <span class="hpc__name">Watercolor</span>
+            <span class="hpc__path">/watercolor</span>
+          </div>
+          <p class="hpc__desc">Sketches from sketchbooks and afternoons outdoors. Click any piece to open it full-screen.</p>
+          <span class="hpc__go">View →</span>
+        </a>
+
+        {{/* ── Solid color cards ── */}}
+
+        <a href="/projects" class="hpc hpc--navy">
+          <div class="hpc__top">
+            <span class="hpc__name">Projects</span>
+            <span class="hpc__path">/projects</span>
+          </div>
+          <p class="hpc__desc">Things I've built — with notes on the tools, decisions, and intent behind each one.</p>
+          <span class="hpc__go">Explore →</span>
+        </a>
+
+        <a href="/highlights" class="hpc hpc--warm">
+          <div class="hpc__top">
+            <span class="hpc__name">Highlights</span>
+            <span class="hpc__path">/highlights</span>
+          </div>
+          <p class="hpc__desc">Weekly curated links — articles, videos, music, and art worth paying attention to.</p>
+          <span class="hpc__go">This week →</span>
+        </a>
+
+        <a href="/me" class="hpc hpc--img" style="--hpc-img: url('https://res.cloudinary.com/dxboziyz7/image/upload/q_auto,f_auto,w_800,h_600,c_fill/v1776976717/DSC00296_gnzp76.jpg')">
+          <div class="hpc__top">
+            <span class="hpc__name">About me</span>
+            <span class="hpc__path">/me</span>
+          </div>
+          <p class="hpc__desc">Professional history, personal background, tools I use, and how to reach me.</p>
+          <span class="hpc__go">Read →</span>
+        </a>
+
+        <a href="/site" class="hpc hpc--teal">
+          <div class="hpc__top">
+            <span class="hpc__name">About this site</span>
+            <span class="hpc__path">/site</span>
+          </div>
+          <p class="hpc__desc">Why this site exists, its typographic influences, design philosophy, and how it was built.</p>
+          <span class="hpc__go">Read →</span>
+        </a>
+
+        <a href="/graph" class="hpc hpc--dark">
+          <div class="hpc__top">
+            <span class="hpc__name">Graph</span>
+            <span class="hpc__path">/graph</span>
+          </div>
+          <p class="hpc__desc">A visual map of all connections in the garden. Each node is a page; each edge is an explicit relationship.</p>
+          <span class="hpc__go">Explore →</span>
+        </a>
+
+      </div>
+    </section>
+
+    <hr class="help-rule">
+
+    <!-- ── 02: Features ──────────────────────────────────────────────────── -->
+    <section class="help-section" id="features">
+      <div class="help-section-head">
+        <span class="help-num">02</span>
+        <h2 class="help-h2">Features</h2>
+      </div>
+      <p class="help-intro">A few built-in tools to make reading more comfortable and exploration more useful.</p>
+
+      <dl class="help-features">
+
+        <div class="hf">
+          <dt class="hf__label">
+            Theme
+            <div class="hf__chips">
+              <span class="hf__chip" id="theme-auto">Auto</span>
+              <span class="hf__chip" id="theme-light">Light</span>
+              <span class="hf__chip" id="theme-dark">Dark</span>
+            </div>
+          </dt>
+          <dd class="hf__desc">Switch between light, dark, or system-matched display. Your preference is saved across pages. The same toggles appear in the upper-right corner of every page.</dd>
+        </div>
+
+        <div class="hf">
+          <dt class="hf__label">
+            Search
+            <div class="hf__chips">
+              <span class="hf__chip hf__chip--interactive" id="search-trigger">Search site</span>
+            </div>
+          </dt>
+          <dd class="hf__desc">Full-text search across all notes, moments, watercolors, and pages. Type a word or phrase and results appear inline. Click any result to jump there, with your term highlighted on the page.</dd>
+        </div>
+
+        <div class="hf">
+          <dt class="hf__label">Graph</dt>
+          <dd class="hf__desc">The <a href="/graph">knowledge graph</a> shows every connection in the garden at once. Click a node to visit that page; hover to see its linked neighbours. Useful for discovering notes that aren't in the main archive.</dd>
+        </div>
+      </dl>
+    </section>
+
+    <hr class="help-rule">
+
+    <!-- ── 03: Content system ─────────────────────────────────────────────── -->
+    <section class="help-section" id="content">
+      <div class="help-section-head">
+        <span class="help-num">03</span>
+        <h2 class="help-h2">How content works</h2>
+      </div>
+      <p class="help-intro">Notes carry metadata that shows their state and how they connect to other pieces. Here's what each label means.</p>
+
+      <h3 class="help-h3">Status</h3>
+      <dl class="help-statuses">
+        <div class="hs">
+          <dt><span class="status-badge status-badge--complete">complete</span></dt>
+          <dd>The piece is finished and unlikely to change significantly. Safe to cite or share.</dd>
+        </div>
+        <div class="hs">
+          <dt><span class="status-badge status-badge--draft">draft</span></dt>
+          <dd>Still being written or revised. Ideas may shift; treat it as thinking-in-progress.</dd>
+        </div>
+        <div class="hs">
+          <dt><span class="status-badge status-badge--archived">archived</span></dt>
+          <dd>Older work kept for continuity. May no longer reflect current thinking.</dd>
+        </div>
+      </dl>
+
+      <h3 class="help-h3">Connections</h3>
+      <p class="help-body">At the bottom of most notes you'll find a <em>Connections</em> section — explicit links to related pieces, each with a note on why they're connected. These same relationships are drawn in the <a href="/graph">graph</a>.</p>
+
+      <h3 class="help-h3">Sidenotes</h3>
+      <p class="help-body">On longer notes, parenthetical thoughts appear as sidenotes — to the left of the main text on desktop, inline on mobile. They're optional reading; the main text is complete without them.</p>
+
+      <h3 class="help-h3">Backlinks</h3>
+      <p class="help-body">Below every note, a <em>Backlinks</em> section lists any other page on the site that links here. A reliable way to trace an idea backwards through the garden.</p>
+    </section>
+
+    <hr class="help-rule">
+
+    <!-- ── Footer CTA ─────────────────────────────────────────────────────── -->
+    <section class="help-cta">
+      <p>Something missing or unclear? <a href="/contact">Write to me</a> — I update this page when the site changes.</p>
+    </section>
+
+  </div>
+</div>
+{{ end }}
