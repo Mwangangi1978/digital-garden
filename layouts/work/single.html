@@ -1,0 +1,26 @@
+{{ define "stylesheets" }}
+  <link rel="stylesheet" href="{{ "css/work.css" | relURL }}">
+{{ end }}
+
+{{ define "main" }}
+<div class="work-page" id="top">
+  <header class="work-header">
+    <div class="work-header__inner">
+      <div class="work-header__text">
+        <p class="work-eyebrow">Résumé</p>
+        <h1 class="work-title">Denis Mwangangi</h1>
+      </div>
+      <a class="work-download" href="/resume/Denis_K_Mwangangi_Resume.pdf" download>Download PDF</a>
+    </div>
+  </header>
+
+  <div class="work-viewer">
+    <object class="work-pdf" data="/resume/Denis_K_Mwangangi_Resume.pdf" type="application/pdf">
+      <div class="work-fallback">
+        <p>Your browser can't preview PDFs inline.</p>
+        <a href="/resume/Denis_K_Mwangangi_Resume.pdf">Open the résumé directly</a>
+      </div>
+    </object>
+  </div>
+</div>
+{{ end }}

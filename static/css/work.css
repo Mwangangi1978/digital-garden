@@ -1,0 +1,113 @@
+/* =============================================================================
+   WORK / RÉSUMÉ PAGE
+   ============================================================================= */
+
+.work-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-color);
+}
+
+.work-header {
+  border-bottom: 1px solid var(--blog-border, rgba(0, 0, 0, 0.12));
+}
+
+.work-header__inner {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 28px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.work-eyebrow {
+  margin: 0 0 6px;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-color);
+  opacity: 0.6;
+}
+
+.work-title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  line-height: 1.1;
+  color: var(--text-color);
+}
+
+.work-download {
+  flex-shrink: 0;
+  border: none;
+  background: #2d2a50;
+  color: #fff;
+  padding: 12px 20px;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.work-download:hover {
+  opacity: 0.85;
+}
+
+.work-viewer {
+  flex: 1;
+  max-width: 1140px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px 30px 40px;
+}
+
+.work-pdf {
+  width: 100%;
+  height: 85vh;
+  min-height: 500px;
+  border: 1px solid var(--blog-border, rgba(0, 0, 0, 0.12));
+  background: #fff;
+}
+
+.work-fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 100%;
+  padding: 40px;
+  text-align: center;
+  font-family: var(--font-body);
+  color: var(--text-color);
+}
+
+.work-fallback a {
+  color: #2d2a50;
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .work-header__inner {
+    padding: 20px 16px;
+  }
+
+  .work-title {
+    font-size: 1.5rem;
+  }
+
+  .work-viewer {
+    padding: 16px;
+  }
+
+  .work-pdf {
+    height: 70vh;
+  }
+}
