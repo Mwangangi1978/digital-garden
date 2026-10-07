@@ -1,0 +1,36 @@
+{{/*
+  Renders one Substack comment (avatar, name, date, body, like/reply stats)
+  and recurses into .replies for nested threads. Calls itself.
+
+  Input: a comment map from substack-comment-tree.html, i.e.
+  { name, photoUrl, body, date, reactionCount, replies }
+*/}}
+{{ $c := . }}
+<li class="comment">
+  <div class="comment__row">
+    {{ if $c.photoUrl }}
+    <img class="comment__avatar" src="{{ $c.photoUrl }}" alt="" loading="lazy">
+    {{ else }}
+    <span class="comment__avatar comment__avatar--placeholder" aria-hidden="true">{{ substr $c.name 0 1 }}</span>
+    {{ end }}
+    <div class="comment__body">
+      <div class="comment__header">
+        <span class="comment__name">{{ $c.name }}</span>
+        {{ if eq $c.name site.Params.author }}<span class="comment__badge">Author</span>{{ end }}
+        <time class="comment__date">{{ $c.date.Format "2 Jan" }}</time>
+      </div>
+      <p class="comment__text">{{ $c.body }}</p>
+      <div class="comment__stats">
+        <span class="comment__stat">♡ Like{{ if gt $c.reactionCount 0 }} ({{ $c.reactionCount }}){{ end }}</span>
+        <span class="comment__stat">💬 Reply{{ if gt (len $c.replies) 0 }} ({{ len $c.replies }}){{ end }}</span>
+      </div>
+    </div>
+  </div>
+  {{ if $c.replies }}
+  <ul class="comment-list comment-list--replies">
+    {{ range $c.replies }}
+      {{ partial "comment-item.html" . }}
+    {{ end }}
+  </ul>
+  {{ end }}
+</li>

@@ -1,0 +1,47 @@
+{{/*
+  Fetches every published post from the Substack archive API (lightweight
+  listing only) and returns a slice of maps:
+  { title, link, slug, pubDate, image, reactionCount, commentCount }
+
+  Used for: /notes card thumbnails, and the content adapter that discovers
+  which Substack posts need an auto-synced page. Does NOT include full post
+  content - the archive endpoint's body_html/comments fields come back
+  empty; substack-post.html fetches those per-post for single-note pages.
+
+  Uses the archive endpoint (not the RSS feed) because it returns the full
+  back-catalogue, not just the most recent ~20 items.
+
+  Unofficial, undocumented Substack endpoint - fails soft (returns an empty
+  slice + a build warning) rather than failing the build.
+*/}}
+{{ $items := slice }}
+{{ $subdomain := site.Params.substackSubdomain }}
+{{/* The archive endpoint caps "limit" at 50, so page through it with "offset" */}}
+{{ $pageSize := 50 }}
+{{ $maxPages := 10 }}
+{{ range $page := (seq 0 (sub $maxPages 1)) }}
+  {{ $offset := mul $page $pageSize }}
+  {{ $archiveURL := printf "https://%s.substack.com/api/v1/archive?sort=new&limit=%d&offset=%d" $subdomain $pageSize $offset }}
+  {{ $try := try (resources.GetRemote $archiveURL) }}
+  {{ with $try.Err }}
+    {{ warnf "substack-feed: could not fetch %s: %s" $archiveURL . }}
+  {{ else with $try.Value }}
+    {{ $rawItems := transform.Unmarshal .Content }}
+    {{ range $rawItems }}
+      {{ $items = $items | append (dict
+        "title" .title
+        "link" .canonical_url
+        "slug" .slug
+        "pubDate" (.post_date | time.AsTime)
+        "image" .cover_image
+        "reactionCount" (.reaction_count | default 0)
+        "commentCount" (.comment_count | default 0)
+      ) }}
+    {{ end }}
+    {{ if lt (len $rawItems) $pageSize }}
+      {{/* Last page reached */}}
+      {{ break }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ return $items }}

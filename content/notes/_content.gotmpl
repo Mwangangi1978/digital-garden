@@ -1,0 +1,58 @@
+{{/*
+  Content adapter: auto-creates a /notes page for every Substack post that
+  doesn't already have a hand-written physical file in this directory.
+
+  Why: existing notes (physical .md files with a substackSlug front
+  matter field) are "curated" - they carry hand-set category/status/
+  connections and are meant to stay as real files you can enrich. Any post
+  published on Substack that ISN'T backed by one of those files yet gets a
+  bare page here automatically, so new Substack posts show up on /notes
+  with zero manual steps. Content, images, reactions and comments for both
+  kinds of page are fetched live at render time by _default/single.html via
+  the substackSlug param - this adapter only needs to create the page shell.
+
+  To "graduate" an auto-synced note into a curated one (custom category,
+  connections, etc.), just add a physical .md file with a matching
+  substackSlug - this adapter will then skip that slug automatically.
+*/}}
+
+{{/* 1. Find which Substack slugs already have a physical content file */}}
+{{ $claimed := slice }}
+{{ $topEntries := readDir "content/notes" }}
+{{ range $topEntries }}
+  {{ $dirName := .Name }}
+  {{ if .IsDir }}
+    {{ $subEntries := readDir (printf "content/notes/%s" $dirName) }}
+    {{ range $subEntries }}
+      {{ if not .IsDir }}
+        {{ $path := printf "content/notes/%s/%s" $dirName .Name }}
+        {{ $raw := readFile $path }}
+        {{ $match := findRE `substackSlug:\s*"[^"]+"` $raw 1 }}
+        {{ if $match }}
+          {{ $slug := replaceRE `substackSlug:\s*"([^"]+)"` "$1" (index $match 0) }}
+          {{ $claimed = $claimed | append $slug }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{/* 2. Fetch every published Substack post and add a page for the unclaimed ones */}}
+{{ $posts := partial "substack-feed.html" . }}
+{{ range $posts }}
+  {{ if not (in $claimed .slug) }}
+    {{ $.AddPage (dict
+      "path" (printf "notes/substack-synced/%s" .slug)
+      "title" .title
+      "dates" (dict "date" .pubDate)
+      "kind" "page"
+      "content" (dict "value" "" "mediaType" "text/html")
+      "params" (dict
+        "substackSlug" .slug
+        "category" "general"
+        "status" "complete"
+        "substackAutoSynced" true
+      )
+    ) }}
+  {{ end }}
+{{ end }}

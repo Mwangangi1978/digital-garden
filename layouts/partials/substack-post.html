@@ -1,0 +1,54 @@
+{{/*
+  Fetches ONE full Substack post by slug, for rendering a single /notes page.
+  Input: the post's substackSlug (string).
+  Returns a map: { title, link, slug, pubDate, image, contentHTML,
+                    reactionCount, commentCount, comments }
+  comments is a slice of { name, photoUrl, body, date, reactionCount, replies },
+  where replies is the same shape, nested to however deep the thread goes.
+
+  Uses the per-post detail endpoint rather than the archive listing endpoint
+  (see substack-feed.html) because the archive endpoint's body_html/comments
+  fields come back empty - only this endpoint reliably includes full post
+  content and the comment thread.
+
+  Unofficial, undocumented Substack endpoint - fails soft (returns an empty
+  dict + a build warning) rather than failing the build.
+*/}}
+{{ $slug := . }}
+{{ $post := dict }}
+{{ $subdomain := site.Params.substackSubdomain }}
+{{ $postURL := printf "https://%s.substack.com/api/v1/posts/%s" $subdomain $slug }}
+{{ $try := try (resources.GetRemote $postURL) }}
+{{ with $try.Err }}
+  {{ warnf "substack-post: could not fetch %s: %s" $postURL . }}
+{{ else with $try.Value }}
+  {{ $data := transform.Unmarshal .Content }}
+
+  {{ $content := $data.body_html }}
+  {{/* Strip Substack's own "Subscribe now" CTA embeds - meaningless outside their reader */}}
+  {{ $content = replaceRE `<p class="button-wrapper"[^>]*data-component-name="ButtonCreateButton"[^>]*>.*?</p>` "" $content }}
+  {{/* Strip the restack/expand-in-lightbox overlay buttons Substack overlays on every image */}}
+  {{ $content = replaceRE `(?s)<div class="image-link-expand">.*?</div>\s*</div>` "" $content }}
+  {{/* Images link out to substackcdn.com in a new tab by default - drop that, JS toggles an in-place expand instead */}}
+  {{ $content = replaceRE `<a class="image-link[^"]*"\s+target="_blank"\s+href="[^"]*"\s+data-component-name="Image2ToDOM">` `<a class="image-link" role="button" tabindex="0" data-component-name="Image2ToDOM">` $content }}
+
+  {{ $comments := slice }}
+  {{ range ($data.comments | default slice) }}
+    {{ if not .deleted }}
+      {{ $comments = $comments | append (partial "substack-comment-tree.html" .) }}
+    {{ end }}
+  {{ end }}
+
+  {{ $post = dict
+    "title" $data.title
+    "link" $data.canonical_url
+    "slug" $data.slug
+    "pubDate" ($data.post_date | time.AsTime)
+    "image" $data.cover_image
+    "contentHTML" $content
+    "reactionCount" ($data.reaction_count | default 0)
+    "commentCount" ($data.comment_count | default 0)
+    "comments" $comments
+  }}
+{{ end }}
+{{ return $post }}

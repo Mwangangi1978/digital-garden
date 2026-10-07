@@ -115,6 +115,211 @@
   margin-top: 0.25rem;
 }
 
+/* "Website Exclusive" badge on notes never cross-posted to Substack */
+.status--exclusive {
+  display: inline-block;
+  margin-left: 0.5em;
+  padding: 0.1em 0.5em;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-style: normal;
+}
+
+.article-meta-sidebar .status--exclusive {
+  display: inline-block;
+  margin-top: 0.4rem;
+  margin-left: 0;
+}
+
+/* Attribution link on notes synced live from Substack */
+.article-substack-note {
+  font-size: 0.75rem;
+  font-style: italic;
+  opacity: 0.7;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.article-substack-note a {
+  text-decoration: underline;
+}
+
+.article-substack-stats a {
+  text-decoration: underline;
+}
+
+/* Substack subscribe widget wrapper */
+.article-subscribe {
+  margin: 2.5rem 0;
+}
+
+.article-subscribe iframe {
+  display: block;
+  width: 100%;
+}
+
+/* Read-only mirror of the Substack comment thread */
+.article-comments {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid currentColor;
+}
+
+.article-comments h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.article-comments .comment-list {
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+}
+
+.article-comments .comment {
+  width: 100%;
+}
+
+/* Top-level comments are separated by a rule; nested replies are not
+   (the connector line + indent already groups them visually) */
+.article-comments > .comment-list > .comment + .comment {
+  border-top: 1px solid rgba(128, 128, 128, 0.2);
+}
+
+.article-comments .comment__row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 0.9rem 0;
+}
+
+.article-comments .comment__avatar {
+  flex: 0 0 2.25rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0;
+}
+
+.article-comments .comment__avatar--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(128, 128, 128, 0.25);
+  font-size: 0.85rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.article-comments .comment__body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.article-comments .comment__header {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 0.3rem;
+}
+
+.article-comments .comment__name {
+  font-weight: bold;
+  font-size: 0.85rem;
+}
+
+.article-comments .comment__badge {
+  display: inline-block;
+  padding: 0.05em 0.5em;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  opacity: 0.8;
+}
+
+.article-comments .comment__date {
+  font-size: 0.75rem;
+  opacity: 0.55;
+}
+
+.article-comments .comment__text {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+.article-comments .comment__stats {
+  display: flex;
+  gap: 1.1rem;
+  margin-top: 0.5rem;
+}
+
+.article-comments .comment__stat {
+  font-size: 0.75rem;
+  opacity: 0.6;
+  white-space: nowrap;
+}
+
+/* Nested replies: indented under the parent's avatar, with a connector line */
+.article-comments .comment-list--replies {
+  margin: 0 0 0 1.1rem;
+  padding-left: 1.15rem;
+  border-left: 2px solid rgba(128, 128, 128, 0.2);
+}
+
+.article-comments .comment-list--replies .comment__row {
+  padding: 0.75rem 0;
+}
+
+.article-comments .comment-list--replies .comment__avatar {
+  flex-basis: 1.85rem;
+  width: 1.85rem;
+  height: 1.85rem;
+}
+
+.article-comments .comment-empty {
+  font-size: 0.85rem;
+  opacity: 0.6;
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.article-comments .comment-cta {
+  display: inline-block;
+  font-size: 0.85rem;
+  text-decoration: underline;
+}
+
+@media (max-width: 767px) {
+  .article-comments .comment__row {
+    gap: 0.5rem;
+  }
+
+  .article-comments .comment__avatar {
+    flex-basis: 1.85rem;
+    width: 1.85rem;
+    height: 1.85rem;
+  }
+
+  .article-comments .comment-list--replies {
+    margin-left: 0.6rem;
+    padding-left: 0.75rem;
+  }
+
+  .article-comments .comment__stats {
+    gap: 0.85rem;
+  }
+}
+
 /* Epistemic status styling */
 .article-epistemic {
   font-size: 0.75rem;
@@ -178,6 +383,36 @@
 /* Content wrapper for sidenote anchoring */
 .article-content {
   position: relative;
+}
+
+/* ==========================================================================
+   INLINE IMAGE EXPAND (click to enlarge in place, click again to collapse)
+   ========================================================================== */
+
+.article-content .image-link {
+  display: block;
+  cursor: zoom-in;
+}
+
+.article-content .image-link img {
+  transition: max-width 0.25s ease, transform 0.25s ease;
+}
+
+.article-content figure.is-expanded .image-link {
+  cursor: zoom-out;
+}
+
+.article-content figure.is-expanded {
+  position: relative;
+  z-index: 2;
+}
+
+.article-content figure.is-expanded img {
+  max-width: min(94vw, 1400px);
+  width: 94vw;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 /* ==========================================================================

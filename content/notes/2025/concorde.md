@@ -5,7 +5,7 @@ status: complete
 category: fiction
 type: short-story
 featured: true
-substack: true
+substackSlug: "concorde"
 image: "https://res.cloudinary.com/dxboziyz7/image/upload/q_auto/f_auto/v1778499742/abe1ba25-6c92-45a8-8b4f-fc0deb7c4035_1000x570_yqeypo.webp"
 connections:
   - path: "/notes/2025/you-can-never-travel-the-world-alone"

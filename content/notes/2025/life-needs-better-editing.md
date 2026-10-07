@@ -4,7 +4,7 @@ date: 2025-06-14T17:00:00+03:00
 status: complete
 category: social
 featured: true
-substack: true
+substackSlug: "life-needs-better-editing"
 image: "https://res.cloudinary.com/dxboziyz7/image/upload/q_auto/f_auto/v1778499582/DSC00360_gjtrcu.jpg"
 connections:
   - path: "/notes/2025/the-window-or-the-screen"

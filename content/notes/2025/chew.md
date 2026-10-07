@@ -4,7 +4,7 @@ date: 2025-06-18T17:00:00+03:00
 status: complete
 category: fiction
 type: short-story
-substack: true
+substackSlug: "chew"
 connections:
   - path: "/notes/2025/concorde"
     context: "Both use surreal narrative to explore emotional pain and self-worth"

@@ -3,7 +3,7 @@ title: "Little people all the way down"
 date: 2025-06-26T17:00:00+03:00
 status: complete
 category: social
-substack: true
+substackSlug: "little-people-all-the-way-down"
 image: "https://res.cloudinary.com/dxboziyz7/image/upload/q_auto/f_auto/v1778511038/lpatwd_mfnngn.webp"
 connections:
   - path: "/notes/2025/chew"

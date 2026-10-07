@@ -6,6 +6,7 @@ title = "Denis Mwangangi | Digital Garden"
   description = "Denis Mwangangi's digital garden — essays, moments, watercolors, and projects from Nairobi."
   author      = "Denis Mwangangi"
   twitterHandle = "@byDenisM"
+  substackSubdomain = "denismwangangi"
   defaultImage = "https://res.cloudinary.com/dxboziyz7/image/upload/q_auto,f_auto,w_1200,h_630,c_fill/v1778532521/DSC00586_1_sylotz.jpg"
 enableRobotsTXT = true
 
@@ -19,6 +20,10 @@ enableRobotsTXT = true
   fiction     = "/:year/:month/:day/:slug/"
   non-fiction = "/:year/:month/:day/:slug/"
   notes       = "/:year/:month/:day/:slug/"
+
+[caches]
+  [caches.getresource]
+    maxAge = "24h"
 
 [taxonomies]
   category = "categories"   # non-fiction only

@@ -109,11 +109,25 @@
 {{/* ═══════════════════════════════ CARDS GRID ═══════════════════════════════ */}}
 <div class="grid" id="articles-container">
 
+  {{ $substackItems := partialCached "substack-feed.html" . "substack-feed" }}
+
   {{ $pages := where .Site.RegularPages "Section" "in" (slice "fiction" "non-fiction" "notes" "poetry" "screenplay") }}
   {{ range $index, $page := $pages.ByDate.Reverse }}
 
-    {{/* ── Image card if image exists ── */}}
-    {{ with $page.Params.image }}
+    {{ $substackMatch := "" }}
+    {{ with $page.Params.substackSlug }}
+      {{ $matches := where $substackItems "slug" . }}
+      {{ if $matches }}
+        {{ $substackMatch = index $matches 0 }}
+      {{ end }}
+    {{ end }}
+
+    {{/* ── Image card if image exists (falls back to the Substack cover image) ── */}}
+    {{ $cardImage := $page.Params.image }}
+    {{ if and (not $cardImage) $substackMatch }}
+      {{ $cardImage = $substackMatch.image }}
+    {{ end }}
+    {{ with $cardImage }}
     <div class="card card--img" aria-hidden="true">
       <div class="card__img" style="background-image: url('{{ . }}')"></div>
     </div>
@@ -130,6 +144,11 @@
       {{ $tagLabel = replace (title $ftype) "-" " " }}
     {{ else }}
       {{ $tagLabel = title (default "general" $page.Params.category) }}
+    {{ end }}
+
+    {{/* Notes not cross-posted to Substack are flagged as website exclusive */}}
+    {{ if and (eq $section "notes") (not $substackMatch) }}
+      {{ $tagLabel = printf "%s · Website Exclusive" $tagLabel }}
     {{ end }}
 
     {{ $cardClass := "card" }}

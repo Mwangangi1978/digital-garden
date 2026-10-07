@@ -3,7 +3,7 @@ title: "When the weekend was mine"
 date: 2025-06-08T17:00:00+03:00
 status: complete
 category: social
-substack: true
+substackSlug: "when-the-weekend-was-mine"
 connections:
   - path: "/notes/2025/life-needs-better-editing"
     context: "Both meditate on everyday life, nostalgia, and finding beauty in the mundane"

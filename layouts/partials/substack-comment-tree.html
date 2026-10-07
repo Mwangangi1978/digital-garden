@@ -1,0 +1,23 @@
+{{/*
+  Recursively converts one raw Substack API comment (plus its "children")
+  into a clean map: { name, photoUrl, body, date, reactionCount, replies }
+  replies is a slice of the same shape, for however many levels deep the
+  thread goes.
+
+  Input: the raw comment object from the Substack API.
+*/}}
+{{ $c := . }}
+{{ $replies := slice }}
+{{ range ($c.children | default slice) }}
+  {{ if not .deleted }}
+    {{ $replies = $replies | append (partial "substack-comment-tree.html" .) }}
+  {{ end }}
+{{ end }}
+{{ return (dict
+  "name" $c.name
+  "photoUrl" $c.photo_url
+  "body" $c.body
+  "date" ($c.date | time.AsTime)
+  "reactionCount" ($c.reaction_count | default 0)
+  "replies" $replies
+) }}

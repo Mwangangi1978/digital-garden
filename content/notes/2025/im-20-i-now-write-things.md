@@ -3,7 +3,7 @@ title: "I'm 20. I now write things. Buckle up."
 date: 2025-06-06T17:00:00+03:00
 status: complete
 category: social
-substack: true
+substackSlug: "im-20-i-now-write-things-buckle-up"
 connections:
   - path: "/site"
     context: "This intro post led to the creation of the digital garden"
