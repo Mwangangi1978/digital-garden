@@ -10,8 +10,8 @@ main() {
   HUGO_VERSION="${HUGO_VERSION:-0.153.2}"
   export TZ="${TZ:-Europe/Oslo}"
 
-  if ! command -v hugo >/dev/null 2>&1; then
-    echo "Hugo not found in PATH. Installing Hugo ${HUGO_VERSION}..."
+  if ! command -v hugo >/dev/null 2>&1 || ! hugo version | grep -q "v${HUGO_VERSION}"; then
+    echo "Hugo ${HUGO_VERSION} not found in PATH. Installing Hugo ${HUGO_VERSION}..."
     mkdir -p "${HOME}/.local" "${HOME}/.local/hugo"
     TMP_DIR="$(mktemp -d)"
     trap 'rm -rf "${TMP_DIR}"' EXIT
